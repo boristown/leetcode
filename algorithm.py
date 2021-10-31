@@ -66,32 +66,61 @@ class TopologicalSortor:
     拓扑排序器
     '''
     def __init__(self,vertices): 
-        self.graph = defaultdict(list) 
+        self.graph = defaultdict(list)
         self.V = vertices
-  
-    def addEdge(self,u,v): 
-        self.graph[u].append(v) 
+    
+    def detectCircle(self,u):
+        self.detectedNode.add(u)
+        for v in self.graph[u]:
+            if v not in self.pathNode:
+                self.pathNode.add(v)
+                self.detectCircle(v)
+                self.pathNode.remove(v)
+                if self.findCircle:
+                    return
+            else:
+                self.findCircle = True
+                return
+
+    def addEdge(self,u,v):
+        '''
+        添加路径
+        '''
+        self.graph[u].append(v)
+    
+    def hasCircle(self):
+        '''
+        环路检测器
+        '''
+        self.pathNode = set()
+        self.detectedNode = set()
+        for i in range(self.V):
+            if i not in self.detectedNode:
+                self.findCircle = False
+                self.pathNode.add(i)
+                self.detectCircle(i)
+                self.pathNode.remove(i)
+                if self.findCircle: return True
+        return False
   
     def topologicalSortUtil(self,v,visited,stack): 
-  
         visited[v] = True
-  
         for i in self.graph[v]: 
             if visited[i] == False: 
                 self.topologicalSortUtil(i,visited,stack) 
-  
         stack.insert(0,v) 
   
-    def topologicalSort(self): 
+    def topologicalSort(self):
+        '''
+        拓扑排序
+        '''
         visited = [False]*self.V 
         stack =[] 
-  
         for i in range(self.V): 
             if visited[i] == False: 
                 self.topologicalSortUtil(i,visited,stack) 
-  
         return stack
-
+        
 def prefix2D(matrix):
     '''
     二维前缀和
