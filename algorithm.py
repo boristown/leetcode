@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 Inf = float("inf")
 # 并查集模板
 class UnionFind:
@@ -58,6 +60,37 @@ class Trie:
 
     def startsWith(self, prefix: str) -> bool:
         return self.searchPrefix(prefix) is not None
+
+class TopologicalSortor:
+    '''
+    拓扑排序器
+    '''
+    def __init__(self,vertices): 
+        self.graph = defaultdict(list) 
+        self.V = vertices
+  
+    def addEdge(self,u,v): 
+        self.graph[u].append(v) 
+  
+    def topologicalSortUtil(self,v,visited,stack): 
+  
+        visited[v] = True
+  
+        for i in self.graph[v]: 
+            if visited[i] == False: 
+                self.topologicalSortUtil(i,visited,stack) 
+  
+        stack.insert(0,v) 
+  
+    def topologicalSort(self): 
+        visited = [False]*self.V 
+        stack =[] 
+  
+        for i in range(self.V): 
+            if visited[i] == False: 
+                self.topologicalSortUtil(i,visited,stack) 
+  
+        return stack
 
 def prefix2D(matrix):
     '''
