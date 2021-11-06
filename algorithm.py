@@ -174,3 +174,38 @@ def largestRectangleArea(heights) -> int:
             ans=max(ans,s)
         stack.append((i,h))
     return ans
+
+class DLinkedNode:
+    def __init__(self, value=0):
+        self.value = value
+        self.prev = None
+        self.next = None
+
+class DLinkedList:
+
+    def __init__(self):
+        self.cache = dict()
+        # 使用伪头部和伪尾部节点    
+        self.head = DLinkedNode()
+        self.tail = DLinkedNode()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def addToHead(self, node):
+        node.prev = self.head
+        node.next = self.head.next
+        self.head.next.prev = node
+        self.head.next = node
+    
+    def removeNode(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def moveToHead(self, node):
+        self.removeNode(node)
+        self.addToHead(node)
+
+    def removeTail(self):
+        node = self.tail.prev
+        self.removeNode(node)
+        return node
