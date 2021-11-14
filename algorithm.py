@@ -209,3 +209,26 @@ class DLinkedList:
         node = self.tail.prev
         self.removeNode(node)
         return node
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    @staticmethod
+    def Node2List(head):
+        L,p = [],head
+        while p:
+            L.append(p.val)
+            p = p.next
+        return L
+    
+    @staticmethod
+    def List2Node(L):
+        n=len(L)
+        N = []
+        for l in L:
+            N.append(ListNode(l,None))
+        for i,node in enumerate(N[:n-1]):
+            node.next = N[i+1]
+        return N[0]
