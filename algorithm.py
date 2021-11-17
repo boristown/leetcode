@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import *
 
 Inf = float("inf")
 # 并查集模板
@@ -232,3 +232,34 @@ class ListNode:
         for i,node in enumerate(N[:n-1]):
             node.next = N[i+1]
         return N[0]
+
+class StateCompression:
+    @staticmethod
+    def word2bin(w):
+        b=0
+        for c in w:
+            i=ord(c)-ord("a")
+            b |= 1<<i
+        return b
+
+class bfs_utils:
+    @staticmethod
+    def nxt(i,j,m,n):
+        for a,b in [(0,1),(0,-1),(1,0),(-1,0)]:
+            if 0<=i+a<m and 0<=j+b<n:
+                yield i+a,j+b
+    @staticmethod
+    def bfs(x,y,x1,y1,m,n):
+        if (x,y) == (x1,y1): return 0
+        Q = deque([(0,x,y)])
+        seen = set((x,y))
+        while Q:
+            step,i,j=Q.popleft()
+            step1 = step + 1
+            for a,b in bfs_utils.nxt(i,j,m,n):
+                if (a,b) not in seen:
+                    if (a,b) == (x1,y1):
+                        return step1
+                    seen.add((a,b))
+                    Q.append((step1,a,b))
+        return -1
