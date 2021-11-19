@@ -244,6 +244,30 @@ class StateCompression:
 
 class bfs_utils:
     @staticmethod
+    def nxt(x):
+        if x%2==0:
+            yield x//2
+        else:
+            yield x+1
+            yield x-1
+    @staticmethod
+    def bfs(n):
+        if n==1: return 0
+        Q = deque([(0,n)])
+        seen = set([n])
+        while Q:
+            step,x=Q.popleft()
+            step1 = step + 1
+            for y in bfs_utils.nxt(x):
+                if y not in seen:
+                    if y == 1:
+                        return step1
+                    seen.add(y)
+                    Q.append((step1,y))
+        return -1
+
+class bfs_utils_2D:
+    @staticmethod
     def nxt(i,j,m,n):
         for a,b in [(0,1),(0,-1),(1,0),(-1,0)]:
             if 0<=i+a<m and 0<=j+b<n:
@@ -252,11 +276,11 @@ class bfs_utils:
     def bfs(x,y,x1,y1,m,n):
         if (x,y) == (x1,y1): return 0
         Q = deque([(0,x,y)])
-        seen = set((x,y))
+        seen = set([(x,y)])
         while Q:
             step,i,j=Q.popleft()
             step1 = step + 1
-            for a,b in bfs_utils.nxt(i,j,m,n):
+            for a,b in bfs_utils_2D.nxt(i,j,m,n):
                 if (a,b) not in seen:
                     if (a,b) == (x1,y1):
                         return step1
