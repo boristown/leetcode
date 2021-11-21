@@ -51,7 +51,7 @@ class Trie:
             ch = ord(ch) - ord("a")
             if not node.children[ch]:
                 node.children[ch] = Trie()
-            node = node.children[ch]
+            node = node.children[ch]    
         node.isEnd = True
 
     def search(self, word: str) -> bool:
@@ -60,6 +60,26 @@ class Trie:
 
     def startsWith(self, prefix: str) -> bool:
         return self.searchPrefix(prefix) is not None
+
+def dec2n(n,x):
+    '''
+    10进制转N进制
+    n为待转换的十进制数，x为机制，取值为2-16
+    '''
+    a=['0','1','2','3','4','5','6','7','8','9','A','b','C','D','E','F']
+    b=[]
+    while True:
+        s=n//x  # 商
+        y=n%x  # 余数
+        b=b+[y]
+        if s==0:
+            break
+        n=s
+    b.reverse()
+    x=""
+    for i in b:
+        x+=a[i]
+    return x
 
 class TopologicalSortor:
     '''
