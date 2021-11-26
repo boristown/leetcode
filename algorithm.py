@@ -308,7 +308,7 @@ class bfs_utils_2D:
                     Q.append((step1,a,b))
         return -1
 
-class binarySearch:
+class BinarySearch:
     '''
     二分查找工具包
     '''
@@ -323,7 +323,7 @@ class binarySearch:
                 r=mid
             else:
                 l=mid+1
-        return l
+        return r
 
     @staticmethod
     def bisect_left(l,r,func):
