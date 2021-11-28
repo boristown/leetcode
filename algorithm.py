@@ -41,8 +41,10 @@ class UnionFind:
         '''
         孤立
         '''
-        self.parent[x] = x
-        self.size[x] = 1
+        if self.parent[x] != x:
+            self.parent[x] = x
+            self.size[x] = 1
+            self.setCount += 1
 
 class Trie:
     def __init__(self):
