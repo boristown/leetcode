@@ -17,6 +17,9 @@ class UnionFind:
         return self.parent[x]
     
     def unite(self, x: int, y: int) -> bool:
+        '''
+        合并
+        '''
         x, y = self.findset(x), self.findset(y)
         if x == y:
             return False
@@ -28,8 +31,18 @@ class UnionFind:
         return True
     
     def connected(self, x: int, y: int) -> bool:
+        '''
+        连通性
+        '''
         x, y = self.findset(x), self.findset(y)
         return x == y
+    
+    def isolate(self, x: int) -> None:
+        '''
+        孤立
+        '''
+        self.parent[x] = x
+        self.size[x] = 1
 
 class Trie:
     def __init__(self):
