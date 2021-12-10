@@ -354,6 +354,9 @@ class BinarySearch:
         return l
 
 class GraphTheory:
+    '''
+    图论工具类
+    '''
     @staticmethod
     def findCircleNum(E) -> int:
         '''
