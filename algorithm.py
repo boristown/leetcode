@@ -352,3 +352,23 @@ class BinarySearch:
             else:
                 r=mid-1
         return l
+
+class GraphTheory:
+    def findCircleNum(self, E) -> int:
+        '''
+        计算图中的独立区域数
+        '''
+        vis,ans,n=set(),0,len(E)
+        def dfs(i):
+            vis.add(i)
+            for j in range(n):
+                if E[i][j]: #判断连通
+                    if j not in vis:
+                        dfs(j)
+        #枚举每个节点
+        for i in range(n):
+            #节点未访问，区域+1
+            if i not in vis: 
+                ans+=1
+                dfs(i)
+        return ans
