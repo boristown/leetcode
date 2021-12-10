@@ -361,6 +361,7 @@ class GraphTheory:
     def findCircleNum(E) -> int:
         '''
         计算图中的独立区域数
+        :param E:领接矩阵
         '''
         vis,ans,n=set(),0,len(E)
         def dfs(i):
@@ -376,3 +377,41 @@ class GraphTheory:
                 ans+=1
                 dfs(i)
         return ans
+
+    @staticmethod
+    def findCircleNum_callback(n,connected) -> int:
+        '''
+        计算图中的独立区域数_回调函数
+        :param connected: example [[1,0],[0,1]]
+        '''
+        vis,ans=set(),0
+        def dfs(i):
+            vis.add(i)
+            for j in range(n):
+                if connected(i,j): #判断连通
+                    if j not in vis:
+                        dfs(j)
+        #枚举每个节点
+        for i in range(n):
+            #节点未访问，区域+1
+            if i not in vis: 
+                ans+=1
+                dfs(i)
+        return ans
+
+    @staticmethod
+    def has_cycle(G):
+        '''
+        判断无向图是否有环
+        :param G: example [set([1,2]),set([3]), set([])]
+        :return:True有环，False无环
+        '''
+        n=len(G)
+        UF=UnionFind(n)
+        for i in range(n):
+            for j in G[i]:
+                #如果连接i,j两点之前，i,j已经连通，则说明存在环
+                if UF.connected(i,j):
+                    return True
+                UF.unite(i,j)
+        return False
