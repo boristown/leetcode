@@ -354,6 +354,7 @@ class BinarySearch:
         return l
 
 class GraphTheory:
+    @staticmethod
     def findCircleNum(self, E) -> int:
         '''
         计算图中的独立区域数
