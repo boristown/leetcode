@@ -423,15 +423,15 @@ class GraphTheory:
         :param G:example [[set(),set([1,2])],[set(0),set()],[set(0),set()]]
         '''
         n=len(G)
-        def dp(i):
+        def dfs(i):
             if G[i][1]:
                 for j in G[i][1]:
                     if j not in vis:
                         vis.add(j)
-                        dp(j)
+                        dfs(j)
         ans=0
         for i in range(n):
             vis = {i}
-            dp(i)
+            dfs(i)
             ans=max(ans,len(vis))
         return ans
