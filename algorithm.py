@@ -1,4 +1,5 @@
 from collections import *
+import heapq
 
 Inf = float("inf")
 # 并查集模板
@@ -435,3 +436,35 @@ class GraphTheory:
             dfs(i)
             ans=max(ans,len(vis))
         return ans
+
+class CourseScheduler:
+    @staticmethod
+    def schedule_by_duration_lastDay(courses) -> list:
+        '''
+        :这里有 n 门不同的在线课程，按从 1 到 n 编号。给你一个数组 courses ，
+        其中 courses[i] = [durationi, lastDayi] 表示第 i 门课将会 持续 上 durationi 天课，
+        并且必须在不晚于 lastDayi 的时候完成。
+        你的学期从第 1 天开始。
+        且不能同时修读两门及两门以上的课程。
+        返回你可以修读最多课程的方案。
+        :param courses: [[100, 200], [200, 1300], [1000, 1250], [2000, 3200]]
+        '''
+        courses = [[i,course[0],course[1]] for i,course in enumerate(courses)]
+        courses.sort(key=lambda c: c[2])
+
+        q = list()
+        # 优先队列中所有课程的总时间
+        total = 0
+
+        for idx, ti, di in courses:
+            if total + ti <= di:
+                total += ti
+                # Python 默认是小根堆
+                heapq.heappush(q, (-ti,di,idx))
+            elif q and -q[0][0] > ti:
+                total -= -q[0][0] - ti
+                heapq.heappop(q)
+                heapq.heappush(q, (-ti,di,idx))
+
+        q.sort(key=lambda c:c[1])
+        return [a[2] for a in q]
