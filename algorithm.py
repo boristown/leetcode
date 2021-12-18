@@ -359,7 +359,7 @@ class GraphTheory:
     图论工具类
     '''
     @staticmethod
-    def grid2graph(grid) -> list:
+    def grid2graph(grid) -> dict:
         '''
         二维矩阵转无向图
         param grid:二维矩阵，1是有效区域，0是无效区域
