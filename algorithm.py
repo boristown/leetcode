@@ -388,6 +388,8 @@ class GraphTheory:
         '''
         统计图中的独立区域数
         :param graph:无向图 example: {0:set([1,2]),1:set([0,2),2:set([0,1])}
+        时间：O(m*n)
+        空间：O(m*n)
         '''
         vis,ans=set(),0
         def dfs(i):
