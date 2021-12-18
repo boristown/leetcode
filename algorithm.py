@@ -362,6 +362,7 @@ class GraphTheory:
     def grid2graph(grid) -> list:
         '''
         二维矩阵转无向图
+        param grid:二维矩阵，1是有效区域，0是无效区域
         时间：O(m*n)
         空间：O(m*n)
         '''
@@ -369,61 +370,35 @@ class GraphTheory:
         n=len(grid[0])
         num=m*n
         nab = [(0,1),(0,-1),(1,0),(-1,0)]
-        graph = [set()]*num
+        graph = {}
         for i in range(m):
             for j in range(n):
-                idx = i*n+j
-                for a,b in nab:
-                    i2,j2=i+a,j+b
-                    if 0<=i2<m and 0<=j2<n:
-                        idx2 = i2*n+j2
-                        graph[idx].add(idx2)
+                if grid[i][j]:
+                    idx = i*n+j
+                    graph[idx] = set()
+                    for a,b in nab:
+                        i2,j2=i+a,j+b
+                        if 0<=i2<m and 0<=j2<n and grid[i2][j2]:
+                            idx2 = i2*n+j2
+                            graph[idx].add(idx2)
         return graph
 
-
-
-
-
-        
-
     @staticmethod
-    def findCircleNum(E) -> int:
+    def countArea(graph) -> int:
         '''
-        计算图中的独立区域数
-        :param E:领接矩阵
-        '''
-        vis,ans,n=set(),0,len(E)
-        def dfs(i):
-            vis.add(i)
-            for j in range(n):
-                if E[i][j]: #判断连通
-                    if j not in vis:
-                        dfs(j)
-        #枚举每个节点
-        for i in range(n):
-            #节点未访问，区域+1
-            if i not in vis: 
-                ans+=1
-                dfs(i)
-        return ans
-
-    @staticmethod
-    def findCircleNum_callback(n,connected) -> int:
-        '''
-        计算图中的独立区域数_回调函数
-        :param connected: example [[1,0],[0,1]]
+        统计图中的独立区域数
+        :param graph:无向图 example: {0:set([1,2]),1:set([0,2),2:set([0,1])}
         '''
         vis,ans=set(),0
         def dfs(i):
             vis.add(i)
-            for j in range(n):
-                if connected(i,j): #判断连通
-                    if j not in vis:
-                        dfs(j)
+            for j in graph[i]:
+                if j not in vis:
+                    dfs(j)
         #枚举每个节点
-        for i in range(n):
+        for i in graph:
             #节点未访问，区域+1
-            if i not in vis: 
+            if i not in vis:
                 ans+=1
                 dfs(i)
         return ans
