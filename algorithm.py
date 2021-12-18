@@ -359,6 +359,34 @@ class GraphTheory:
     图论工具类
     '''
     @staticmethod
+    def grid2graph(grid) -> list:
+        '''
+        二维矩阵转无向图
+        时间：O(m*n)
+        空间：O(m*n)
+        '''
+        m=len(grid)
+        n=len(grid[0])
+        num=m*n
+        nab = [(0,1),(0,-1),(1,0),(-1,0)]
+        graph = [set()]*num
+        for i in range(m):
+            for j in range(n):
+                idx = i*n+j
+                for a,b in nab:
+                    i2,j2=i+a,j+b
+                    if 0<=i2<m and 0<=j2<n:
+                        idx2 = i2*n+j2
+                        graph[idx].add(idx2)
+        return graph
+
+
+
+
+
+        
+
+    @staticmethod
     def findCircleNum(E) -> int:
         '''
         计算图中的独立区域数
