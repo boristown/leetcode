@@ -303,22 +303,31 @@ class bfs_utils:
         return -1
 
 class bfs_utils_2D:
-    @staticmethod
-    def nxt(i,j,m,n):
+    def __init__(self,grid,sx,sy,tx,ty):
+        self.grid = grid
+        self.m = len(grid)
+        self.n = len(grid[0])
+        self.sx = sx
+        self.sy = sy
+        self.tx = tx
+        self.ty = ty
+
+    def nxt(self,x,y):
         for a,b in [(0,1),(0,-1),(1,0),(-1,0)]:
-            if 0<=i+a<m and 0<=j+b<n:
-                yield i+a,j+b
-    @staticmethod
-    def bfs(x,y,x1,y1,m,n):
-        if (x,y) == (x1,y1): return 0
-        Q = deque([(0,x,y)])
-        seen = set([(x,y)])
+            nx,ny = x+a,y+b
+            if 0<=nx<self.m and 0<=ny<self.n and self.grid[nx][ny]:
+                yield nx,ny
+
+    def bfs(self):
+        if (self.sx,self.sy) == (self.tx,self.ty): return 0
+        Q = deque([(0,self.sx,self.sy)])
+        seen = set([(self.sx,self.sy)])
         while Q:
             step,i,j=Q.popleft()
             step1 = step + 1
-            for a,b in bfs_utils_2D.nxt(i,j,m,n):
+            for a,b in self.nxt(i,j):
                 if (a,b) not in seen:
-                    if (a,b) == (x1,y1):
+                    if (a,b) == (self.tx,self.ty):
                         return step1
                     seen.add((a,b))
                     Q.append((step1,a,b))
