@@ -182,6 +182,16 @@ def prefix2D(matrix):
             prefix[i][j]=prefix[i-1][j]+prefix[i][j-1]-prefix[i-1][j-1]+matrix[i-1][j-1]
     return prefix
 
+def int_reverse(num: int)->int:
+    """
+    整数翻转
+    """
+    ans = 0
+    while num:
+        ans = 10 * ans + num % 10
+        num /= 10
+    return ans
+
 def LCS(text1: str, text2: str) -> int:
     """
     最长公共子序列
