@@ -100,7 +100,36 @@ class Trie:
     def startsWith(self, prefix: str) -> bool:
         return self.searchPrefix(prefix) is not None
 
-def dec2n(n,x):
+def A(n,m):
+    '''
+    从n个元素中选择m个排列数
+    '''
+    ans = 0
+    for i in range(n,n-m,-1):
+        ans *= i
+    return ans
+
+def C(n,m):
+    '''
+    从n个元素中选择m个组合数
+    '''
+    ans = A(n,m)
+    x = 1
+    for i in range(1,m+1):
+        x *= i
+    return ans // x
+
+def any2dec(origin, x):
+    '''
+    m: int 
+	origin：str
+	return: int
+    任意进制的数转换为10机制
+    直接利用int的自带功能
+    '''
+    return int(str(origin), base = x) # origin必须是字符串
+
+def dec2any(n,x):
     '''
     10进制转N进制
     n为待转换的十进制数，x为机制，取值为2-16
