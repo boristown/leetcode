@@ -430,9 +430,27 @@ class GraphTheory:
     图论工具类
     '''
     @staticmethod
-    def grid2graph(grid) -> dict:
+    def matrix2graph(grid) -> dict:
         '''
-        二维矩阵转无向图
+        邻接矩阵转无向图
+        '''
+        graph = {}
+        n = len(grid)
+        for i in range(n-1):
+            for j in range(i+1,n):
+                if grid[i][j]:
+                    if i not in graph:
+                        graph[i] = set()
+                    if j not in graph:
+                        graph[j] = set()
+                    graph[i].add(j)
+                    graph[j].add(i)
+        return graph
+
+    @staticmethod
+    def maze2graph(grid) -> dict:
+        '''
+        二维迷宫转无向图
         param grid:二维矩阵，1是有效区域，0是无效区域
         时间：O(m*n)
         空间：O(m*n)
