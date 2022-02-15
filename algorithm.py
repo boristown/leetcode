@@ -5,10 +5,11 @@ import numpy as np
 import heapq
 from matrix import *
 from constants import *
-from graph import *
+from GraphTheory import *
 from UnionFind import *
 from PQ import *
 from Trie import *
+import math
 
 def A(n,m):
     '''
@@ -59,78 +60,7 @@ def dec2any(n,x):
         x+=a[i]
     return x
 
-class TopologicalSortor:
-    '''
-    拓扑排序器
-    '''
-    def __init__(self,vertices): 
-        self.graph = defaultdict(set)
-        self.V = vertices
-    
-    def detectCircle(self,u):
-        self.detectedNode.add(u)
-        for v in self.graph[u]:
-            if v not in self.pathNode:
-                self.pathNode.add(v)
-                self.detectCircle(v)
-                self.pathNode.remove(v)
-                if self.findCircle:
-                    return
-            else:
-                self.findCircle = True
-                return
 
-    def addEdge(self,u,v):
-        '''
-        添加路径
-        '''
-        if v not in self.graph[u]:
-            self.graph[u].add(v)
-    
-    def hasCircle(self):
-        '''
-        环路检测器
-        '''
-        self.pathNode = set()
-        self.detectedNode = set()
-        for i in range(self.V):
-            if i not in self.detectedNode:
-                self.findCircle = False
-                self.pathNode.add(i)
-                self.detectCircle(i)
-                self.pathNode.remove(i)
-                if self.findCircle: return True
-        return False
-  
-    def topologicalSortUtil(self,v,visited,stack):
-        visited[v] = True
-        for i in self.graph[v]: 
-            if visited[i] == False: 
-                self.topologicalSortUtil(i,visited,stack) 
-        stack.insert(0,v)
-  
-    def topologicalSort(self):
-        '''
-        拓扑排序
-        '''
-        visited = [False]*self.V 
-        stack =[] 
-        for i in range(self.V): 
-            if visited[i] == False: 
-                self.topologicalSortUtil(i,visited,stack) 
-        self.stack = stack
-        return stack
-    
-    def is_Hamiltonian_path(self):
-        '''
-        拓扑排序的唯一性判断（哈密顿路径）
-        '''
-        for i in range(self.V - 1):
-            a,b = self.stack[i],self.stack[i+1]
-            if b not in self.graph[a]:
-                return False
-        return True
-        
 def prefix2D(matrix):
     '''
     二维前缀和
@@ -367,66 +297,22 @@ class CourseScheduler:
         q.sort(key=lambda c:c[1])
         return [a[2] for a in q]
 
-def optimize_assignment(n,cost_func,maximize=False):
+def gcd(a,b):
     '''
-    二分图的最优代价分配：匈牙利算法
-    n:元素数量
-    cost_func:代价函数，以(i,j)为入参，返回个代价值
-    maximize:寻找最大(True)/最小(False)代价
-    返回值:最优代价，分配方案
+    求a与b的最大公因数gcd
     '''
-    from scipy.optimize import linear_sum_assignment
-    import numpy as np
-    cost = np.zeros((n, n))
-    for i,j in itertools.product(range(n),range(n)):
-        cost[i,j] = cost_func(i,j)
-    row,col = linear_sum_assignment(cost,maximize=maximize)
-    return int(cost[row,col].sum()),col
+    if b!=0:
+        return gcd(b,a%b)
+    else:
+        return a
 
-def TSP(graph):
+def factors(a):
     '''
-    旅行商问题:状压DP
-    在一个图中，从某个点出发将所有点恰好遍历一遍，使得最后路过的路径的总权值最大
-    graph：有向带权图graph[i][j]表示从i到j的权值
-    返回值：最大权值，最优路径
+    计算a的所有因子
     '''
-    N=len(graph)
-    # dp[mask][i] = most overlap with mask, ending with ith element
-    dp = [[0] * N for _ in range(1<<N)]
-    parent = [[None] * N for _ in range(1<<N)]
-    for mask in range(1, 1 << N):
-        for bit in range(N):
-            if (mask >> bit) & 1:
-                # Let's try to find dp[mask][bit].  Previously, we had
-                # a collection of items represented by pmask.
-                pmask = mask ^ (1 << bit)
-                if pmask == 0: continue
-                for i in range(N):
-                    if (pmask >> i) & 1:
-                        # For each bit i in pmask, calculate the value
-                        # if we ended with word i, then added word 'bit'.
-                        value = dp[pmask][i] + graph[i][bit]
-                        if value > dp[mask][bit]:
-                            dp[mask][bit] = value
-                            parent[mask][bit] = i
-
-    # Answer will have length sum(len(A[i]) for i) - max(dp[-1])
-    # Reconstruct answer:
-
-    # Follow parents down backwards path that retains maximum overlap
-    ans = []
-    mask = (1<<N) - 1
-    i = max(range(N), key = dp[-1].__getitem__)
-    max_weight = dp[-1][i]
-
-    while i is not None:
-        ans.append(i)
-        mask, i = mask ^ (1<<i), parent[mask][i]
-
-    # Reverse path to get forwards direction; add all remaining words
-    ans = ans[::-1]
-    seen = [False] * N
-    for x in ans:
-        seen[x] = True
-    ans.extend([i for i in range(N) if not seen[i]])
-    return max_weight,ans
+    ans = set()
+    for i in range(1,int(math.sqrt(a))+1):
+        if not a%i:
+            ans.add(i)
+            ans.add(a//i)
+    return ans
