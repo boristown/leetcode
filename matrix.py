@@ -28,10 +28,10 @@ def matrix_row_max(M,index=False):
     M:矩阵
     index:是否同时获取坐标
     '''
-    row_max = [max(M[i]) for i in range(M)]
+    row_max = [max(M[i]) for i in range(len(M))]
     if not index:
         return row_max
-    col_ind = [M[i].index(row_max[i]) for i in range(M)]
+    col_ind = [M[i].index(row_max[i]) for i in range(len(M))]
     return row_max,col_ind
 
 def matrix_row_min(M,index=False):
@@ -40,10 +40,10 @@ def matrix_row_min(M,index=False):
     M:矩阵
     index:是否同时获取坐标
     '''
-    row_min = [min(M[i]) for i in range(M)]
+    row_min = [min(M[i]) for i in range(len(M))]
     if not index:
         return row_min
-    col_ind = [M[i].index(row_min[i]) for i in range(M)]
+    col_ind = [M[i].index(row_min[i]) for i in range(len(M))]
     return row_min,col_ind
 
 def matrix_col_max(M,index=False):
