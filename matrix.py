@@ -14,12 +14,7 @@ def matrix_transpose(M):
     '''
     返回矩阵M的行列转置矩阵
     '''
-    m,n = matrix_dim(M)
-    T = matrix(n,m)
-    for i in range(m):
-        for j in range(n):
-            T[j][i] = M[i][j]
-    return T
+    return list(map(list,zip(*M)))
 
 def matrix_col(M,j):
     '''
@@ -94,3 +89,14 @@ def matrix_min(M,index=False):
         return row_min_min,(row_min_ind,row_ind[row_min_ind])
     else:
         return min(matrix_row_min(M))
+
+def matrix_rotate(M,counterclockwise=False):
+    '''
+    将矩阵M旋转90度(默认顺时针方向)
+    M:矩阵
+    counterclockwise:是否是逆时针
+    '''
+    if not counterclockwise:
+        return matrix_transpose(M[::-1])
+    else:
+        return matrix_transpose(M)[::-1]
