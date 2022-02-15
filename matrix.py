@@ -80,3 +80,17 @@ def matrix_max(M,index=False):
         return row_max_max,(row_max_ind,row_ind[row_max_ind])
     else:
         return max(matrix_row_max(M))
+
+def matrix_min(M,index=False):
+    '''
+    获取矩阵的最小值/坐标
+    M:矩阵
+    index:是否同时获取坐标
+    '''
+    if index:
+        row_min,row_ind = matrix_row_min(M,True)
+        row_min_min = min(row_min)
+        row_min_ind = row_min.index(row_min_min)
+        return row_min_min,(row_min_ind,row_ind[row_min_ind])
+    else:
+        return min(matrix_row_min(M))
