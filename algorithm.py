@@ -306,7 +306,7 @@ def gcd(a,b):
     else:
         return a
 
-def factors(a):
+def get_factors(a):
     '''
     计算a的所有因子
     '''
