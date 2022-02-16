@@ -9,6 +9,7 @@ from GraphTheory import *
 from UnionFind import *
 from PQ import *
 from Trie import *
+from Tree import *
 import math
 
 def A(n,m):
