@@ -3,8 +3,8 @@ from itertools import *
 import itertools
 import numpy as np
 import heapq
-from matrix import *
-from constants import *
+from Matrix import *
+from Constants import *
 from GraphTheory import *
 from UnionFind import *
 from PQ import *
