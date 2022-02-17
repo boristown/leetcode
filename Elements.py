@@ -7,7 +7,7 @@ def elements_max_split(E):
     E:元素清单
     :返回符合条件的子集的最大大小
     '''
-    @cache(None)
+    @cache
     def dp(i, s):
         if i == len(E):
             return 0 if s == 0 else float('-inf')
