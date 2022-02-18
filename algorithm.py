@@ -11,6 +11,7 @@ from PQ import *
 from Trie import *
 from Tree import *
 import math
+import bisect
 
 def A(n,m):
     '''
@@ -84,6 +85,25 @@ def int_reverse(num: int)->int:
         ans = 10 * ans + num % 10
         num /= 10
     return ans
+
+def LIS(self, nums, strictMode = True) -> int:
+    '''
+    最长上升子序列
+    nums:数字序列
+    strictMode：True上升序列，False非降序列
+    '''
+    dp = []
+    if strictMode:
+        for m in nums:
+            p=bisect.bisect_left(dp,m)
+            if p==len(dp): dp.append(m)
+            else: dp[p]=m
+    else:
+        for m in nums:
+            p=bisect.bisect_right(dp,m)
+            if p==len(dp): dp.append(m)
+            else: dp[p]=m
+    return len(dp)
 
 def LCS(text1: str, text2: str) -> int:
     """
