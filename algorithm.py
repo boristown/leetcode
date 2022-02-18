@@ -86,11 +86,36 @@ def int_reverse(num: int)->int:
         num /= 10
     return ans
 
-def LIS(self, nums, strictMode = True) -> int:
+def LIS1(self, nums, strictMode = True) -> int:
     '''
+    O(n^2)
     最长上升子序列
     nums:数字序列
-    strictMode：True上升序列，False非降序列
+    strictMode：True上升序列，False非降序列,默认True
+    '''
+    if not nums:
+        return 0
+    dp = []
+    if strictMode:
+        for i in range(len(nums)):
+            dp.append(1)
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+    else:
+        for i in range(len(nums)):
+            dp.append(1)
+            for j in range(i):
+                if nums[i] >= nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+    return max(dp)
+
+def LIS2(self, nums, strictMode = True) -> int:
+    '''
+    O(n * log n)
+    最长上升子序列
+    nums:数字序列
+    strictMode：True上升序列，False非降序列,默认True
     '''
     dp = []
     if strictMode:
