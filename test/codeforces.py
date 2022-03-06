@@ -1,25 +1,14 @@
+from collections import *
 INF = float("inf")
-n,l,k = map(int,input().split())
+n = int(input())
 L = list(map(int,input().split()))
-M = list(map(int,input().split()))
-L.append(l)
-while k>0:
-    maxloss = 0
-    maxI = 0
-    for i in range(1,n):
-        if M[i] > M[i-1]:
-            loss = (L[i+1] - L[i]) * (M[i] - M[i-1])
-            if loss > maxloss:
-                maxloss = loss
-                maxI = i
-    if maxI:
-        del M[maxI]
-        del L[maxI]
-        n-=1
-        k-=1
-    else:
-        break
-ans = 0
-for i in range(1,n+1):
-    ans += (L[i] - L[i-1])*M[i-1]
-print(ans)
+def calculate(n,L):
+    cnt = Counter()
+    for i in range(n):
+        cnt[L[i]%2] += 1
+    d = cnt.most_common(1)[0][0]
+    for i in range(n):
+        if L[i]%2 != d:
+            return i+1
+
+print(calculate(n,L))
