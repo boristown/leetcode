@@ -33,12 +33,3 @@ class UnionFind:
         '''
         x, y = self.findset(x), self.findset(y)
         return x == y
-    
-    def isolate(self, x: int) -> None:
-        '''
-        孤立
-        '''
-        if self.parent[x] != x:
-            self.parent[x] = x
-            self.size[x] = 1
-            self.setCount += 1
