@@ -21,9 +21,9 @@ class BoolSearch:
         func的第一个参数是坐标x,第二个参数是param（可选）
         '''
         if param:
-            return bisect_right(range(l,r+1),False,lambda x:func(x,param))
+            return bisect_right(range(l,r+1),False,key=lambda x:func(x,param))
         else:
-            return bisect_right(range(l,r+1),False,lambda x:func(x))
+            return bisect_right(range(l,r+1),False,key=lambda x:func(x))
 
     @staticmethod
     def left(l,r,func,param=None):
@@ -36,6 +36,6 @@ class BoolSearch:
         func的第一个参数是坐标x,第二个参数是param（可选）
         '''
         if param:
-            return bisect_left(range(l,r+1),True,lambda x:not func(x,param))-1
+            return bisect_left(range(l,r+1),True,key=lambda x:not func(x,param))-1
         else:
-            return bisect_left(range(l,r+1),True,lambda x:not func(x))-1
+            return bisect_left(range(l,r+1),True,key=lambda x:not func(x))-1
