@@ -1,6 +1,11 @@
+from bisect import bisect_right
+
+
 class BinarySearch:
     '''
     二分查找工具类
+    by leetcode-cn.com/u/ak-bot
+    2022-3-26
     '''
     @staticmethod
     def bisect_right(l,r,func,param=None):
