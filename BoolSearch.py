@@ -17,8 +17,8 @@ class BoolSearch:
         对于一个形如[False...False,True...True]的序列
         此方法用于获取右侧第一个True的下标
         [l,r]是查找范围
-        func是一个函数，返回指定坐标mid的布尔值
-        func的第一个参数是坐标mid,第二个参数是param（可选）
+        func是一个函数，返回指定坐标x的布尔值
+        func的第一个参数是坐标x,第二个参数是param（可选）
         '''
         if param:
             return bisect_right(range(l,r+1),False,lambda x:func(x,param))
@@ -32,8 +32,8 @@ class BoolSearch:
         对于一个形如[True...True,False...False]的序列
         此方法用于获取左侧最后一个True的下标
         [l,r]是查找范围
-        func是一个函数，返回指定坐标mid的布尔值
-        func的第一个参数是坐标mid,第二个参数是param（可选）
+        func是一个函数，返回指定坐标x的布尔值
+        func的第一个参数是坐标x,第二个参数是param（可选）
         '''
         if param:
             return bisect_left(range(l,r+1),True,lambda x:not func(x,param))-1
