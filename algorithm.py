@@ -3,8 +3,8 @@ from itertools import *
 import itertools
 import numpy as np
 import heapq
-from Matrix import *
-from Constants import *
+from matrix import *
+from constants import *
 from GraphTheory import *
 from UnionFind import *
 from PQ import *
@@ -331,4 +331,20 @@ def get_factors(a):
         if not a%i:
             ans.add(i)
             ans.add(a//i)
+    return ans
+
+def primes_factors(x):
+    ans = Counter()
+    if x in pset:
+        ans[x] +=1
+        return ans
+    np = len(primes)
+    i = 0
+    while x>1 and i<np:
+        p = primes[i]
+        if x % p == 0:
+            ans[p]+=1
+            x //= p
+        else:
+            i+=1
     return ans
