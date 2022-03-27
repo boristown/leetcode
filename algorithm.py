@@ -340,7 +340,7 @@ def primes_factors(x):
         return ans
     np = len(primes)
     i = 0
-    while x>1 and i<np:
+    while x>1 and i<np and primes[i] <= x:
         p = primes[i]
         if x % p == 0:
             ans[p]+=1
