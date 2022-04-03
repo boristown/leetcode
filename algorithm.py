@@ -32,9 +32,9 @@ def C(n,m):
         x *= i
     return ans // x
 
-def A2(cnt,n,m):
+def A2(cnt,n):
     '''
-    从计数器cnt(共n个元素)中选择m个排列数
+    计数器cnt(共n个元素)的排列数
     '''
     pass
 
