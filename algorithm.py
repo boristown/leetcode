@@ -3,6 +3,8 @@ from itertools import *
 import itertools
 import numpy as np
 import heapq
+
+from sortedcontainers import SortedList
 from matrix import *
 from constants import *
 from GraphTheory import *
@@ -16,11 +18,21 @@ from functools import *
 
 @cache
 def fact(x):
-    if x == 1:
+    '''
+    x的阶乘
+    '''
+    if x <= 1:
         return 1
     return x*fact(x-1)
-    return math.factorial(6)
 
+@cache
+def fact2(x,y):
+    '''
+    从y+1到x的阶乘
+    '''
+    return fact(x)//fact(y)
+
+@cache
 def A(n,m):
     '''
     从n个元素中选择m个排列数
@@ -30,6 +42,7 @@ def A(n,m):
         ans *= i
     return ans
 
+@cache
 def C(n,m):
     '''
     从n个元素中选择m个组合数
@@ -40,14 +53,67 @@ def C(n,m):
         x *= i
     return ans // x
 
-def A2(cnt,n):
+@cache
+def fact_factors(x):
     '''
-    计数器cnt(共n个元素)的排列数
+    阶乘质因子
     '''
-    ans = fact(n)
-    for i in cnt:
-        ans //= fact(cnt[i])
+    factors = Counter()
+    for i in range(2,x+1):
+        factors+= primes_factors(i)
+    return factors
+
+def reduce_factors(factors,MOD):
+    ans=1
+    for a in factors:
+        ans=(ans*pow(a,factors[a],MOD))%MOD
     return ans
+
+@cache
+def A2(cnt,n,MOD):
+    '''
+    计数器cnt(共n个元素)的排列数,cnt是一个存储数量的元组（升序排列）
+    '''
+    if cnt[-1]==n:
+        return 1
+    factors = fact_factors(n) - fact_factors(cnt[-1])
+    for m in cnt[:-1]:
+        factors-= fact_factors(m)
+    ans = reduce_factors(factors,MOD)
+    return ans
+
+def dictorder(s,MOD):
+    '''
+    字符串s（仅含小写字母）在全排列中的字典序的MOD模
+    '''
+    n = len(s)
+    S=[ord(c)-ord("a") for c in s]
+    sl = SortedList()
+    C=[0]*26
+    for p in S:
+        C[p]+=1
+    for i in range(26):
+        sl.add(C[i])
+    ans = 0
+    for p in S:
+        n-=1
+        for q in range(p):
+            if C[q]:
+                sl.discard(C[q])
+                C[q]-=1
+                if C[q]:
+                    sl.add(C[q])
+                T=tuple(sl)
+                ans += A2(T,n,MOD)
+                if C[q]:
+                    sl.discard(C[q])
+                C[q]+=1
+                sl.add(C[q])
+        sl.discard(C[p])
+        C[p]-=1
+        if C[p]:
+            sl.add(C[p])
+    return ans%MOD
 
 def any2dec(origin, x):
     '''
@@ -350,18 +416,31 @@ def get_factors(a):
             ans.add(a//i)
     return ans
 
+@cache
+def min_prime_factor(x):
+    if x in pset:
+        return x
+    for i,p in enumerate(primes):
+        if x % p == 0:
+            return i
+    return -1
+
+g_factor_idx = 0
+
+@cache
 def primes_factors(x):
     ans = Counter()
+    if x<2: return ans
     if x in pset:
         ans[x] +=1
         return ans
     np = len(primes)
-    i = 0
-    while x>1 and i<np and primes[i] <= x:
-        p = primes[i]
+    global g_factor_idx
+    while x>1 and g_factor_idx<np:
+        p = primes[g_factor_idx]
         if x % p == 0:
             ans[p]+=1
             x //= p
+            return ans + primes_factors(x)
         else:
-            i+=1
-    return ans
+            g_factor_idx+=1
