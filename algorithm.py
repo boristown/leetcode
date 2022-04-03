@@ -32,6 +32,12 @@ def C(n,m):
         x *= i
     return ans // x
 
+def A2(cnt,n,m):
+    '''
+    从计数器cnt(共n个元素)中选择m个排列数
+    '''
+    pass
+
 def any2dec(origin, x):
     '''
     m: int 
