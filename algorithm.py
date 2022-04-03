@@ -12,6 +12,14 @@ from Trie import *
 from Tree import *
 import math
 import bisect
+from functools import *
+
+@cache
+def fact(x):
+    if x == 1:
+        return 1
+    return x*fact(x-1)
+    return math.factorial(6)
 
 def A(n,m):
     '''
