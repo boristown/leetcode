@@ -18,7 +18,7 @@ class Trie:
             ch = ord(ch) - ord("a")
             if not node.children[ch]:
                 node.children[ch] = Trie()
-            node = node.children[ch]    
+            node = node.children[ch]
         node.isEnd = True
 
     def search(self, word: str) -> bool:

@@ -44,7 +44,10 @@ def A2(cnt,n):
     '''
     计数器cnt(共n个元素)的排列数
     '''
-    pass
+    ans = fact(n)
+    for i in cnt:
+        ans //= fact(cnt[i])
+    return ans
 
 def any2dec(origin, x):
     '''
