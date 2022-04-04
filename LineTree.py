@@ -21,6 +21,7 @@ class LineTree(object):
         self.max_size = 4 * n
         self.tree = [LineTreeNode() for i in range(self.max_size)]  # 维护一个TreeNode数组
         self.arr = arr
+        self.build()
 
     # index从1开始
     def _build(self, index, left, right):
@@ -51,9 +52,9 @@ class LineTree(object):
             self.pushup_sum(i)
 
     # 单点更新
-    # point 要更新的数在数组的下标 val更新的值
+    # point 要更新的数在数组的下标 val更新的值(增量)
     def update(self, point, val, ):
-        self._update(point, val, 1, 1, self.n)
+        self._update(point+1, val, 1, 1, self.n)
 
     # 求和
     def pushup_sum(self, k):
@@ -74,7 +75,7 @@ class LineTree(object):
 
     # 区间查询
     def query(self, ql, qr):
-        return self._query(ql, qr, 1, 1, self.n)
+        return self._query(ql+1, qr+1, 1, 1, self.n)
 
     # 深度遍历打印数组
     def _show_arr(self, i):
