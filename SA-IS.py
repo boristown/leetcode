@@ -392,8 +392,8 @@ if __name__ == '__main__':
     #i的下标从0开始
     #其中,sa[i]表示将所有后缀排序后第i小的后缀的编号。rk[i]表示后缀i的排名。
     # https://oi-wiki.org/string/sa/
-    str1 = 'aabaaaab'
-    SA = makeSuffixArray(str1)
+    s = 'aabaaaab'
+    SA = makeSuffixArray(s)
     print("sa:",SA)
     RK = makeRKwithSA(SA)
     print("rk:",RK)
