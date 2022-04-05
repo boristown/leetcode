@@ -21,8 +21,8 @@ def fact(x):
     '''
     x的阶乘
     '''
-    if x <= 1:
-        return 1
+    if x < 1: return 0
+    if x == 1: return 1
     return x*fact(x-1)
 
 @cache
@@ -53,67 +53,45 @@ def C(n,m):
         x *= i
     return ans // x
 
-@cache
-def fact_factors(x):
+def dictorder(s,mod):
     '''
-    阶乘质因子
+    字符串s（仅含小写字母）在全排列中的字典序的mod模
     '''
-    factors = Counter()
-    for i in range(2,x+1):
-        factors+= primes_factors(i)
-    return factors
+    # 快速幂，用来计算 x^y mod m
+    def quickmul(x: int, y: int) -> int:
+        # Python 有方便的内置函数
+        return pow(x, y, mod)
 
-def reduce_factors(factors,MOD):
-    ans=1
-    for a in factors:
-        ans=(ans*pow(a,factors[a],MOD))%MOD
-    return ans
-
-@cache
-def A2(cnt,n,MOD):
-    '''
-    计数器cnt(共n个元素)的排列数,cnt是一个存储数量的元组（升序排列）
-    '''
-    if cnt[-1]==n:
-        return 1
-    factors = fact_factors(n) - fact_factors(cnt[-1])
-    for m in cnt[:-1]:
-        factors-= fact_factors(m)
-    ans = reduce_factors(factors,MOD)
-    return ans
-
-def dictorder(s,MOD):
-    '''
-    字符串s（仅含小写字母）在全排列中的字典序的MOD模
-    '''
     n = len(s)
-    S=[ord(c)-ord("a") for c in s]
-    sl = SortedList()
-    C=[0]*26
-    for p in S:
-        C[p]+=1
-    for i in range(26):
-        sl.add(C[i])
+    
+    # fac[i] 表示 i! mod m
+    # facinv[i] 表示 i! 在 mod m 意义下的乘法逆元
+    fac, facinv = [0] * (n + 1), [0] * (n + 1)
+    fac[0] = facinv[0] = 1
+    for i in range(1, n):
+        fac[i] = fac[i - 1] * i % mod
+        # 使用费马小定理 + 快速幂计算乘法逆元
+        facinv[i] = quickmul(fac[i], mod - 2)
+    
+    # freq 存储每个字符出现的次数
+    freq = Counter(s)
+    
     ans = 0
-    for p in S:
-        n-=1
-        for q in range(p):
-            if C[q]:
-                sl.discard(C[q])
-                C[q]-=1
-                if C[q]:
-                    sl.add(C[q])
-                T=tuple(sl)
-                ans += A2(T,n,MOD)
-                if C[q]:
-                    sl.discard(C[q])
-                C[q]+=1
-                sl.add(C[q])
-        sl.discard(C[p])
-        C[p]-=1
-        if C[p]:
-            sl.add(C[p])
-    return ans%MOD
+    for i in range(n - 1):
+        # rank 求出比 s[i] 小的字符数量
+        rank = sum(occ for ch, occ in freq.items() if ch < s[i])
+        # 排列个数的分子
+        cur = rank * fac[n - i - 1] % mod
+        # 依次乘分母每一项阶乘的乘法逆元
+        for ch, occ in freq.items():
+            cur = cur * facinv[occ] % mod
+        
+        ans += cur
+        freq[s[i]] -= 1
+        if freq[s[i]] == 0:
+            freq.pop(s[i])
+    
+    return ans % mod
 
 def any2dec(origin, x):
     '''

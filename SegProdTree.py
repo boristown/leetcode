@@ -44,7 +44,7 @@ class SegProdTree:
         '''
         self.change(index, val, 0, 0, self.n - 1)
 
-    def sumRange(self, left: int, right: int) -> int:
+    def prodRange(self, left: int, right: int) -> int:
         '''
         求区间[left,right]的积
         '''
