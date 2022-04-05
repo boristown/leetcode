@@ -5,7 +5,7 @@ import numpy as np
 import heapq
 
 from sortedcontainers import SortedList
-from matrix import *
+from Matrix import *
 from constants import *
 from GraphTheory import *
 from UnionFind import *
