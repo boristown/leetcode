@@ -15,6 +15,19 @@ from Tree import *
 import math
 import bisect
 from functools import *
+from SegSumTree import *
+
+def MultiInverse(x,mod):
+    '''
+    乘法逆元
+    '''
+    return pow(x,mod-2,mod)
+
+def BigDivision(x,y,mod):
+    '''
+    大数除法x/y
+    '''
+    return (x % mod) * MultiInverse(y) % mod
 
 @cache
 def fact(x):
@@ -57,41 +70,35 @@ def dictorder(s,mod):
     '''
     字符串s（仅含小写字母）在全排列中的字典序的mod模
     '''
-    # 快速幂，用来计算 x^y mod m
-    def quickmul(x: int, y: int) -> int:
-        # Python 有方便的内置函数
-        return pow(x, y, mod)
-
-    n = len(s)
-    
-    # fac[i] 表示 i! mod m
-    # facinv[i] 表示 i! 在 mod m 意义下的乘法逆元
-    fac, facinv = [0] * (n + 1), [0] * (n + 1)
-    fac[0] = facinv[0] = 1
-    for i in range(1, n):
-        fac[i] = fac[i - 1] * i % mod
-        # 使用费马小定理 + 快速幂计算乘法逆元
-        facinv[i] = quickmul(fac[i], mod - 2)
-    
-    # freq 存储每个字符出现的次数
-    freq = Counter(s)
-    
+    s = [ord(c)-ord('a') for c in s]
+    #排列数（含重复项）公式
+    #N = a!/(a1! * a2! *a3!)
+    #字符串     c           b           a
+    #计数n      3           2           1
+    #计数c      1           0           0
+    #计数b      1           1           0
+    #计数a      1           1           1
+    #分子nume   (3-1)!(1+1) (2-1)!1     (1-1)!0
+    #分母deno   1!1!1!      1!1!        1!
+    #答案ans    4           1           0
+    segs = SegSumTree([0]*26)
+    n = 0
+    nume = 1
+    deno = 1
+    ct = [0]*26
     ans = 0
-    for i in range(n - 1):
-        # rank 求出比 s[i] 小的字符数量
-        rank = sum(occ for ch, occ in freq.items() if ch < s[i])
-        # 排列个数的分子
-        cur = rank * fac[n - i - 1] % mod
-        # 依次乘分母每一项阶乘的乘法逆元
-        for ch, occ in freq.items():
-            cur = cur * facinv[occ] % mod
-        
-        ans += cur
-        freq[s[i]] -= 1
-        if freq[s[i]] == 0:
-            freq.pop(s[i])
-    
-    return ans % mod
+    for v in s[::-1]:
+        if n>0:
+            nume = nume * n % mod
+        n+=1
+        ct[v]+=1
+        #使用乘法逆元将除法转为乘法
+        deno=deno * MultiInverse(ct[v],mod) % mod
+        segs.update(v,ct[v])
+        if v>0:
+            nume2 = nume * segs.sumRange(0,v-1)
+            ans = (ans + nume2 * deno % mod) % mod
+    return ans
 
 def any2dec(origin, x):
     '''
