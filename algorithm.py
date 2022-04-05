@@ -29,6 +29,22 @@ def BigDivision(x,y,mod):
     '''
     return (x % mod) * MultiInverse(y) % mod
 
+def strhash(s,mod):
+    '''
+    字符串hash(仅小写字母)
+    #a->1
+    #z->26
+    #aa->27
+    #za->52
+    '''
+    s = [ord(c)-ord('a')+1 for c in s]
+    b = 1
+    ans = 0
+    for v in s:
+        ans = (ans + v * b)%mod
+        b*=26
+    return ans
+
 @cache
 def fact(x):
     '''
