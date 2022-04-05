@@ -1,5 +1,4 @@
 #后缀数组（Suffix Array）,基于SA-IS算法
-
 S_TYPE = ord("S")
 L_TYPE = ord("L")
 
