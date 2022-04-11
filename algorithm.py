@@ -66,7 +66,7 @@ def A(n,m):
     '''
     从n个元素中选择m个排列数
     '''
-    ans = 0
+    ans = 1
     for i in range(n,n-m,-1):
         ans *= i
     return ans
