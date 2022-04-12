@@ -1,5 +1,8 @@
 # 并查集模板
 class UnionFind:
+    '''
+    适用范围：连通性检测
+    '''
     def __init__(self, n: int):
         self.parent = list(range(n))
         self.size = [1] * n

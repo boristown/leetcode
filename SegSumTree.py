@@ -1,6 +1,7 @@
 class SegSumTree:
     '''
     线段树（区间和）
+    适用场景：区间和
     '''
     def __init__(self, nums):
         n = len(nums)

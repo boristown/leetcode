@@ -5,6 +5,7 @@ from UnionFind import *
 class GraphTheory:
     '''
     图论工具类
+    适用范围：图论相关问题
     '''
     @staticmethod
     def matrix2graph(grid) -> dict:

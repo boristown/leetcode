@@ -1,4 +1,8 @@
 class Trie:
+    '''
+    字典树
+    适用范围：字符串集
+    '''
     def __init__(self):
         self.children = [None] * 26
         self.isEnd = False

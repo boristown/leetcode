@@ -5,6 +5,7 @@ def checktree_by_nabors(nabors):
     根据节点的上层或下层节点（不一定相邻）的集合，判断树的有效性
     nabors:包含节点上下级的集合字典
     返回:0 无效树;1 有效唯一树 2 有效不唯一树
+    适用范围：树的有效性判断
     '''
     max_nabor = -float("inf")
     for a in nabors:

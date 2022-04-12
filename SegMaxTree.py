@@ -1,6 +1,7 @@
 class SegMaxTree:
     '''
     线段树（区间最大值）
+    适用场景：区间最大值
     '''
     def __init__(self, nums):
         n = len(nums)

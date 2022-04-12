@@ -1,6 +1,7 @@
 class SegProdTree:
     '''
     线段树（区间积）
+    适用场景：区间积
     '''
     def __init__(self, nums):
         n = len(nums)

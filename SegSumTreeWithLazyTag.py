@@ -1,5 +1,9 @@
 # 线段树的节点类
 class TreeNode(object):
+    '''
+    线段树（区间和）支持区间更新
+    适用场景：区间更新
+    '''
     def __init__(self):
         self.left = -1
         self.right = -1

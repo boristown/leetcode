@@ -2,7 +2,9 @@ from sortedcontainers import *
 from collections import *
 
 class SortedCounter:
-
+    '''
+    适用范围：有序计数器
+    '''
     def __init__(self):
         self.C = Counter()
         self.S = SortedList()

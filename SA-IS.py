@@ -1,3 +1,6 @@
+'''
+使用场景：后缀数组（字符串模式匹配）
+'''
 #后缀数组（Suffix Array）,基于SA-IS算法
 S_TYPE = ord("S")
 L_TYPE = ord("L")
