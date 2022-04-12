@@ -20,13 +20,14 @@ from SegSumTree import *
 def MultiInverse(x,mod):
     '''
     乘法逆元
-    适用场景：快速计算大数相除（取模）
+    适用场景：将除法模运算转化为乘法
     '''
     return pow(x,mod-2,mod)
 
 def BigDivision(x,y,mod):
     '''
     大数除法x/y
+    适用场景：快速计算大数相除（取模）
     '''
     return (x % mod) * MultiInverse(y) % mod
 
@@ -37,6 +38,7 @@ def strhash(s,mod):
     #z->26
     #aa->27
     #za->52
+    适用场景：字符串匹配
     '''
     s = [ord(c)-ord('a')+1 for c in s]
     b = 1
@@ -50,6 +52,7 @@ def strhash(s,mod):
 def fact(x):
     '''
     x的阶乘
+    适用场景：计算排列组合数
     '''
     if x < 1: return 0
     if x == 1: return 1
@@ -59,6 +62,7 @@ def fact(x):
 def fact2(x,y):
     '''
     从y+1到x的阶乘
+    适用场景：计算排列组合数
     '''
     return fact(x)//fact(y)
 
@@ -66,6 +70,7 @@ def fact2(x,y):
 def A(n,m):
     '''
     从n个元素中选择m个排列数
+    适用场景：计算排列数
     '''
     ans = 1
     for i in range(n,n-m,-1):
@@ -76,6 +81,7 @@ def A(n,m):
 def C(n,m):
     '''
     从n个元素中选择m个组合数
+    适用场景：计算组合数
     '''
     ans = A(n,m)
     x = 1
@@ -86,6 +92,7 @@ def C(n,m):
 def dictorder(s,mod):
     '''
     字符串s（仅含小写字母）在全排列中的字典序的mod模
+    适用场景：求字符串在全排列中的字典序
     '''
     s = [ord(c)-ord('a') for c in s]
     #排列数（含重复项）公式
@@ -124,6 +131,7 @@ def any2dec(origin, x):
 	return: int
     任意进制的数转换为10机制
     直接利用int的自带功能
+    适用场景：进制转换
     '''
     return int(str(origin), base = x) # origin必须是字符串
 
@@ -131,6 +139,7 @@ def dec2any(n,x):
     '''
     10进制转N进制
     n为待转换的十进制数，x为机制，取值为2-16
+    适用场景：进制转换
     '''
     a=['0','1','2','3','4','5','6','7','8','9','A','b','C','D','E','F']
     b=[]
@@ -150,7 +159,8 @@ def dec2any(n,x):
 
 def prefix2D(matrix):
     '''
-    二维前缀和
+    计算二维前缀和
+    适用场景：二维前缀和
     '''
     if not matrix: return matrix
     height=len(matrix)
@@ -164,6 +174,7 @@ def prefix2D(matrix):
 def int_reverse(num: int)->int:
     """
     整数翻转
+    适用场景：整数翻转
     """
     ans = 0
     while num:
@@ -177,6 +188,7 @@ def LIS1(self, nums, strictMode = True) -> int:
     最长上升子序列
     nums:数字序列
     strictMode：True上升序列，False非降序列,默认True
+    适用场景：最长上升子序列
     '''
     if not nums:
         return 0
@@ -201,6 +213,7 @@ def LIS2(self, nums, strictMode = True) -> int:
     最长上升子序列
     nums:数字序列
     strictMode：True上升序列，False非降序列,默认True
+    适用场景：最长上升子序列
     '''
     dp = []
     if strictMode:
@@ -217,7 +230,8 @@ def LIS2(self, nums, strictMode = True) -> int:
 
 def LCS(text1: str, text2: str) -> int:
     """
-    最长公共子序列
+    最长公共子序列（双串）
+    适用场景：最长公共子序列
     """
     m, n = len(text1), len(text2)
     dp = [[0] * (n + 1) for _ in range(m + 1)]
@@ -232,6 +246,7 @@ def LCS(text1: str, text2: str) -> int:
 def largestRectangleArea(heights) -> int:
     '''
     剑指 Offer II 039. 直方图最大矩形面积
+    适用场景：直方图的最大矩形面积
     '''
     stack=[(-1,-1)]
     heights.append(0)
@@ -245,13 +260,18 @@ def largestRectangleArea(heights) -> int:
     return ans
 
 class DLinkedNode:
+    '''
+    适用场景：双向链表
+    '''
     def __init__(self, value=0):
         self.value = value
         self.prev = None
         self.next = None
 
 class DLinkedList:
-
+    '''
+    适用场景：双向链表
+    '''
     def __init__(self):
         self.cache = dict()
         # 使用伪头部和伪尾部节点    
@@ -280,6 +300,9 @@ class DLinkedList:
         return node
 
 class ListNode:
+    '''
+    适用场景：链表
+    '''
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
@@ -303,6 +326,9 @@ class ListNode:
         return N[0]
 
 class StateCompression:
+    '''
+    适用场景：字母状态压缩
+    '''
     @staticmethod
     def word2bin(w):
         b=0
@@ -312,6 +338,9 @@ class StateCompression:
         return b
 
 class bfs_utils:
+    '''
+    适用场景：bfs
+    '''
     @staticmethod
     def nxt(x):
         if x%2==0:
@@ -336,6 +365,9 @@ class bfs_utils:
         return -1
 
 class bfs_utils_2D:
+    '''
+    适用场景：bfs
+    '''
     def __init__(self,grid,sx,sy,tx,ty):
         self.grid = grid
         self.m = len(grid)
@@ -367,6 +399,9 @@ class bfs_utils_2D:
         return -1
 
 class CourseScheduler:
+    '''
+    适用场景：课程规划
+    '''
     @staticmethod
     def schedule_by_duration_lastDay(courses) -> list:
         '''
@@ -401,6 +436,7 @@ class CourseScheduler:
 def gcd(a,b):
     '''
     求a与b的最大公因数gcd
+    适用场景：最大公因数
     '''
     if b!=0:
         return gcd(b,a%b)
@@ -410,6 +446,7 @@ def gcd(a,b):
 def get_factors(a):
     '''
     计算a的所有因子
+    适用场景：因子分解
     '''
     ans = set()
     for i in range(1,int(math.sqrt(a))+1):
@@ -418,19 +455,14 @@ def get_factors(a):
             ans.add(a//i)
     return ans
 
-@cache
-def min_prime_factor(x):
-    if x in pset:
-        return x
-    for i,p in enumerate(primes):
-        if x % p == 0:
-            return i
-    return -1
-
 g_factor_idx = 0
 
 @cache
 def primes_factors(x):
+    '''
+    质因子分解
+    适用场景：因子分解
+    '''
     ans = Counter()
     if x<2: return ans
     if x in pset:
