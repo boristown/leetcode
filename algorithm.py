@@ -20,6 +20,7 @@ from SegSumTree import *
 def MultiInverse(x,mod):
     '''
     乘法逆元
+    适用场景：快速计算大数相除（取模）
     '''
     return pow(x,mod-2,mod)
 
