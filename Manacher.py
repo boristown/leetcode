@@ -2,6 +2,7 @@ class Manacher:
     '''
     马拉车算法O(n)
     计算字符串的所有回文信息
+    适用场景：字符串回文匹配问题
     https://oi-wiki.org/string/manacher/
     '''
     def __init__(self,s):
