@@ -1,4 +1,5 @@
-//位运算
+// 位运算
+// https://oi-wiki.org/math/bit/
 
 //判断一个数是不是2的非负整数次幂
 bool isPowerOfTwo(int n) { return n > 0 && (n & (n - 1)) == 0; }
