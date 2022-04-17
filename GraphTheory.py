@@ -197,6 +197,27 @@ def optimize_assignment(n,cost_func,maximize=False):
     row,col = linear_sum_assignment(cost,maximize=maximize)
     return int(cost[row,col].sum()),col
 
+def longestpath(G):
+    '''
+    无向无环图中的最长路径
+    '''
+    ans = 0
+    @cache
+    def dp(i,j):
+        '''
+        从i,j出发的最长路径
+        '''
+        ans = 0
+        for k in G[j]:
+            if k!=i:
+                ans = max(ans,1+dp(j,k))
+        return ans
+    
+    for a in G:
+        for b in G[a]:
+            ans = max(ans,1+dp(a,b))
+    return ans
+
 def TSP(graph):
     '''
     旅行商问题:状压DP
