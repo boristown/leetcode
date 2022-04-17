@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//二分图的最优代价分配：匈牙利算法
 template <typename T>
 struct hungarian {  // km
   int n;
