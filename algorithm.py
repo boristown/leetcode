@@ -5,17 +5,16 @@ import numpy as np
 import heapq
 
 from sortedcontainers import SortedList
-from Matrix import *
 from constants import *
-from GraphTheory import *
-from UnionFind import *
+from Graph.GraphBase import *
+from Graph.UnionFind import *
 from PQ import *
-from Trie import *
-from Tree import *
+from String.Trie import *
+from Others.TreeCheck import *
 import math
 import bisect
 from functools import *
-from SegSumTree import *
+from segtree.SegSumTree import *
 
 def MultiInverse(x,mod):
     '''
