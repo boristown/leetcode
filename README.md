@@ -1,2 +1,4 @@
-# leetcode
- Python algorithm packages for leetcode 
+# leetcode模板库
+ 这是我在力扣刷题的过程中总结的各种Python模板,也有少量C++，还不完善，欢迎提issue。
+
+ 2022-04-18
