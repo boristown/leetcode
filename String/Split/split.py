@@ -7,7 +7,4 @@ def split2(s,c1,c2):
     c2:第二维分隔符2
     返回：二维数组
     '''
-    ans = []
-    for a in s.split(c1):
-        ans.append(a.split(c2))
-    return ans
+    return [a.split(c2) for a in s.split(c1)]
