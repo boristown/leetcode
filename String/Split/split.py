@@ -8,7 +8,6 @@ def split2(s,c1,c2):
     返回：二维数组
     '''
     ans = []
-    A = s.split(c1)
-    for a in A:
+    for a in s.split(c1):
         ans.append(a.split(c2))
     return ans
