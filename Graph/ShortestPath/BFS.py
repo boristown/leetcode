@@ -21,4 +21,23 @@ def ShortestPath(graph,start,end):
     '''
     有向无权图中：从start到end的最短路
     '''
-    pass
+    if start == end: return [start]
+    last = {}
+    Q = deque([(0,start)])
+    vis = set(start)
+    ans = []
+    while Q:
+        step,node = Q.popleft()
+        step += 1
+        for node2 in graph[node]:
+            if node2 not in vis:
+                last[node2] = node
+                vis.add(node2)
+                if node2 == end:
+                    ans.append(end)
+                    while node2 in last:
+                        ans.append(last[node2])
+                        node2 = last[node2]
+                    return ans[::-1]
+                Q.append((step,node2))
+    return ans[::-1]
