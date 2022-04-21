@@ -41,3 +41,20 @@ def ShortestPath(graph,start,end):
                     return ans[::-1]
                 Q.append((step,node2))
     return ans[::-1]
+
+def ShortestPathALL(graph,start):
+    '''
+    有向无权图中：从start到所有节点的最短路长度
+    '''
+    Q = deque([(0,start)])
+    vis = set(start)
+    ans = {start:0}
+    while Q:
+        step,node = Q.popleft()
+        step += 1
+        for node2 in graph[node]:
+            if node2 not in vis:
+                ans[node2] = step
+                vis.add(node2)
+                Q.append((step,node2))
+    return ans
