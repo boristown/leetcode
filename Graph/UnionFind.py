@@ -30,9 +30,9 @@ class UnionFind:
         self.setCount -= 1
         return True
     
-    def connected(self, x: int, y: int) -> bool:
+    def con(self, x: int, y: int) -> bool:
         '''
-        连通性
+        connected连通性
         '''
         x, y = self.findset(x), self.findset(y)
         return x == y
