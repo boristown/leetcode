@@ -16,9 +16,9 @@ class UnionFind:
         self.parent[x] = self.findset(self.parent[x])
         return self.parent[x]
     
-    def unite(self, x: int, y: int) -> bool:
+    def un(self, x: int, y: int) -> bool:
         '''
-        合并
+        unite合并
         '''
         x, y = self.findset(x), self.findset(y)
         if x == y:
@@ -30,7 +30,7 @@ class UnionFind:
         self.setCount -= 1
         return True
     
-    def con(self, x: int, y: int) -> bool:
+    def co(self, x: int, y: int) -> bool:
         '''
         connected连通性
         '''
