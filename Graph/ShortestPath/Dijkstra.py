@@ -12,8 +12,12 @@ def dijkstra(graph,s):
     Q = [(0,s)]
     ans = defaultdict(lambda:float("inf"))
     ans[s] = 0
+    vis = set()
     while Q:
         _, node = heappop(Q)
+        if node in vis:
+            continue
+        vis.add(node)
         for node2 in graph[node]:
             dis = ans[node] + graph[node][node2]
             if ans[node2] > dis:
@@ -31,8 +35,12 @@ def dijkstra_path(graph,s):
     last = {}
     ans = defaultdict(lambda:float("inf"))
     ans[s] = 0
+    vis = set()
     while Q:
         _, node = heappop(Q)
+        if node in vis:
+            continue
+        vis.add(node)
         for node2 in graph[node]:
             dis = ans[node] + graph[node][node2]
             if ans[node2] > dis:
