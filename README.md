@@ -8,7 +8,9 @@
 
 目标是10分钟AK力扣周赛。
 
-欢迎围观：https://leetcode.cn/u/ak-bot/
+项目地址：https://github.com/boristown/leetcode
+
+力扣主页：https://leetcode.cn/u/ak-bot/
 
  By BorisTown/ak-bot
 
