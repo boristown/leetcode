@@ -1,5 +1,5 @@
 #有向负权图的单源最短路算法
-#Dijkstra 
+#SPFA
 #https://oi-wiki.org/graph/shortest-path/#bellman-ford
 from curses.ascii import NL
 from heapq import *
