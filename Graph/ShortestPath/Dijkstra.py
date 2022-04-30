@@ -2,25 +2,27 @@
 #Dijkstra 
 #https://oi-wiki.org/graph/shortest-path/#dijkstra
 from heapq import *
+import heapq
 from collections import *
 
-def dijkstra(graph,s):
+def dijkstra(e,s):
     '''
-    在有向正权图中：从s出发到所有节点的最短路长度
-    graph:defaultdict(dict)
+    输入：
+    e:邻接表
+    s:起点
+    返回：
+    dis:从s到每个顶点的最短路长度
     '''
-    Q = [(0,s)]
-    ans = defaultdict(lambda:float("inf"))
-    ans[s] = 0
+    dis = defaultdict(lambda:float("inf"))
+    dis[s] = 0
+    q = [(0,s)]
     vis = set()
-    while Q:
-        _, node = heappop(Q)
-        if node in vis:
-            continue
-        vis.add(node)
-        for node2 in graph[node]:
-            dis = ans[node] + graph[node][node2]
-            if ans[node2] > dis:
-                ans[node2] = dis
-                heappush(Q,(dis,node2))
-    return ans
+    while q:
+        _, u = heapq.heappop(q)
+        if u in vis: continue
+        vis.add(u)
+        for v,w in e[u]:
+            if dis[v] > dis[u] + w:
+                dis[v] = dis[u] + w
+                heapq.heappush(q,(dis[v],v))
+    return dis
