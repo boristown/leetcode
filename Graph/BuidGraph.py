@@ -9,3 +9,13 @@ def reverse_dg(DG):
         for b in DG[a]:
             gra2[b].add(a)
     return gra2
+
+def reverse_adj(adj):
+    '''
+    有向赋权图（邻接表）转向
+    '''
+    adj2 = defaultdict(list)
+    for u in adj:
+        for v,w in adj[u]:
+            adj2[v].append((u,w))
+    return adj2
