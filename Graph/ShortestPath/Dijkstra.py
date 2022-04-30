@@ -26,4 +26,4 @@ def dijkstra(e,s):
             if dis[v] > dis[u] + w:
                 dis[v] = dis[u] + w
                 heapq.heappush(q,(dis[v],v))
-    return dis
+    return dict(dis)
