@@ -14,4 +14,4 @@ def kthPath(adj,s,t,k):
     返回：
     dis:从s到t的第k短路
     '''
-    adj = reverse_dg(adj)
+    adj2 = reverse_dg(adj)
