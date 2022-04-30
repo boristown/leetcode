@@ -3,6 +3,7 @@
 #https://oi-wiki.org/graph/shortest-path/#dijkstra
 from heapq import *
 import heapq
+import sys
 from collections import *
 
 def dijkstra(e,s):
