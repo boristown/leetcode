@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import *
 import heapq
 
 def astar_k(adj,s,t,k,H):
@@ -12,16 +12,21 @@ def astar_k(adj,s,t,k,H):
     返回：
     ans:从s到t的第k短路
     '''
-    dis = defaultdict(lambda:float("inf"))
-    dis[s] = 0
-    q = [(0+H(s),s)]
-    vis = set()
+    if s == t: 
+        return 0 if k == 1 else -1
+    q = [(0+H(s),0,s)]
+    cnt = Counter() #记录节点入堆的次数
+    cnt[s] += 1
+    cnt2 = Counter() #记录访问到节点的次数
     while q:
-        _, u = heapq.heappop(q)
-        if u in vis: continue
-        vis.add(u)
+        _, dis, u = heapq.heappop(q)
         for v,w in adj[u]:
-            if dis[v] > dis[u] + w:
-                dis[v] = dis[u] + w
-                heapq.heappush(q,(dis[v],v))
-    return dis
+            cnt2[v]+=1
+            dis2 = dis+w
+            if v == t:
+                if cnt2[u] == k:
+                    return dis2
+            if cnt[u] < k:
+                cnt[u] += 1
+                heapq.heappush(q,(dis2+H[v],dis2,v))
+    return -1
