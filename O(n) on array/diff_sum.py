@@ -1,6 +1,6 @@
 from collections import *
 
-def sub_diff_total(L,mod=float("inf")):
+def diff_sum(L,mod=float("inf")):
     '''
     统计列表L中的所有子列表L1中的不同元素的总数(对mod取模)
     时间复杂度：O(n)
