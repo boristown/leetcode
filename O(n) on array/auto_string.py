@@ -1,15 +1,11 @@
-#string自动优化器
-#自动生成string问题的O(n)算法（只要算法存在，就能自动生成）
+#string自动测试器
+#自动生成string问题的测试用例
 #string由26种小写字母组成
-#输出一个整数int
+#比较两种算法的执行结果
 #by BorisTown/ak-bot
-
-#输入：朴素算法
-#输出：O(n)算法
-
-#原理：暴力枚举代码组合直到找到解决方案
 import random
 import string
+from collections import *
 
 def sample_generator(n):
     '''
@@ -20,10 +16,30 @@ def sample_generator(n):
         ans.append("".join([random.choice(string.ascii_lowercase) for i in range(k)]))
     return ans
 
-def auto_string(F):
-    def G(s):
-        return F(s)
-    return lambda s:G(s)
+def F(s):
+    ans,suf_sum,pos = 0,0,defaultdict(lambda:-1)
+    for i,c in enumerate(s):
+        suf_sum += i - pos[c]
+        ans += suf_sum
+        pos[c] = i
+    return int(ans)
+
+def G(s):
+    ans,suf_sum,pos = 0,0,defaultdict(lambda:-1)
+    for i,c in enumerate(s):
+        suf_sum += i - pos[c]
+        ans += suf_sum
+        pos[c] = i
+    return int(ans)
 
 if __name__ == '__main__':
-    print(sample_generator(20))
+    sp = sample_generator(20)
+    print(sp)
+    ans = []
+    for s in sp:
+        ans.append(F(s))
+    ans2 = []
+    for s in sp:
+        ans2.append(G(s))
+    print([(a,b,(a-b)) for a,b in zip(ans,ans2)])
+    
