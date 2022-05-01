@@ -34,12 +34,11 @@ def G(s):
 
 if __name__ == '__main__':
     sp = sample_generator(20)
-    print(sp)
     ans = []
     for s in sp:
         ans.append(F(s))
     ans2 = []
     for s in sp:
         ans2.append(G(s))
-    print([(a,b,(a-b)) for a,b in zip(ans,ans2)])
+    print([(s,a,b,(a-b)) for s,a,b in zip(sp,ans,ans2)])
     
