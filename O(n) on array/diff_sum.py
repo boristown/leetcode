@@ -14,9 +14,9 @@ def diff_sum(L,mod=float("inf")):
     #suf_sum(L2,e2) = suf_sum(L2,e2) + i - pos[e2]
     #其中pos[e2]是e2上一次出现的坐标，只有在这之后的后缀，不同元素的数量才会增加，
     #因此用i-pos[e2]计算suf_sum增加的值
-    ans,tot,pos = 0,0,defaultdict(lambda:-1)
+    ans,suf_sum,pos = 0,0,defaultdict(lambda:-1)
     for i,c in enumerate(L):
-        tot += i - pos[c]
-        ans += tot
+        suf_sum += i - pos[c]
+        ans += suf_sum
         pos[c] = i
     return int(ans % mod)
