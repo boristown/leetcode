@@ -31,4 +31,4 @@ def SPFA(adj,s):
                     cnt[v]+=1
                     if cnt[v] > n:
                         return [] #存在负环
-    return dict(dis)
+    return dis
