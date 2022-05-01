@@ -27,4 +27,5 @@ def rotate_max_F(L):
     for k in range(1,n):
         f += sumL - L[n-k]*n
         ans = max(ans,f)
+    #5 输出最大值
     return ans
