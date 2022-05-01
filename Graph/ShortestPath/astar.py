@@ -24,7 +24,7 @@ def astar_k(adj,s,t,k,H):
             cnt2[v]+=1
             dis2 = dis+w
             if v == t:
-                if cnt2[u] == k:
+                if cnt2[v] == k:
                     return dis2
             if cnt[u] < k:
                 cnt[u] += 1
