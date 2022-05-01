@@ -16,7 +16,7 @@ def diff_sum(L,mod=float("inf")):
     #因此用i-pos[e2]计算suf_sum增加的值
     ans,tot,pos = 0,0,defaultdict(lambda:-1)
     for i,c in enumerate(L):
-        tot += i - pos[c] #通过e的当前坐标与前一个坐标的差值，计算tot增量
+        tot += i - pos[c]
         ans += tot
         pos[c] = i
     return int(ans % mod)
