@@ -20,6 +20,8 @@ import re
 def isValid(self, code: str) -> bool:
     '''
     解决方案：循环正则表达式
+    来源：leetcode.cn
+    by /u/z1m/
     '''
     code = re.sub(r'<!\[CDATA\[.*?\]\]>|t', '-', code)
     prev = None
