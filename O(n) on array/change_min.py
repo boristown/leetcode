@@ -38,7 +38,7 @@ def change_min_palindrome(s,que):
     for k in range(6):
         for i in range(n):
             pre[k][i+1]=pre[k][i]
-            if s[i] != pat[i%3]:
+            if s[i] != pat[k][i%3]:
                 pre[k][i+1]+=1
     ans = []
     for l,r in que:
