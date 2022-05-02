@@ -16,5 +16,9 @@ def change_min_palindrome(s,L):
     #长度4：abca / acba / bacb / bcab / cabc / cbac
     #长度5：abcab / acbac / bacba / bcabc / cabca / cbacb
     #可以看出对于大于1的每一个长度，都只存在6种合理的排列
+    #1 暴力解法：
+    # 对比区间与6种排列，分别计算成本
+    # 每次查询的时间复杂度为O(n)
+    # 总时间复杂度为O(m*n)
     #
     pass
