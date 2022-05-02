@@ -1,10 +1,15 @@
-def change_min_palindrome(s,L):
+def change_min_palindrome(s,que):
     '''
     # 在区间内更改最少的元素，使得它不包含长度2以上的回文
     # 输入包括一系列区间查询，输出变更区间的最小成本
-    # 字符串只含有a|b|c 
+    # 字符串只含有a,b,c 
     #https://codeforces.com/problemset/problem/1555/D
     #*1600
+    #输入:
+    s:字符串
+    que:查询序列，每个查询为(l,r)表示区间范围，坐标从1开始
+    #返回：
+    ans:每个查询的答案
     '''
     #分析
     #由于不能包含长度2以上的回文，且只有三种字符
@@ -26,4 +31,19 @@ def change_min_palindrome(s,L):
     # 并使用前缀pre[k][i]记录第k种排列方式扫描到第i个字符时的成本
     # 初始化时间复杂度：O(n)
     # 每次查询的时间复杂度：O(1)
-    pass
+    # 肯定通过
+    pat = ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+    n = len(s)
+    pre = [[0]*(n+1) for _ in range(6)]
+    for k in range(6):
+        for i in range(n):
+            pre[k][i+1]=pre[k][i]
+            if s[i] != pat[i%3]:
+                pre[k][i+1]+=1
+    ans = []
+    for l,r in que:
+        a = float("inf")
+        for k in range(6):
+            a = min(a,pre[k][r]-pre[k][l-1])
+        ans.append(a)
+    return ans
