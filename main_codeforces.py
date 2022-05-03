@@ -1,36 +1,34 @@
-def ok(n,L,S):
-    L = L[::-1]
-    j = 0
-    odd = (n%2==1)
-    if not L:
-        return True
-    while j<n:
-        #odd:first must be min
-        if odd:
-            if L[-1] != S[j]:
-                return False
-            L.pop()
-        #even:first or second must be min
-        else:
-            if L[-1] != S[j] and L[-2] != S[j]:
-                return False
-            if L[-1] == S[j]:
-                L.pop()
-            else:
-                a = L.pop()
-                b = L.pop()
-                L.append(a)
-        odd = not odd
-        j+=1
-    return True
+#begin of codeforces template
+# (don't delete):
+#  
+# from collections import *
+# from sortedcontainers import *
+# from heapq import *
+#
+#t = int(input()) #input number of test cases
+#for _ in range(t): #iter for test cases
+#    n = int(input()) #input int
+#    n,m = map(int,input().split()) #input tuple
+#    L = list(map(int,input().split())) #input list
+#    s = input() #input string
+#    ans = solve(s,L) #solve
+#    print(ans)
+#
+#end of codeforces template 
 
-def solve(n,L):
-    return "YES" if ok(n,L,sorted(L)) else "NO"
+
+def solve(r):
+    if r<=1399:
+        return "Division 4"
+    elif r<=1599:
+        return "Division 3"
+    elif r<=1899 :
+        return "Division 2"
+    else:
+        return "Division 1"
 
 t = int(input())
-for _ in range(t):
-    n = int(input())
-    L = list(map(int,input().split()))
-    ans = solve(n,L)
+for _ in range(t): #iter for test cases
+    rating = int(input()) #input int
+    ans = solve(rating)
     print(ans)
-
