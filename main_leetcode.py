@@ -5,16 +5,6 @@ from Graph.ShortestPath.kthPath import *
 from Graph.visualize import visualize
 
 if __name__ == "__main__":
-    #模式匹配：邮箱
-    print("模式匹配：邮箱:")
-    s = "boristown@gmail.com"
-    pat = "^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
-    print("字符串："+s+"\n正则："+pat+"\n匹配结果："+str(re.match(pat,s)))
-    #模式匹配：域名
-    print("模式匹配：域名:")
-    s = "leetcode.cn"
-    pat = "[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?"
-    print("字符串："+s+"\n正则："+pat+"\n匹配结果："+str(re.match(pat,s)))
     #正权最短路：dijkstra
     adj = {1:[(2,1),(3,3),(5,5)],2:[(4,5)],3:[(4,2),(6,7)],4:[(6,1)],5:[],6:[]}
     print(visualize(adj))

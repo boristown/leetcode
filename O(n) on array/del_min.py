@@ -23,4 +23,8 @@ def del_min_even(L):
     C = Counter()
     m = 0
     for a in L:
-        
+        C[a]+=1
+        if C[a] == 2:
+            C = Counter()
+            m+=1
+    return n-m*2
