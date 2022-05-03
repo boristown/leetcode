@@ -16,7 +16,6 @@
 #
 #end of codeforces template 
 
-
 def solve(r):
     if r<=1399:
         return "Division 4"
