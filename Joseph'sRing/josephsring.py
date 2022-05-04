@@ -1,6 +1,11 @@
-def josephsring(n,k):
+#经典的约瑟夫环问题，不容错过
+#by leetcode.cn/u/ak-bot
+#2022-5-4
+
+def josephsring_recursive(n,k):
     '''
-    约瑟夫环
+    约瑟夫环(递归解法)
+    时间复杂度:O(n)
     n个人围成一圈，从0开始编码。
     从第一个人（0号）开始计数，杀死第k个人，然后从下一个人开始计数，问谁能活到最后？
     输入：
@@ -48,13 +53,34 @@ def josephsring(n,k):
     #     ans += 1
     if n == 1: return 0
     i = (k-1)%n
-    ans1 = josephsring(n-1,k)
+    ans1 = josephsring_recursive(n-1,k)
     ans = (ans1+i) % (n-1)
     if ans >= i:
         ans += 1
     return ans
 
+def josephsring_non_recursive(n,k):
+    '''
+    约瑟夫环(非递归解法)
+    由于递归解法可能会栈溢出
+    考虑非递归的解法
+    '''
+    #分析：
+    #按照经验，递归解法应该都能转化为非递归
+    #在递归的过程中n逐渐缩小为1，计算出n=1的结果后，再推广到n=2的值，逐渐放大直到计算出最后的结果
+    #（等等，这个不就是动态规划么？）
+    #删除递归中，缩小n到1的过程，直接以1为起点来计算结果，不断推广到下一个结果
+    ans = 0
+    for n1 in range(2,n+1):
+        i = (k-1)%n1
+        ans = (ans+i) % (n1-1)
+        if ans >= i:
+            ans += 1
+    return ans
+
 if __name__ == '__main__':
     n,k = map(int,input().split())
-    ans = josephsring(n,k)
+    ans = josephsring_recursive(n,k)
+    print(ans)
+    ans = josephsring_non_recursive(n,k)
     print(ans)
