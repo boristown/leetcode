@@ -17,7 +17,7 @@ def josephsring_recursive(n,k):
     #分析：
     #如果只有一个人，那直接返回0就可以了
     #如果是两个人，如果k是奇数，那0号先挂；如果是偶数，1号先挂
-    #（这个时候我们发现k对n的余数(k-1)%n就是第一个挂掉的人，是否可以考虑递归？）
+    #（这个时候我们发现k-1对n的余数(k-1)%n就是第一个挂掉的人，是否可以考虑递归？）
     #（等等……如果第i个人挂掉了，就会从i+1开始计数，可是我们的题目要求是从第一个人开始计数啊）
     #（如果递归的话，如果将从第i+1开始计数的问题转化为从第一个人开始计数的问题呢？）
     #（因为是一个环，假如从第1个人开始计数的结果是ans）
@@ -80,7 +80,7 @@ def josephsring_non_recursive(n,k):
 
 if __name__ == '__main__':
     n,k = map(int,input().split())
-    ans = josephsring_recursive(n,k)
-    print(ans)
+    #ans = josephsring_recursive(n,k)
+    #print(ans)
     ans = josephsring_non_recursive(n,k)
     print(ans)
