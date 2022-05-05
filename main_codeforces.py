@@ -16,18 +16,41 @@
 #
 #end of codeforces template 
 
-def solve(r):
-    if r<=1399:
-        return "Division 4"
-    elif r<=1599:
-        return "Division 3"
-    elif r<=1899 :
-        return "Division 2"
-    else:
-        return "Division 1"
+def solve(n,k,s):
+    ans = []
+    mx = ""
+    s1 = "a"
+    s2 = ""
+    for c in s:
+        if c > mx:
+            mx  = c
+            co = ord(c) - ord('a')
+            if co > k:
+                s2 = c
+                break
+            else:
+                s1 = c
+    M = {}
+    for i in range(26):
+        c = chr(ord('a')+i)
+        M[c] = c
+    #s1->a
+    d = ord(s1)-ord('a')
+    k-=d
+    for i in range(d):
+        M[chr(ord(s1)-i)] = 'a'
+    #s2->?
+    if s2:
+        t = chr(ord(s2) - k)
+        for i in range(k):
+            M[chr(ord(s2)-i)] = t
+    for c in s:
+        ans.append(M[c])
+    return "".join(ans)
 
 t = int(input())
 for _ in range(t): #iter for test cases
-    rating = int(input()) #input int
-    ans = solve(rating)
+    n,k = map(int,input().split()) #input tuple
+    s = input() #input string
+    ans = solve(n,k,s)
     print(ans)
