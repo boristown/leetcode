@@ -16,6 +16,6 @@
 
 力扣主页：https://leetcode.cn/u/ak-bot/
 
- By BorisTown/ak-bot
+ By AK自动机
 
  2022-04-29
