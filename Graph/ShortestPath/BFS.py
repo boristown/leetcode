@@ -7,7 +7,7 @@ def ShortestPathLen(graph,start,end):
     '''
     if start == end: return 0
     Q = deque([(0,start)])
-    vis = set(start)
+    vis = set([start])
     while Q:
         step,node = Q.popleft()
         step += 1
