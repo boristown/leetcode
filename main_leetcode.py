@@ -1,34 +1,41 @@
-import re
-from Graph.ShortestPath.Dijkstra import *
-from Graph.ShortestPath.SFPA import *
-from Graph.ShortestPath.kthPath import *
-from Graph.visualize import visualize
+#begin of leetcode template
+from collections import *
+import heapq
+import itertools
+from functools import *
+#end of leetcode template
+
+MOD = 10**9+7
+
+class Solution:
+    def countTexts(self, P: str) -> int:
+        M = [0,0,3,3,3,3,3,3,3,4]
+        @cache
+        def dp(m,n):
+            if n==0:
+                return 1
+            ans = 0
+            for i in range(1,min(m,n)+1):
+                ans = (ans + dp(m,n-i)) % MOD
+            #print("dp",m,n,ans)
+            return ans
+        cur = 0
+        cnt = 0
+        ans = 1
+        for a in P:
+            k = int(a)
+            if k != cur:
+                if cur != 0:
+                    ans *= dp(M[cur],cnt) % MOD
+                cur = k
+                cnt = 1
+            else:
+                cnt+=1
+        ans *= dp(M[cur],cnt) % MOD
+        return ans
 
 if __name__ == "__main__":
-    #正权最短路：dijkstra
-    adj = {1:[(2,1),(3,3),(5,5)],2:[(4,5)],3:[(4,2),(6,7)],4:[(6,1)],5:[],6:[]}
-    print(visualize(adj))
-    print("正权最短路：dijkstra:")
-    dis = dijkstra(adj,1)
-    print(dis)
-    #正权第K短路：dijkstra+A*
-    print("正权第K短路：dijkstra+A*:")
-    dis = dijkstra(adj,1)
-    print(dis)
-    #负权最短路：SFPA
-    adj = {1:[(2,1),(3,-3),(5,5)],2:[(3,-3),(4,5)],3:[(4,-2),(6,-7)],4:[(6,1)],5:[],6:[]}
-    print(visualize(adj))
-    print("负权最短路：SFPA")
-    dis = SPFA(adj,1)
-    print(dis)
-    #负权最短路：dijkstra(错误结果)
-    adj = {1:[(2,1),(3,-3),(5,5)],2:[(3,-3),(4,5)],3:[(4,-2),(6,-7)],4:[(6,1)],5:[],6:[(2,-10)]}
-    print(visualize(adj))
-    print("负权最短路：dijkstra(错误结果)")
-    dis = dijkstra(adj,1)
-    print(dis)
-    #负环检测：SFPA
-    print("负环检测：SFPA")
-    dis = SPFA(adj,1)
-    print(dis)
-
+    slt = Solution()
+    print(slt.countTexts("22233"))
+    print(slt.countTexts("222222222222222222222222222222222222"))
+    print(slt.countTexts("55555555999977779555"))

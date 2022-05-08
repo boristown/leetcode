@@ -1,4 +1,3 @@
-
 //g++ 
 #include <bits/stdc++.h>
 
