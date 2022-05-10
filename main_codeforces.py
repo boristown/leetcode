@@ -2,8 +2,8 @@
 # (don't delete):
 #  
 # from collections import *
-# from sortedcontainers import *
 # from heapq import *
+# import bisect
 #
 #t = int(input()) #input number of test cases
 #for _ in range(t): #iter for test cases
@@ -15,42 +15,46 @@
 #    print(ans)
 #
 #end of codeforces template 
+from collections import *
 
-def solve(n,k,s):
-    ans = []
-    mx = ""
-    s1 = "a"
-    s2 = ""
-    for c in s:
-        if c > mx:
-            mx  = c
-            co = ord(c) - ord('a')
-            if co > k:
-                s2 = c
-                break
+def solve(n,L,s):
+    leaf = []
+    st = set()
+    for i in L:
+        st.add(i)
+    CW,CB = Counter(),Counter()
+    for node in range(1,n+1):
+        if node not in st:
+            leaf.append(node)
+            if s[node-1] == 'W':
+                CW[node],CB[node] = 1,0
             else:
-                s1 = c
-    M = {}
-    for i in range(26):
-        c = chr(ord('a')+i)
-        M[c] = c
-    #s1->a
-    d = ord(s1)-ord('a')
-    k-=d
-    for i in range(d):
-        M[chr(ord(s1)-i)] = 'a'
-    #s2->?
-    if s2:
-        t = chr(ord(s2) - k)
-        for i in range(k):
-            M[chr(ord(s2)-i)] = t
-    for c in s:
-        ans.append(M[c])
-    return "".join(ans)
+                CW[node],CB[node] = 0,1
+    vis = set()
+    for lf in leaf:
+        a = lf
+        k1,k2 = CW[lf],CB[lf]
+        while a>=2:
+            p = L[a-2]
+            if p not in vis:
+                vis.add(p)
+                if s[p-1] == 'W':
+                    CW[p],CB[p] = 1,0
+                else:
+                    CW[p],CB[p] = 0,1
+            CW[p]+=k1
+            CB[p]+=k2
+            a = p
+    ans = 0
+    for node in range(1,n+1):
+        if CB[node] == CW[node]:
+            ans+=1
+    return ans
 
 t = int(input())
 for _ in range(t): #iter for test cases
-    n,k = map(int,input().split()) #input tuple
+    n = int(input()) #input int
+    L = list(map(int,input().split())) #input list
     s = input() #input string
-    ans = solve(n,k,s)
+    ans = solve(n,L,s)
     print(ans)
