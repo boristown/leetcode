@@ -1,15 +1,5 @@
 #由于codeforces不能直接使用sortedcontainers，因此我做了如下封装
 #https://github.com/grantjenks/python-sortedcontainers/blob/master/sortedcontainers/sortedlist.py
-"""Sorted List
-==============
-:doc:`Sorted Containers<index>` is an Apache2 licensed Python sorted
-collections library, written in pure-Python, and fast as C-extensions. The
-:doc:`introduction<introduction>` is the best way to get started.
-Sorted list implementations:
-.. currentmodule:: sortedcontainers
-* :class:`SortedList`
-* :class:`SortedKeyList`
-"""
 # pylint: disable=too-many-lines
 from __future__ import print_function
 
@@ -80,46 +70,6 @@ def recursive_repr(fillvalue='...'):
 
 
 class SortedList(MutableSequence):
-    """Sorted list is a sorted mutable sequence.
-    Sorted list values are maintained in sorted order.
-    Sorted list values must be comparable. The total ordering of values must
-    not change while they are stored in the sorted list.
-    Methods for adding values:
-    * :func:`SortedList.add`
-    * :func:`SortedList.update`
-    * :func:`SortedList.__add__`
-    * :func:`SortedList.__iadd__`
-    * :func:`SortedList.__mul__`
-    * :func:`SortedList.__imul__`
-    Methods for removing values:
-    * :func:`SortedList.clear`
-    * :func:`SortedList.discard`
-    * :func:`SortedList.remove`
-    * :func:`SortedList.pop`
-    * :func:`SortedList.__delitem__`
-    Methods for looking up values:
-    * :func:`SortedList.bisect_left`
-    * :func:`SortedList.bisect_right`
-    * :func:`SortedList.count`
-    * :func:`SortedList.index`
-    * :func:`SortedList.__contains__`
-    * :func:`SortedList.__getitem__`
-    Methods for iterating values:
-    * :func:`SortedList.irange`
-    * :func:`SortedList.islice`
-    * :func:`SortedList.__iter__`
-    * :func:`SortedList.__reversed__`
-    Methods for miscellany:
-    * :func:`SortedList.copy`
-    * :func:`SortedList.__len__`
-    * :func:`SortedList.__repr__`
-    * :func:`SortedList._check`
-    * :func:`SortedList._reset`
-    Sorted lists use lexicographical ordering semantics when compared to other
-    sequences.
-    Some methods of mutable sequences are not supported and will raise
-    not-implemented error.
-    """
     DEFAULT_LOAD_FACTOR = 1000
 
 
@@ -1036,19 +986,3 @@ class SortedList(MutableSequence):
 def identity(value):
     "Identity function."
     return value
-
-def solve(n,L):
-    sl = SortedList()
-    ans = 0
-    for i,a in enumerate(L):
-        p = sl.bisect_left(a)
-        ans += i-p
-        sl.add(a)
-    return ans
-
-t = int(input())
-for _ in range(t): #iter for test cases
-    n = int(input()) #input int
-    L = list(map(int,input().split())) #input list
-    ans = solve(n,L)
-    print(ans)
