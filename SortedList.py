@@ -1,20 +1,5 @@
-#begin of codeforces template
-# (don't delete):
-#  
-# from collections import *
-# from heapq import *
-# import bisect
-#
-#t = int(input()) #input number of test cases
-#for _ in range(t): #iter for test cases
-#    n = int(input()) #input int
-#    n,m = map(int,input().split()) #input tuple
-#    L = list(map(int,input().split())) #input list
-#    s = input() #input string
-#    ans = solve(s,L) #solve
-#    print(ans)
-#
-#end of codeforces template 
+#由于codeforces不能直接使用sortedcontainers，因此我做了如下封装
+#https://github.com/grantjenks/python-sortedcontainers/blob/master/sortedcontainers/sortedlist.py
 """Sorted List
 ==============
 :doc:`Sorted Containers<index>` is an Apache2 licensed Python sorted
