@@ -1,3 +1,4 @@
+#todo:将数组线段树修改为动态开点线段树
 # 线段树的节点类
 class TreeNode(object):
     '''
