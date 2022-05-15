@@ -1,3 +1,4 @@
+#https://github.com/boristown/leetcode/blob/main/RangeContainers.py
 #用于处理Range的容器
 #支持添加Range，减去Range，判断区间是否被包含，全局计数
 import bisect
