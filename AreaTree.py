@@ -1,4 +1,4 @@
-from itertools import reduce
+from functools import reduce
 
 class AreaTree:
     '''
@@ -56,8 +56,7 @@ class AreaTree:
         将区域树的值初始化为矩阵Matrx
         输入保证Matrx与区域大小一致
         '''
-        if self.end:
-            return
+        if self.end: return
         m0 = M[0][0]
         self.lazy_tag = 0
         diff = False
@@ -108,8 +107,7 @@ class AreaTree:
         '''
         将区域[top,bottom) [left,right)覆盖为val
         '''
-        if self.end:
-            return
+        if self.end: return
         if t <= self.t and b >= self.b and l <= self.l and r >= self.r:
             self.v = v
             self.lazy_tag = 0
@@ -134,34 +132,37 @@ class AreaTree:
     
     def pushdown(self):
         if self.lazy_tag != 0:
-            if self.lt.v != '#':
-                self.lt.v += self.lazy_tag
-                self.lt.lazy_tag = 0
-            else:
-                self.lt.lazy_tag += self.lazy_tag
-            if self.lb.v != '#':
-                self.lb.v += self.lazy_tag
-                self.lb.lazy_tag = 0
-            else:
-                self.lb.lazy_tag += self.lazy_tag
-            if self.rt.v != '#':
-                self.rt.v += self.lazy_tag
-                self.rt.lazy_tag = 0
-            else:
-                self.rt.lazy_tag += self.lazy_tag
-            if self.rb.v != '#':
-                self.rb.v += self.lazy_tag
-                self.rb.lazy_tag = 0
-            else:
-                self.rb.lazy_tag += self.lazy_tag
+            if not self.lt.end:
+                if self.lt.v != '#':
+                    self.lt.v += self.lazy_tag
+                    self.lt.lazy_tag = 0
+                else:
+                    self.lt.lazy_tag += self.lazy_tag
+            if not self.lb.end:
+                if self.lb.v != '#':
+                    self.lb.v += self.lazy_tag
+                    self.lb.lazy_tag = 0
+                else:
+                    self.lb.lazy_tag += self.lazy_tag
+            if not self.rt.end:
+                if self.rt.v != '#':
+                    self.rt.v += self.lazy_tag
+                    self.rt.lazy_tag = 0
+                else:
+                    self.rt.lazy_tag += self.lazy_tag
+            if not self.rb.end:
+                if self.rb.v != '#':
+                    self.rb.v += self.lazy_tag
+                    self.rb.lazy_tag = 0
+                else:
+                    self.rb.lazy_tag += self.lazy_tag
             self.lazy_tag = 0
 
     def inc_area(self, t, b, l, r, v):
         '''
         将区域[top,bottom) [left,right)增加val
         '''
-        if self.end:
-            return
+        if self.end: return
         if t <= self.t and b >= self.b and l <= self.l and r >= self.r:
             if self.v == '#':
                 self.lazy_tag += v
@@ -201,7 +202,7 @@ class AreaTree:
         f1:lambda a,b:min(a,b)
         f2:lambda a,n:a
         '''
-        if self.end: return '#'
+        if self.end: return
         if self.v != '#':
             return f2(self.v, (min(b,self.b)-max(t,self.t))*(min(r,self.r)-max(l,self.l)))
         self.create_subtrees()
@@ -218,3 +219,20 @@ class AreaTree:
         if b > midv and r > midh:
             ans.append(self.rb.query(t, b, l, r, f1, f2))
         return reduce(f1,ans)
+
+if __name__ == '__main__':
+    #测试：线段树模式
+    #输入:0,3,[1,3,4,2],cover(1,3,10),quert(sum,2,4),inc(2,4,5),,quert(sum,2,4)
+    AT = AreaTree(0,1,0,4)
+    AT.init_area([[1,3,4,2]])
+    AT.cover_area(0,1,1,3,10)
+    f1 = lambda a,b:a+b
+    f2 = lambda a,n:a*n
+    ans = AT.query(0,1,2,4,f1,f2)
+    print(ans)
+    AT.inc_area(0,1,2,4,5)
+    ans = AT.query(0,1,2,4,f1,f2)
+    print(ans)
+    AT.inc_area(0,1,0,4,-1)
+    ans = AT.query(0,1,0,4,f1,f2)
+    print(ans)
