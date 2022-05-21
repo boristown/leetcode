@@ -8,16 +8,23 @@ class AreaTree:
     初始化：O(1)
     增量更新或覆盖更新的单次操作复杂度：O(log k)
     序列更新的单次复杂度：O(n)
-    当区域宽度为1时，区域树退化为线段树，因此区域树也可以当作线段树使用
+    当第一个维度长度为1时，区域树退化为线段树，因此区域树也可以当作线段树使用
     https://github.com/boristown/leetcode/blob/main/AreaTree.py
     '''
     def __init__(self, f1, f2, t, b, l, r, v = 0):
         '''
         初始化区域树[top,bottom) [left,right)
+        f1,f2示例：
+        区域和:
+        f1:lambda a,b:a+b 
+        f2:lambda a,n:a*n
+        区域最大值:
+        f1:lambda a,b:max(a,b)
+        f2:lambda a,n:a
+        区域最小值:
+        f1:lambda a,b:min(a,b)
+        f2:lambda a,n:a
         '''
-        if t >= b or l >= r:
-            self.end = True
-            return
         self.segmode = (t + 1 == b)
         if not self.segmode:
             self.t = t #top
@@ -33,7 +40,6 @@ class AreaTree:
         self.lazy_tag = 0 #Lazy tag
         self.lb = None #SubTree(left,bottom)
         self.rb = None #SubTree(right,bottom)
-        self.end = False #End node
     
     @property
     def mid_h(self):
@@ -44,21 +50,20 @@ class AreaTree:
         return (self.t + self.b) // 2
 
     def create_subtrees(self):
-        if self.end: return
         midh = self.mid_h
         if not self.segmode:
             midv = self.mid_v
         if not self.segmode:
-            if not self.lt:
+            if not self.lt and midv > self.t:
                 self.lt = AreaTree(self.f1, self.f2, self.t, midv, self.l, midh)
-            if not self.rt:
+            if not self.rt and midv > self.t and midh > self.l:
                 self.rt = AreaTree(self.f1, self.f2, self.t, midv, midh, self.r)
-            if not self.lb:
+            if not self.lb and midh > self.l:
                 self.lb = AreaTree(self.f1, self.f2, midv, self.b, self.l, midh)
             if not self.rb:
                 self.rb = AreaTree(self.f1, self.f2, midv, self.b, midh, self.r)
         else:
-            if not self.lb:
+            if not self.lb and midh > self.l:
                 self.lb = AreaTree(self.f1, self.f2, 0, 1, self.l, midh)
             if not self.rb:
                 self.rb = AreaTree(self.f1, self.f2, 0, 1, midh, self.r)
@@ -69,7 +74,6 @@ class AreaTree:
         将区域树的值初始化为矩阵Matrx
         输入保证Matrx与区域大小一致
         '''
-        if self.end: return
         m0 = M[0][0]
         self.lazy_tag = 0
         diff = False
@@ -136,7 +140,6 @@ class AreaTree:
         '''
         将区域[top,bottom) [left,right)覆盖为val
         '''
-        if self.end: return
         if self.v == v: return
         if not self.segmode:
             if t <= self.t and b >= self.b and l <= self.l and r >= self.r:
@@ -157,14 +160,18 @@ class AreaTree:
             midv = self.mid_v
         if self.v != '#':
             if not self.segmode:
-                self.lt.v = self.v
-                self.lt.ans = '?'
-                self.rt.v = self.v
-                self.rt.ans = '?'
-            self.lb.v = self.v
-            self.lb.ans = '?'
-            self.rb.v = self.v
-            self.rb.ans = '?'
+                if self.lt:
+                    self.lt.v = self.v
+                    self.lt.ans = '?'
+                if self.rt:
+                    self.rt.v = self.v
+                    self.rt.ans = '?'
+            if self.lb:
+                self.lb.v = self.v
+                self.lb.ans = '?'
+            if self.rb:
+                self.rb.v = self.v
+                self.rb.ans = '?'
             self.v = '#'
         if not self.segmode:
             if t < midv and l < midh:
@@ -184,28 +191,28 @@ class AreaTree:
     def pushdown(self):
         if self.lazy_tag != 0:
             if not self.segmode:
-                if not self.lt.end:
+                if self.lt:
                     if self.lt.v != '#':
                         self.lt.v += self.lazy_tag
                         self.lt.lazy_tag = 0
                     else:
                         self.lt.lazy_tag += self.lazy_tag
                     self.lt.ans = '?'
-                if not self.rt.end:
+                if self.rt:
                     if self.rt.v != '#':
                         self.rt.v += self.lazy_tag
                         self.rt.lazy_tag = 0
                     else:
                         self.rt.lazy_tag += self.lazy_tag
                     self.rt.ans = '?'
-            if not self.lb.end:
+            if self.lb:
                 if self.lb.v != '#':
                     self.lb.v += self.lazy_tag
                     self.lb.lazy_tag = 0
                 else:
                     self.lb.lazy_tag += self.lazy_tag
                 self.lb.ans = '?'
-            if not self.rb.end:
+            if self.rb:
                 if self.rb.v != '#':
                     self.rb.v += self.lazy_tag
                     self.rb.lazy_tag = 0
@@ -218,7 +225,6 @@ class AreaTree:
         '''
         将区域[top,bottom) [left,right)增加val
         '''
-        if self.end: return
         if v == 0: return
         self.ans = '?'
         if not self.segmode:
@@ -268,19 +274,8 @@ class AreaTree:
 
     def query(self, t, b, l, r):
         '''
-        查询区域[left,top,right,bottom)的f1
-        f1,f2示例：
-        区域和:
-        f1:lambda a,b:a+b 
-        f2:lambda a,n:a*n
-        区域最大值:
-        f1:lambda a,b:max(a,b)
-        f2:lambda a,n:a
-        区域最小值:
-        f1:lambda a,b:min(a,b)
-        f2:lambda a,n:a
+        查询区域[left,top,right,bottom)的RMQ
         '''
-        if self.end: return
         if self.ans != '?':
             return self.ans
         if self.v != '#':
