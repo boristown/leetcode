@@ -1,6 +1,9 @@
 // 位运算
 // https://oi-wiki.org/math/bit/
 
+//获取一个二进制长度为n且全是1的数字
+int allone(int n) { return (1<<n)-1; }
+
 //判断一个数是不是2的非负整数次幂
 bool isPowerOfTwo(int n) { return n > 0 && (n & (n - 1)) == 0; }
 

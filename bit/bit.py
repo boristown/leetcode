@@ -1,6 +1,12 @@
 # 位运算
 # https://oi-wiki.org/math/bit/
 
+def allone(n):
+    '''
+    获取一个二进制长度为n且全是1的数字
+    '''
+    return (1<<n)-1
+    
 #判断一个数是不是2的非负整数次幂
 def isPowerOfTwo(n):
     return n > 0 and (n & (n - 1)) == 0
