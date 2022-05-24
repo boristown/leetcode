@@ -41,11 +41,11 @@ class SegTree:
     def create_subtrees(self):
         midh = self.mid_h
         if not self.left and midh > self.l:
-            self.left = SegTree(self.f1, self.f2, 0, 1, self.l, midh)
+            self.left = SegTree(self.f1, self.f2, self.l, midh)
         if not self.right:
-            self.right = SegTree(self.f1, self.f2, 0, 1, midh, self.r)
+            self.right = SegTree(self.f1, self.f2, midh, self.r)
 
-    def init_area(self, M):
+    def init_seg(self, M):
         '''
         将线段树的值初始化为矩阵Matrx
         输入保证Matrx与线段大小一致
@@ -62,10 +62,10 @@ class SegTree:
         self.ans = '?'
         midh = self.mid_h
         self.create_subtrees()
-        self.left.init_area(M[:midh-self.l])
-        self.right.init_area(M[midh-self.l:])
+        self.left.init_seg(M[:midh-self.l])
+        self.right.init_seg(M[midh-self.l:])
     
-    def cover_area(self, l, r, v):
+    def cover_seg(self, l, r, v):
         '''
         将线段[left,right)覆盖为val
         '''
@@ -87,9 +87,9 @@ class SegTree:
                 self.right.ans = '?'
             self.v = '#'
         if l < midh:
-            self.left.cover_area(l, r, v)
+            self.left.cover_seg(l, r, v)
         if r > midh:
-            self.right.cover_area(l, r, v)
+            self.right.cover_seg(l, r, v)
     
     def pushdown(self):
         if self.lazy_tag != 0:
@@ -109,7 +109,7 @@ class SegTree:
                 self.right.ans = '?'
             self.lazy_tag = 0
 
-    def inc_area(self, l, r, v):
+    def inc_seg(self, l, r, v):
         '''
         将线段[left,right)增加val
         '''
@@ -131,9 +131,9 @@ class SegTree:
             self.v = '#'
         self.pushdown()
         if l < midh:
-            self.left.inc_area(l, r, v)
+            self.left.inc_seg(l, r, v)
         if r > midh:
-            self.right.inc_area(l, r, v)
+            self.right.inc_seg(l, r, v)
 
     def query(self, l, r):
         '''
