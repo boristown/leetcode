@@ -16,14 +16,14 @@ class AreaTree:
         初始化区域树[top,bottom) [left,right)
         f1,f2示例：
         区域和:
-        f1:lambda a,b:a+b 
-        f2:lambda a,n:a*n
+        f1=lambda a,b:a+b 
+        f2=lambda a,n:a*n
         区域最大值:
-        f1:lambda a,b:max(a,b)
-        f2:lambda a,n:a
+        f1=lambda a,b:max(a,b)
+        f2=lambda a,n:a
         区域最小值:
-        f1:lambda a,b:min(a,b)
-        f2:lambda a,n:a
+        f1=lambda a,b:min(a,b)
+        f2=lambda a,n:a
         '''
         self.segmode = (t + 1 == b)
         if not self.segmode:

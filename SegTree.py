@@ -15,14 +15,14 @@ class SegTree:
         初始化线段树[left,right)
         f1,f2示例：
         线段和:
-        f1:lambda a,b:a+b 
-        f2:lambda a,n:a*n
+        f1=lambda a,b:a+b 
+        f2=lambda a,n:a*n
         线段最大值:
-        f1:lambda a,b:max(a,b)
-        f2:lambda a,n:a
+        f1=lambda a,b:max(a,b)
+        f2=lambda a,n:a
         线段最小值:
-        f1:lambda a,b:min(a,b)
-        f2:lambda a,n:a
+        f1=lambda a,b:min(a,b)
+        f2=lambda a,n:a
         '''
         self.ans = '?'
         self.f1 = f1
