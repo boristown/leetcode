@@ -139,7 +139,7 @@ class SegTree:
         '''
         查询线段[right,bottom)的RMQ
         '''
-        if self.ans != '?':
+        if self.ans != '?' and l <= self.l and r >= self.r:
             return self.ans
         if self.v != '#':
             ans = self.f2(self.v, min(r,self.r)-max(l,self.l))

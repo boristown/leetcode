@@ -276,7 +276,7 @@ class AreaTree:
         '''
         查询区域[left,top,right,bottom)的RMQ
         '''
-        if self.ans != '?':
+        if self.ans != '?' and t <= self.t and b >= self.b and l <= self.l and r >= self.r:
             return self.ans
         if self.v != '#':
             if not self.segmode:
