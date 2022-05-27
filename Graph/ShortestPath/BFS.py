@@ -18,7 +18,7 @@ def ShortestPathLen(graph,start,end):
                     return step
                 Q.append((step,node2))
     return -1
-    
+
 def ShortestPath(graph,start,end):
     '''
     有向无权图中：从start到end的最短路

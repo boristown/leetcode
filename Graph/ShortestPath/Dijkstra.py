@@ -49,3 +49,34 @@ def dijkstraF(e,s):
                 dis[v] = dis[u] + w
                 heapq.heappush(q,(dis[v],v))
     return dis
+
+def dijkstra_path(e,s,t):
+    '''
+    输入：
+    e:邻接表
+    s:起点
+    t:终点
+    返回：
+    dis:从s到t的最短路径
+    '''
+    dis = defaultdict(lambda:float("inf"))
+    dis[s] = 0
+    q = [(0,s)]
+    vis = set()
+    last = {} #last node
+    while q:
+        _, u = heapq.heappop(q)
+        if u in vis: continue
+        vis.add(u)
+        for v,w in e[u]:
+            if dis[v] > dis[u] + w:
+                last[v] = u
+                dis[v] = dis[u] + w
+                heapq.heappush(q,(dis[v],v))
+    if t not in last:
+        return []
+    ans = [t]
+    while t in last:
+        ans.append(last[t])
+        t = last[t]
+    return ans[::-1]
