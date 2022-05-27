@@ -16,42 +16,29 @@
 #
 #end of codeforces template 
 
-from collections import *
-import heapq
+class bracket_range:
+    def __init__(self,s):
+        p1,p2,self.psum1,self.psum2 = 0,0,[0],[0]
+        for a in s:
+            if a == '(':
+                p1+=1
+            else:
+                p2+=1
+            self.psum1.append(p1)
+            self.psum2.append(p2)
+    
+    def get_range(self,i,j):
+        '''
+        correct bracket length in [i,j)
+        '''
+        s1 = self.psum1[j]-self.psum1[i]
+        s2 = self.psum2[j]-self.psum2[i]
+        ans = min(s1,s2)
+        return ans*2
 
-def dijkstra_path(e,s,t):
-    dis = defaultdict(lambda:float("inf"))
-    dis[s] = 0
-    q = [(0,s)]
-    vis = set()
-    last = {} #last node
-    while q:
-        _, u = heapq.heappop(q)
-        if u in vis: continue
-        vis.add(u)
-        for v,w in e[u]:
-            if dis[v] > dis[u] + w:
-                last[v] = u
-                dis[v] = dis[u] + w
-                heapq.heappush(q,(dis[v],v))
-    if t not in last:
-        return []
-    ans = [t]
-    while t in last:
-        ans.append(last[t])
-        t = last[t]
-    return ans[::-1]
-
-n,m = map(int,input().split()) #input tuple
-G = defaultdict(list)
-for _ in range(m): #iter for test cases
-    a,b,w = map(int,input().split()) #input tuple
-    if a!=b:
-        G[a].append((b,w))
-        G[b].append((a,w))
-#print(G)
-ans = dijkstra_path(G,1,n)
-if not ans: 
-    print(-1)
-else:
-    print(" ".join(map(str,ans)))
+s = input() #input string
+n = int(input()) #input int
+br = bracket_range(s)
+for _ in range(n): #iter for test cases
+    i,j = map(int,input().split()) #input tuple
+    print(br.get_range(i-1,j))
