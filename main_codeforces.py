@@ -19,19 +19,23 @@
 class bracket_range:
     def __init__(self,s):
         self.s = s
+        self.psum = [0]
+        p=0
+        for c in s:
+            if c == '(':
+                p+=1
+            self.psum.append(p)
         
     def get_range(self,i,j):
         '''
         correct bracket length in [i,j)
         '''
-        ans,b = 0,0
+        ans = self.psum[i]
         for p in range(i,j):
-            a = self.s[p]
-            if a == '(':
-                b+=1
-            else:
-                ans = min(ans + 1, b)
-        return ans*2
+            if self.s[p] == ')' and ans < self.psum[p+1]:
+                ans += 1
+        ans = (ans - self.psum[i])*2
+        return ans
 
 s = input() #input string
 n = int(input()) #input int
