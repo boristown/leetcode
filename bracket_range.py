@@ -21,7 +21,7 @@ class bracket_range:
         return ans*2
 
 def _bracket(s,i,j):
-    #暴力：O(n)
+    #1. 暴力：O(n)
     ans = 0
     b = 0
     for p in range(i,j):
@@ -31,18 +31,13 @@ def _bracket(s,i,j):
         elif a == ')':
             if b>0:
                 b-=1
-                ans+=1
-    #前缀和：O(1)
-    ans = 0
-    p1,p2,psum1,psum2 = 0,0,[0],[0]
-    for a in s:
+            ans+=1
+    #2. 变形：O(n)
+    ans,b = 0,0 #答案, 上限
+    for p in range(i,j):
+        a = s[p]
         if a == '(':
-            p1+=1
+            b+=1
         else:
-            p2+=1
-        psum1.append(p1)
-        psum2.append(p2)
-    s1 = psum1[j]-psum1[i]
-    s2 = psum2[j]-psum2[i]
-    ans = min(s1,s2)
+            ans = min(ans + 1, b)
     return ans
