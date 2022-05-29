@@ -3,39 +3,30 @@ from collections import *
 import heapq
 import itertools
 from functools import *
+import math
+from decimal import Decimal,ROUND_HALF_UP
 #end of leetcode template
-
-MOD = 10**9+7
-
+inf = float("inf")
 class Solution:
-    def countTexts(self, P: str) -> int:
-        M = [0,0,3,3,3,3,3,3,3,4]
-        @cache
-        def dp(m,n):
-            if n==0:
-                return 1
-            ans = 0
-            for i in range(1,min(m,n)+1):
-                ans = (ans + dp(m,n-i)) % MOD
-            #print("dp",m,n,ans)
-            return ans
-        cur = 0
-        cnt = 0
-        ans = 1
-        for a in P:
-            k = int(a)
-            if k != cur:
-                if cur != 0:
-                    ans *= dp(M[cur],cnt) % MOD
-                cur = k
-                cnt = 1
-            else:
-                cnt+=1
-        ans *= dp(M[cur],cnt) % MOD
-        return ans
+    def totalSteps(self, A) -> int:
+        ans = 0
+        B,n = [(-1,-inf)],len(A)
+        for i,a in enumerate(A):
+            if a>=B[-1][1]:
+                B.append((i,a))
+        n = len(B)-1
+        for i in range(n):
+            a,b = B[i][0],B[i+1][0]
+            m = 1
+            for j in range(a+1,b):
+                if A[j]<=A[j+1]:
+                    m+=1
+                else:
+                    m=1
 
 if __name__ == "__main__":
     slt = Solution()
-    print(slt.countTexts("22233"))
-    print(slt.countTexts("222222222222222222222222222222222222"))
-    print(slt.countTexts("55555555999977779555"))
+    print(slt.totalSteps([5,3,4,4,7,3,6,11,8,5,11])) #3
+    print(slt.totalSteps([4,5,7,7,13])) #0
+    print(slt.totalSteps([10,1,2,3,4,5,6,1,2,3])) #6
+    print(slt.totalSteps([7,14,4,14,13,2,6,13])) #3
