@@ -1,46 +1,37 @@
 #计算字符串s中(i,j]的合法括号序列的长度
-import bisect
-
 class bracket_range:
-    def __init__(self,s):
-        self.n = len(s)
-        self.s = s
-        self.psum = [0]
-        self.pbalance = [0]
-        self.left = [0]*self.n  #The position of the first ')' to the left of s[i] (with i)
-        self.right = [0]*self.n  #The position of the first '(' to the right of s[i] (with i)
-        i2,j2 = 0,0
-        p,sm=0,0
-        j2 = -1
-        for i,c in enumerate(s):
-            if c==')':
-                j2 = i
-            self.left[i] = j2
-        i2 = self.n
-        for i in range(self.n-1,-1,-1):
-            if s[i]=='(':
-                i2 = i
-            self.right[i] = i2
-        for c in s:
-            if c == '(':
-                p+=1
-            elif p>0:
-                p-=1
-                sm+=1
-            self.psum.append(sm)
-            self.pbalance.append(p)
+    def __init__(self,s,Q):
+        self.sl = SortedList()
+        st = []
+        n = len(s)
+        matched = 0
+        self.psum = []
+        Evt = [(q[1],q[0],i) for i,q in enumerate(Q)]
+        n_ans = len(Q)
+        self.ans = [0]*n_ans
+        Evt.sort()
+        k = -1
+        for j,i,idx in Evt:
+            while j > k+1:
+                k+=1
+                a = s[k]
+                if a == '(':
+                    st.append(k)
+                else:
+                    if st:
+                        k2 = st.pop()
+                        self.sl.add((k2,k))
+                        matched+=1
+                self.psum.append(matched)
+            self.ans[idx] = self.get_range(i,j)
         
     def get_range(self,i,j):
         '''
         correct bracket length in [i,j)
         '''
-        i2,j2 = self.right[i],self.left[j-1]
-        if i2 >= j2: return 0
-        delta = self.pbalance[i2] - self.pbalance[j2+1]
-        ans = self.psum[j2+1] - self.psum[i2]
-        if delta > 0:
-            ans -= delta
-        return ans*2
+        a = self.psum[j-1]
+        b = self.sl.bisect_left((i,0))
+        return (a-b)*2
         
 def magic(A,B):
     ans = 0
