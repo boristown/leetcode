@@ -89,8 +89,8 @@ int main() {
     cin >> n; // input int
     for(int q=0;q<n;q++){
         cin>>i>>j;
-        Que.PB({i-1,j});
-        Ord.PB({j,q});
+        Que.PUB({i-1,j});
+        Ord.PUB({j,q});
     }
     SORT(Ord);
     int ns = s.size();
@@ -105,7 +105,7 @@ int main() {
         while(j > k+1){
             k++;
             if(s[k] == '('){
-                st.PB(k);
+                st.PUB(k);
             }
             else{
                 if(st.size()){
