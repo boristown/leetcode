@@ -69,28 +69,51 @@ class SegTree:
         '''
         将线段[left,right)覆盖为val
         '''
-        if self.v == v: return
+        if self.v == v or l >= self.r or r <= self.l:
+            return self.ans
         if l <= self.l and r >= self.r:
             self.v = v
             self.lazy_tag = 0
-            self.ans = '?'
-            return
-        self.ans = '?'
+            self.ans = self.f2(v,self.r-self.l)
+            return self.ans
         self.create_subtrees()
-        midh = self.mid_h
         if self.v != '#':
             if self.left:
                 self.left.v = self.v
-                self.left.ans = '?'
+                self.left.ans = self.f2(v,self.left.r-self.left.l)
             if self.right:
                 self.right.v = self.v
-                self.right.ans = '?'
+                self.right.ans = self.f2(v,self.right.r-self.right.l)
             self.v = '#'
-        if l < midh:
-            self.left.cover_seg(l, r, v)
-        if r > midh:
-            self.right.cover_seg(l, r, v)
-    
+        #push up
+        self.ans = self.f1(self.left.cover_seg(l, r, v),self.right.cover_seg(l, r, v))
+        return self.ans
+
+    def inc_seg(self, l, r, v):
+        '''
+        将线段[left,right)增加val
+        '''
+        if v == 0 or l >= self.r or r <= self.l:
+            return self.ans
+        #self.ans = '?'
+        if l <= self.l and r >= self.r:
+            if self.v == '#':
+                self.lazy_tag += v
+            else:
+                self.v += v
+            self.ans += self.f2(v,self.left.r-self.left.l)
+            return self.ans
+        self.create_subtrees()
+        if self.v != '#':
+            self.left.v = self.v
+            self.left.ans = self.f2(v,self.left.r-self.left.l)
+            self.right.v = self.v
+            self.right.ans = self.f2(v,self.right.r-self.right.l)
+            self.v = '#'
+        self.pushdown()
+        self.ans = self.f1(self.left.inc_seg(l, r, v),self.right.inc_seg(l, r, v))
+        return self.ans
+        
     def pushdown(self):
         if self.lazy_tag != 0:
             if self.left:
@@ -99,41 +122,15 @@ class SegTree:
                     self.left.lazy_tag = 0
                 else:
                     self.left.lazy_tag += self.lazy_tag
-                self.left.ans = '?'
+                self.left.ans += self.f2(self.lazy_tag, self.left.r-self.left.l)
             if self.right:
                 if self.right.v != '#':
                     self.right.v += self.lazy_tag
                     self.right.lazy_tag = 0
                 else:
                     self.right.lazy_tag += self.lazy_tag
-                self.right.ans = '?'
+                self.right.ans += self.f2(self.lazy_tag, self.right.r-self.right.l)
             self.lazy_tag = 0
-
-    def inc_seg(self, l, r, v):
-        '''
-        将线段[left,right)增加val
-        '''
-        if v == 0: return
-        self.ans = '?'
-        if l <= self.l and r >= self.r:
-            if self.v == '#':
-                self.lazy_tag += v
-            else:
-                self.v += v
-            return
-        self.create_subtrees()
-        midh = self.mid_h
-        if self.v != '#':
-            self.left.v = self.v
-            self.left.ans = '?'
-            self.right.v = self.v
-            self.right.ans = '?'
-            self.v = '#'
-        self.pushdown()
-        if l < midh:
-            self.left.inc_seg(l, r, v)
-        if r > midh:
-            self.right.inc_seg(l, r, v)
 
     def query(self, l, r):
         '''
@@ -146,8 +143,6 @@ class SegTree:
             if l <= self.l and r >= self.r:
                 self.ans = ans
             return ans
-        if self.ans != '?' and l <= self.l and r >= self.r:
-            return self.ans
         self.create_subtrees()
         midh = self.mid_h
         self.pushdown()
