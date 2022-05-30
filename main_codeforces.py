@@ -1563,15 +1563,11 @@ class bracket_range:
     def __init__(self,s,Q):
         self.sl = SortedList()
         st = []
-        n = len(s)
         matched = 0
-        self.psum = []
-        Evt = [(q[1],q[0],i) for i,q in enumerate(Q)]
         n_ans = len(Q)
         self.ans = [0]*n_ans
-        Evt.sort()
         k = -1
-        for j,i,idx in Evt:
+        for j,i,idx in Q:
             while j > k+1:
                 k+=1
                 a = s[k]
@@ -1582,23 +1578,14 @@ class bracket_range:
                         k2 = st.pop()
                         self.sl.add((k2,k))
                         matched+=1
-                self.psum.append(matched)
-            self.ans[idx] = self.get_range(i,j)
-        
-    def get_range(self,i,j):
-        '''
-        correct bracket length in [i,j)
-        '''
-        a = self.psum[j-1]
-        b = self.sl.bisect_left((i,0))
-        return (a-b)*2
+            self.ans[idx] = (matched - self.sl.bisect_left((i,0))) * 2
 
 s = input() #input string
 n = int(input()) #input int
-Que = []
-for _ in range(n): #iter for test cases
+Que = SortedList()
+for q in range(n): #iter for test cases
     i,j = map(int,input().split()) #input tuple
-    Que.append((i-1,j))
+    Que.add((j,i-1,q))
 br = bracket_range(s,Que)
 for a in br.ans:
     print(a)

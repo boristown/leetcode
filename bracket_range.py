@@ -5,7 +5,7 @@ class bracket_range:
         st = []
         n = len(s)
         matched = 0
-        self.psum = []
+        #self.psum = []
         Evt = [(q[1],q[0],i) for i,q in enumerate(Q)]
         n_ans = len(Q)
         self.ans = [0]*n_ans
@@ -22,8 +22,8 @@ class bracket_range:
                         k2 = st.pop()
                         self.sl.add((k2,k))
                         matched+=1
-                self.psum.append(matched)
-            self.ans[idx] = self.get_range(i,j)
+                #self.psum.append(matched)
+            self.ans[idx] = (matched - self.sl.bisect_left((i,0))) * 2
         
     def get_range(self,i,j):
         '''
