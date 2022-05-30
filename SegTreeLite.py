@@ -22,12 +22,12 @@ class SegTreeLite:
     
     def query_sum(self, L: int, R: int):
         '''
-        Query sum in range [l,r]
+        Query sum in range [l,r)
         '''
-        return self._query_sum(1,1,self.n,L,R)
+        return self._query_sum(1,1,self.n,L+1,R)
     
     def add(self, idx: int, val: int):
         '''
         Increase arr[idx] by val
         '''
-        return self._add(1, 1, self.n, idx, val)
+        return self._add(1, 1, self.n, idx+1, val)
