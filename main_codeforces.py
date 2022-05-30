@@ -156,7 +156,7 @@ for q in range(n): #iter for test cases
     i,j = map(int,input().split()) #input tuple
     Que.append((j,i-1,q))
 ns = len(s)
-f1=lambda a,b:a+b 
+f1=lambda a,b:a+b
 f2=lambda a,n:a*n
 seg = SegTree(f1,f2,0,ns,0)
 st = []
