@@ -70,7 +70,7 @@ for j,i,idx in sorted(Que,key=lambda x:x[0]):
         else:
             if st:
                 k2 = st.pop()
-                seg.add(k2,2)
+                seg.add(k2,1)
     ans[idx] = seg.query_sum(i,j)
 for a in ans:
-    print(a)
+    print(a<<1)
