@@ -98,6 +98,24 @@ class SegTree:
         self.pushdown()
         self.ans = self.f1(self.left.inc_seg(l, r, v),self.right.inc_seg(l, r, v))
         return self.ans
+
+    def inc_idx(self, idx, v):
+        if v == 0 or idx >= self.r or idx < self.l:
+            return self.ans
+        if idx == self.l == self.r - 1:
+            self.v += v
+            self.ans += self.f2(v,1)
+            return self.ans
+        self.create_subtrees()
+        if self.v != '#':
+            self.left.v = self.v
+            self.left.ans = self.f2(self.v,self.left.r-self.left.l)
+            self.right.v = self.v
+            self.right.ans = self.f2(self.v,self.right.r-self.right.l)
+            self.v = '#'
+        self.pushdown()
+        self.ans = self.f1(self.left.inc_idx(idx, v),self.right.inc_idx(idx, v))
+        return self.ans
         
     def pushdown(self):
         if self.lazy_tag != 0:
@@ -154,7 +172,7 @@ for j,i,idx in sorted(Que):
         else:
             if st:
                 k2 = st.pop()
-                seg.inc_seg(k2,k2+1,2)
+                seg.inc_idx(k2,2)
     ans[idx] = seg.query(i,j)
 for a in ans:
     print(a)
