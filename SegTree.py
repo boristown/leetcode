@@ -101,14 +101,14 @@ class SegTree:
                 self.lazy_tag += v
             else:
                 self.v += v
-            self.ans += self.f2(v,self.left.r-self.left.l)
+            self.ans += self.f2(v,self.r-self.l)
             return self.ans
         self.create_subtrees()
         if self.v != '#':
             self.left.v = self.v
-            self.left.ans = self.f2(v,self.left.r-self.left.l)
+            self.left.ans = self.f2(self.v,self.left.r-self.left.l)
             self.right.v = self.v
-            self.right.ans = self.f2(v,self.right.r-self.right.l)
+            self.right.ans = self.f2(self.v,self.right.r-self.right.l)
             self.v = '#'
         self.pushdown()
         self.ans = self.f1(self.left.inc_seg(l, r, v),self.right.inc_seg(l, r, v))
@@ -136,8 +136,11 @@ class SegTree:
         '''
         查询线段[right,bottom)的RMQ
         '''
+        if l>=r: return 0
         if l <= self.l and r >= self.r:
             return self.ans
+        if self.v != '#':
+            return self.f2(self.v, min(self.r, r) - max(self.l, l))
         midh = self.mid_h
         anss = []
         if l < midh:
