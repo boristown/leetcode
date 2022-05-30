@@ -1559,33 +1559,29 @@ class SortedKeyList(SortedList):
 
 SortedListWithKey = SortedKeyList
 
-class bracket_range:
-    def __init__(self,s,Q):
-        self.sl = SortedList()
-        st = []
-        matched = 0
-        n_ans = len(Q)
-        self.ans = [0]*n_ans
-        k = -1
-        for j,i,idx in Q:
-            while j > k+1:
-                k+=1
-                a = s[k]
-                if a == '(':
-                    st.append(k)
-                else:
-                    if st:
-                        k2 = st.pop()
-                        self.sl.add((k2,k))
-                        matched+=1
-            self.ans[idx] = (matched - self.sl.bisect_left((i,0))) * 2
-
 s = input() #input string
 n = int(input()) #input int
-Que = SortedList()
+Que = []
 for q in range(n): #iter for test cases
     i,j = map(int,input().split()) #input tuple
-    Que.add((j,i-1,q))
-br = bracket_range(s,Que)
-for a in br.ans:
+    Que.append((j,i-1,q))
+sl = SortedList()
+st = []
+matched = 0
+n_ans = len(Que)
+ans = [0]*n_ans
+k = -1
+for j,i,idx in sorted(Que):
+    while j > k+1:
+        k+=1
+        a = s[k]
+        if a == '(':
+            st.append(k)
+        else:
+            if st:
+                k2 = st.pop()
+                sl.add(k2)
+                matched+=1
+    ans[idx] = (matched - sl.bisect_left(i)) * 2
+for a in ans:
     print(a)
