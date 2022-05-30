@@ -163,7 +163,7 @@ st = []
 n_ans = len(Que)
 ans = [0]*n_ans
 k = -1
-for j,i,idx in sorted(Que):
+for j,i,idx in sorted(Que,key=lambda x:x[0]):
     while j > k+1:
         k+=1
         a = s[k]
