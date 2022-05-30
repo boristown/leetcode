@@ -24,7 +24,7 @@ class SegTree:
         f1=lambda a,b:min(a,b)
         f2=lambda a,n:a
         '''
-        self.ans = '?'
+        self.ans = f2(v,r-l)
         self.f1 = f1
         self.f2 = f2
         self.l = l #left
@@ -57,13 +57,13 @@ class SegTree:
                 break
         else:
             self.v = m0
-            return
+            self.ans = self.f2(m0,len(M))
+            return self.ans
         self.v = '#'
-        self.ans = '?'
         midh = self.mid_h
         self.create_subtrees()
-        self.left.init_seg(M[:midh-self.l])
-        self.right.init_seg(M[midh-self.l:])
+        self.ans = self.f1(self.left.init_seg(M[:midh-self.l]), self.right.init_seg(M[midh-self.l:]))
+        return self.ans
     
     def cover_seg(self, l, r, v):
         '''
@@ -136,22 +136,12 @@ class SegTree:
         '''
         查询线段[right,bottom)的RMQ
         '''
-        if self.ans != '?' and l <= self.l and r >= self.r:
+        if l <= self.l and r >= self.r:
             return self.ans
-        if self.v != '#':
-            ans = self.f2(self.v, min(r,self.r)-max(l,self.l))
-            if l <= self.l and r >= self.r:
-                self.ans = ans
-            return ans
-        self.create_subtrees()
         midh = self.mid_h
-        self.pushdown()
         anss = []
         if l < midh:
             anss.append(self.left.query(l, r))
         if r > midh:
             anss.append(self.right.query(l, r))
-        ans = reduce(self.f1,anss)
-        if l <= self.l and r >= self.r:
-            self.ans = ans
-        return ans
+        return reduce(self.f1,anss)
