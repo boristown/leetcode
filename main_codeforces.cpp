@@ -1,5 +1,5 @@
 /*
-compile: 
+compile & run: 
 g++ main_codeforces.cpp
 run:
 .\a
@@ -43,20 +43,17 @@ end of codeforces template
 using namespace std;
 
 int main() {
-    int n;
-    int* A;
+    int n,a;
+    set<int> A;
     cin >> n; // input int
-    MALL0(A,int,n);
     for(int i=0;i<n;i++){ //loop for input
-        cin>>A[i]; //input tuple
+        cin>>a; //input tuple
+        A.insert(a);
     }
     int ans = 0;
-    for(int i=0;i<n;i++)
-    {
-        for(int j=0;j<n;j++){
-            if(A[i]>A[j]){
-                ans = max(ans,A[i]%A[j]);
-            }
+    for(auto a:A){
+        for(auto b:A){
+            if(a>b) ans = max(ans,a%b);
         }
     }
     cout<<ans<<endl;
