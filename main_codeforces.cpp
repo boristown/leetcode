@@ -1,7 +1,6 @@
 /*
 compile & run: 
 g++ main_codeforces.cpp
-run:
 .\a
 
 begin of codeforces template (don't delete):
@@ -48,12 +47,25 @@ int main() {
     cin >> n; // input int
     for(int i=0;i<n;i++){ //loop for input
         cin>>a; //input tuple
-        A.insert(a);
+        if(a>1)
+            A.insert(a);
+    }
+    if(!A.size()){
+        cout<<0<<endl;
+        return 0;
     }
     int ans = 0;
-    for(auto a:A){
-        for(auto b:A){
-            if(a>b) ans = max(ans,a%b);
+    auto pmax = A.end();
+    for(int i = 0;i<100;i++){
+        pmax--;
+        if(pmax == A.begin()){
+            break;
+        }
+        for(auto pbase = pmax;*pbase > ans;){
+            pbase--;
+            ans = max(ans,(*pmax) % (*pbase));
+            if(pbase==A.begin())
+                break;
         }
     }
     cout<<ans<<endl;
