@@ -106,3 +106,4 @@ if __name__ == '__main__':
     s = "x"
     pat = "[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?"
     print("字符串："+s+"\n正则："+pat+"\n匹配结果："+str(re.match(pat,s)))
+    #注：re.match是从头匹配；re.search是从任意部分开始匹配
