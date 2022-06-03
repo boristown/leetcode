@@ -1,5 +1,7 @@
 from functools import *
 
+MOD = 10**9+7
+
 def MultiInverse(x,mod):
     '''
     乘法逆元
@@ -77,3 +79,52 @@ def Cmod(n,m,mod):
     for i in range(1,m+1):
         x = (x * MultiInverse(i,mod)) % mod
     return (ans * x) % mod
+
+@cache
+def Amod(n,m,mod):
+    '''
+    从n个元素中选择m个排列数(结果取模)
+    适用场景：计算排列数
+    '''
+    ans = 1
+    for i in range(n,n-m,-1):
+        ans = (ans * i) % mod
+    return ans
+
+@cache
+def Cmod(n,m,mod):
+    '''
+    从n个元素中选择m个组合数(结果取模)
+    适用场景：计算组合数
+    '''
+    ans = Amod(n,m,mod)
+    x = 1
+    for i in range(1,m+1):
+        x = (x * MultiInverse(i,mod)) % mod
+    return (ans * x) % mod
+
+@cache
+def _Amod(n,m):
+    '''
+    从n个元素中选择m个排列数(结果取模)
+    递归写法
+    适用场景：计算排列数
+    '''
+    if m == 0: return 1
+    return (_Amod(n-1,m-1)*n)%MOD
+
+@cache
+def _Cmod(n,m):
+    '''
+    从n个元素中选择m个组合数(结果取模)
+    递归写法
+    适用场景：计算组合数
+    '''
+    if m == 0: return 1
+    return _Cmod(n-1,m-1) * n // m
+
+def Cmod2(n):
+    '''
+    从n个元素中选择任意个数的组合数
+    '''
+    return 1<<n
