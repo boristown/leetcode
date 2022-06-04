@@ -46,7 +46,6 @@ using namespace std;
 int main() {
     int n,a;
     set<int> A;
-    vector<int> V;
     cin >> n; // input int
     for(int i=0;i<n;i++){ //loop for input
         cin>>a; //input tuple
@@ -54,12 +53,15 @@ int main() {
             A.insert(a);
     }
     n = A.size();
-    if(!n){
+    if(n<2){
         cout<<0<<endl;
         return 0;
     }
+    int *V;
+    MALL0(V,int,n);
+    int i=0;
     for(auto a:A){
-        V.PUB(a);
+        V[i++]=a;
     }
     int ans = 0;
     int pl = 0;
@@ -69,11 +71,14 @@ int main() {
     while(pl2 <= pr2){
         for(int pl=pl2;pl<=pr2;pl++)
         {
-            ans = max(ans,V[pr] % V[pl]);
-            while(V[pr] - V[pr2]<=ans) pr2--;
+            int an = V[pr] % V[pl];
+            if(an > ans){
+                ans = an;
+                while((V[pr] - V[pr2])<=ans) pr2--;
+            }
         }
         pr--;
-        while(V[pr] - V[pr2]<=ans) pr2--;
+        while((V[pr] - V[pr2])<=ans) pr2--;
         while(V[pl2]<=ans) pl2++;
     }
     cout<<ans<<endl;
