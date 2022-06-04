@@ -10,6 +10,7 @@ begin of codeforces template (don't delete):
 #define PUB push_back
 #define POB pop_back
 #define SORT(L) sort(L.begin(),L.end())
+#define RSOR(L) sort(L.rbegin(),L.rend())
 #define MALL0(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0, sizeof(T) * N);
 #define MALLI(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0x3f, sizeof(T) * N);
 
@@ -36,6 +37,7 @@ end of codeforces template
 #define PUB push_back
 #define POB pop_back
 #define SORT(L) sort(L.begin(),L.end())
+#define RSOR(L) sort(L.rbegin(),L.rend())
 #define MALL0(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0, sizeof(T) * N);
 #define MALLI(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0x3f, sizeof(T) * N);
 
@@ -44,29 +46,35 @@ using namespace std;
 int main() {
     int n,a;
     set<int> A;
+    vector<int> V;
     cin >> n; // input int
     for(int i=0;i<n;i++){ //loop for input
         cin>>a; //input tuple
         if(a>1)
             A.insert(a);
     }
-    if(!A.size()){
+    n = A.size();
+    if(!n){
         cout<<0<<endl;
         return 0;
     }
+    for(auto a:A){
+        V.PUB(a);
+    }
     int ans = 0;
-    auto pmax = A.end();
-    for(int i = 0;i<100;i++){
-        pmax--;
-        if(pmax == A.begin()){
-            break;
+    int pl = 0;
+    int pr = n-1;
+    int pl2 = 0;
+    int pr2 = n-1;
+    while(pl2 <= pr2){
+        for(int pl=pl2;pl<=pr2;pl++)
+        {
+            ans = max(ans,V[pr] % V[pl]);
+            while(V[pr] - V[pr2]<=ans) pr2--;
         }
-        for(auto pbase = pmax;*pbase > ans;){
-            pbase--;
-            ans = max(ans,(*pmax) % (*pbase));
-            if(pbase==A.begin())
-                break;
-        }
+        pr--;
+        while(V[pr] - V[pr2]<=ans) pr2--;
+        while(V[pl2]<=ans) pl2++;
     }
     cout<<ans<<endl;
     return 0;

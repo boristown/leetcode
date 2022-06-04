@@ -15,62 +15,63 @@
 #    print(ans)
 #
 #end of codeforces template 
-class SegTreeLite:
-    def __init__(self, n: int):
-        self.n = n
-        self.sum = [0] * (n * 4)
 
-    def _add(self, o: int, l: int, r: int, idx: int, val: int):
-        if l == r:
-            self.sum[o] += val
-            return
-        m = (l + r) // 2
-        if idx <= m: self._add(o * 2, l, m, idx, val)
-        else: self._add(o * 2 + 1, m + 1, r, idx, val)
-        self.sum[o] = self.sum[o * 2] + self.sum[o * 2 + 1]
-
-    def _query_sum(self, o: int, l: int, r: int, L: int, R: int):
-        if L <= l and r <= R: return self.sum[o]
-        sum = 0
-        m = (l + r) // 2
-        if L <= m: sum += self._query_sum(o * 2, l, m, L, R)
-        if R > m: sum += self._query_sum(o * 2 + 1, m + 1, r, L, R)
-        return sum
+def allone(n):
+    return (1<<n)-1
     
-    def query_sum(self, L: int, R: int):
-        '''
-        Query sum in range [l,r)
-        '''
-        return self._query_sum(1,1,self.n,L+1,R)
-    
-    def add(self, idx: int, val: int):
-        '''
-        Increase arr[idx] by val
-        '''
-        return self._add(1, 1, self.n, idx+1, val)
+def isPowerOfTwo(n):
+    return n > 0 and (n & (n - 1)) == 0
 
-s = input() #input string
+def modPowerOfTwo(x, mod):
+    return x & (mod - 1)
+
+def getBit(a, b):
+    return (a >> b) & 1
+
+def unsetBit(a, b):
+    return a & ~(1 << b)
+
+def setBit(a, b):
+    return a | (1 << b)
+
+def flapBit(a, b):
+    return a ^ (1 << b)
+
+def popcount(x):
+    cnt = 0
+    while x:
+        cnt += x & 1
+        x >>= 1
+    return cnt
+
+def any2dec(origin, x):
+    return int(str(origin), base = x)
+
 n = int(input()) #input int
-Que = []
 for q in range(n): #iter for test cases
-    i,j = map(int,input().split()) #input tuple
-    Que.append((j,i-1,q))
-ns = len(s)
-seg = SegTreeLite(ns)
-st = []
-n_ans = len(Que)
-ans = [0]*n_ans
-k = -1
-for j,i,idx in sorted(Que,key=lambda x:x[0]):
-    while j > k+1:
-        k+=1
-        a = s[k]
-        if a == '(':
-            st.append(k)
-        else:
-            if st:
-                k2 = st.pop()
-                seg.add(k2,1)
-    ans[idx] = seg.query_sum(i,j)
-for a in ans:
-    print(a<<1)
+    a = int(input()) #input int
+    ans = []
+    pc = popcount(a)
+    if a == 1:
+        print(3)
+        continue
+    elif pc == 1:
+        ans.append('1')
+        while a:
+            a=a>>1
+            if a%2:
+                ans.append('1')
+                break
+            else:
+                ans.append('0')
+        print(any2dec("".join(ans[::-1]),2))
+        continue
+    else:
+        while a:
+            if a%2:
+                ans.append('1')
+                break
+            else:
+                ans.append('0')
+            a=a>>1
+        print(any2dec("".join(ans[::-1]),2))
