@@ -11,6 +11,8 @@ begin of codeforces template (don't delete):
 #define POB pop_back
 #define SORT(L) sort(L.begin(),L.end())
 #define RSOR(L) sort(L.rbegin(),L.rend())
+#define LOB(A,a) lower_bound(A.begin(),A.end(),a)
+#define UPB(A,a) upper_bound(A.begin(),A.end(),a)
 #define MALL0(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0, sizeof(T) * N);
 #define MALLI(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0x3f, sizeof(T) * N);
 
@@ -38,6 +40,8 @@ end of codeforces template
 #define POB pop_back
 #define SORT(L) sort(L.begin(),L.end())
 #define RSOR(L) sort(L.rbegin(),L.rend())
+#define LOB(A,a) lower_bound(A.begin(),A.end(),a)
+#define UPB(A,a) upper_bound(A.begin(),A.end(),a)
 #define MALL0(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0, sizeof(T) * N);
 #define MALLI(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0x3f, sizeof(T) * N);
 
@@ -69,12 +73,23 @@ int main() {
     int pl2 = 0;
     int pr2 = n-1;
     while(pl2 <= pr2){
-        for(int pl=pl2;pl<=pr2;pl++)
+        pl=pl2;
+        while(pl<=pr2)
+        //for(int pl=pl2;pl<=pr2;pl++)
         {
-            int an = V[pr] % V[pl];
+            int times = V[pr] / V[pl];
+            int prod = times * V[pl];
+            int an = V[pr] - prod;
             if(an > ans){
                 ans = an;
                 while((V[pr] - V[pr2])<=ans) pr2--;
+            }
+            if(times==1) break;
+            else if( pl==pr2 ) break;
+            else if( (V[pr] / V[pl+1])!=times ) pl++;
+            else{
+                int pos = upper_bound(V+pl,V+(pr2+1),V[pr]/times)-(V+pl);
+                pl += pos;
             }
         }
         pr--;
