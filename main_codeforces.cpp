@@ -7,6 +7,8 @@ begin of codeforces template (don't delete):
 
 #include <bits/stdc++.h>
 
+#define VI vector<int>
+#define UMII unordered_map<int,int>
 #define PUB push_back
 #define POB pop_back
 #define SORT(L) sort(L.begin(),L.end())
@@ -36,6 +38,8 @@ end of codeforces template
 */
 #include <bits/stdc++.h>
 
+#define VI vector<int>
+#define UMII unordered_map<int,int>
 #define PUB push_back
 #define POB pop_back
 #define SORT(L) sort(L.begin(),L.end())
@@ -48,53 +52,30 @@ end of codeforces template
 using namespace std;
 
 int main() {
-    int n,a;
-    set<int> A;
-    cin >> n; // input int
+    int n,t,a;
+    cin>>n>>t; //input tuple
+    VI A;
     for(int i=0;i<n;i++){ //loop for input
         cin>>a; //input tuple
-        if(a>1)
-            A.insert(a);
+        A.PUB(a);
     }
-    n = A.size();
-    if(n<2){
-        cout<<0<<endl;
-        return 0;
-    }
-    int *V;
-    MALL0(V,int,n);
-    int i=0;
-    for(auto a:A){
-        V[i++]=a;
-    }
-    int ans = 0;
-    int pl = 0;
-    int pr = n-1;
-    int pl2 = 0;
-    int pr2 = n-1;
-    while(pl2 <= pr2){
-        pl=pl2;
-        while(pl<=pr2)
-        {
-            int times = V[pr] / V[pl];
-            int prod = times * V[pl];
-            int an = V[pr] - prod;
-            if(an > ans){
-                ans = an;
-                while((V[pr] - V[pr2])<=ans) pr2--;
+    int l,r;
+    for(int i=0;i<t;i++){
+        cin>>l>>r;
+        l--;
+        r--;
+        UMII cnt;
+        for(int j=l;j<=r;j++){
+            if(!cnt.count(A[j])){
+                cnt[A[j]]=0;
             }
-            if(times==1) break;
-            else if( pl==pr2 ) break;
-            else if( (V[pr] / V[pl+1])!=times ) pl++;
-            else{
-                int pos = upper_bound(V+pl,V+(pr2+1),V[pr]/times)-(V+pl);
-                pl += pos;
-            }
+            cnt[A[j]]++;
         }
-        pr--;
-        while((V[pr] - V[pr2])<=ans) pr2--;
-        while(V[pl2]<=ans) pl2++;
+        long long ans = 0;
+        for(auto k :cnt){
+            ans+=(long long)(k.first)*k.second*k.second;
+        }
+        cout<<ans<<endl;
     }
-    cout<<ans<<endl;
     return 0;
 };
