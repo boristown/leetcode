@@ -75,7 +75,6 @@ int main() {
     while(pl2 <= pr2){
         pl=pl2;
         while(pl<=pr2)
-        //for(int pl=pl2;pl<=pr2;pl++)
         {
             int times = V[pr] / V[pl];
             int prod = times * V[pl];
