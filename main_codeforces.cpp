@@ -61,6 +61,8 @@ int main() {
         A[a].PUB(i);
     }
     int l,r;
+    int *ANS;
+    MALL0(ANS,int,t);
     for(int i=0;i<t;i++){
         cin>>l>>r;
         r--;
