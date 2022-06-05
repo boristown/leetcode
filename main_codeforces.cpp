@@ -54,26 +54,23 @@ using namespace std;
 int main() {
     int n,t,a;
     cin>>n>>t; //input tuple
-    VI A;
+    unordered_map<int,vector<int>> A;
+    UMII cnt;
     for(int i=0;i<n;i++){ //loop for input
         cin>>a; //input tuple
-        A.PUB(a);
+        A[a].PUB(i);
     }
     int l,r;
     for(int i=0;i<t;i++){
         cin>>l>>r;
-        l--;
         r--;
-        UMII cnt;
-        for(int j=l;j<=r;j++){
-            if(!cnt.count(A[j])){
-                cnt[A[j]]=0;
-            }
-            cnt[A[j]]++;
-        }
+        l--;
         long long ans = 0;
-        for(auto k :cnt){
-            ans+=(long long)(k.first)*k.second*k.second;
+        for(auto k:A){
+            if(k.second[0]<=r){
+                int len = UPB(k.second,r) - LOB(k.second,l);
+                if(len) ans+=(long long)(k.first)*len*len;
+            }
         }
         cout<<ans<<endl;
     }
