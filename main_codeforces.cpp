@@ -54,25 +54,29 @@ using namespace std;
 int main() {
     int n,t,a;
     cin>>n>>t; //input tuple
-    unordered_map<int,vector<int>> A;
+    vector<vector<pair<int,int>>> A;
     UMII cnt;
+    UMII cnt2;
     for(int i=0;i<n;i++){ //loop for input
         cin>>a; //input tuple
-        A[a].PUB(i);
+        cnt[a]++;
+        int c = cnt[a];
+        cnt2[c]+=a;
+        if(c>A.size()) A.PUB(vector<pair<int,int>>());
+        A[c-1].PUB({i,cnt2[c]});
     }
     int l,r;
-    int *ANS;
-    MALL0(ANS,int,t);
     for(int i=0;i<t;i++){
         cin>>l>>r;
         r--;
         l--;
         long long ans = 0;
-        for(auto k:A){
-            if(k.second[0]<=r){
-                int len = UPB(k.second,r) - LOB(k.second,l);
-                if(len) ans+=(long long)(k.first)*len*len;
-            }
+        for(int c=0;c<A.size();c++){
+            
+        }
+        for(auto& k:A){
+            int len = UPB(k.second,r) - LOB(k.second,l);
+            if(len) ans+=(long long)(k.first)*len*len;
         }
         cout<<ans<<endl;
     }
