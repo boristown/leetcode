@@ -1,4 +1,11 @@
-//g++ 
+/*g++ 
+
+compile & run: 
+
+g++ main_leetcode.cpp
+.\a
+
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
