@@ -80,10 +80,10 @@ class SegTree:
         if self.v != '#':
             if self.left:
                 self.left.v = self.v
-                self.left.ans = self.f2(v,self.left.r-self.left.l)
+                self.left.ans = self.f2(self.v,self.left.r-self.left.l)
             if self.right:
                 self.right.v = self.v
-                self.right.ans = self.f2(v,self.right.r-self.right.l)
+                self.right.ans = self.f2(self.v,self.right.r-self.right.l)
             self.v = '#'
         #push up
         self.ans = self.f1(self.left.cover_seg(l, r, v),self.right.cover_seg(l, r, v))
