@@ -24,6 +24,7 @@ class SegTree:
         f1=lambda a,b:min(a,b)
         f2=lambda a,n:a
         '''
+        self.default = v
         self.ans = f2(v,r-l)
         self.f1 = f1
         self.f2 = f2
@@ -41,9 +42,9 @@ class SegTree:
     def create_subtrees(self):
         midh = self.mid_h
         if not self.left and midh > self.l:
-            self.left = SegTree(self.f1, self.f2, self.l, midh)
+            self.left = SegTree(self.f1, self.f2, self.l, midh, self.default)
         if not self.right:
-            self.right = SegTree(self.f1, self.f2, midh, self.r)
+            self.right = SegTree(self.f1, self.f2, midh, self.r, self.default)
 
     def init_seg(self, M):
         '''

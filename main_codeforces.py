@@ -42,6 +42,7 @@ class SegTree:
         f1=lambda a,b:min(a,b)
         f2=lambda a,n:a
         '''
+        self.default = v
         self.ans = f2(v,r-l)
         self.f1 = f1
         self.f2 = f2
@@ -59,9 +60,9 @@ class SegTree:
     def create_subtrees(self):
         midh = self.mid_h
         if not self.left and midh > self.l:
-            self.left = SegTree(self.f1, self.f2, self.l, midh)
+            self.left = SegTree(self.f1, self.f2, self.l, midh, self.default)
         if not self.right:
-            self.right = SegTree(self.f1, self.f2, midh, self.r)
+            self.right = SegTree(self.f1, self.f2, midh, self.r, self.default)
 
     def init_seg(self, M):
         '''
@@ -197,7 +198,7 @@ def f1(a,b):
     for c in c1:
         if c in c2:
             C.add(c)
-    return x1+x2+2*sum(c*c1[c]*c2[c] for c in C)
+    return c1+c2,x1+x2+2*sum(c*c1[c]*c2[c] for c in C)
 
 def f2(a,n):
     ans = 0
@@ -212,5 +213,5 @@ seg = SegTree(f1,f2,0,n,({0:1},0))
 seg.init_seg([(Counter({a:1}),a) for a in L])
 for q in range(t): #iter for test cases
     i,j = map(int,input().split()) #input tuple
-    ans = seg.query(i-1,j)
+    ans = seg.query(i-1,j)[1]
     print(ans)
