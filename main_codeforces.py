@@ -19,29 +19,7 @@ from functools import reduce
 from collections import *
 
 class SegTree:
-    '''
-    通用线段树 by AK自动机
-    支持增量更新，覆盖更新，序列更新，任意RMQ操作
-    基于二叉树实现
-    初始化：O(1)
-    增量更新或覆盖更新的单次操作复杂度：O(log k)
-    序列更新的单次复杂度：O(n)
-    https://github.com/boristown/leetcode/blob/main/SegTree.py
-    '''
     def __init__(self, f1, f2, l, r, v = 0):
-        '''
-        初始化线段树[left,right)
-        f1,f2示例：
-        线段和:
-        f1=lambda a,b:a+b 
-        f2=lambda a,n:a*n
-        线段最大值:
-        f1=lambda a,b:max(a,b)
-        f2=lambda a,n:a
-        线段最小值:
-        f1=lambda a,b:min(a,b)
-        f2=lambda a,n:a
-        '''
         self.default = v
         self.ans = f2(v,r-l)
         self.f1 = f1
@@ -65,10 +43,6 @@ class SegTree:
             self.right = SegTree(self.f1, self.f2, midh, self.r, self.default)
 
     def init_seg(self, M):
-        '''
-        将线段树的值初始化为矩阵Matrx
-        输入保证Matrx与线段大小一致
-        '''
         m0 = M[0]
         self.lazy_tag = 0
         for a in M:
@@ -85,9 +59,6 @@ class SegTree:
         return self.ans
     
     def cover_seg(self, l, r, v):
-        '''
-        将线段[left,right)覆盖为val
-        '''
         if self.v == v or l >= self.r or r <= self.l:
             return self.ans
         if l <= self.l and r >= self.r:
@@ -109,9 +80,6 @@ class SegTree:
         return self.ans
 
     def inc_seg(self, l, r, v):
-        '''
-        将线段[left,right)增加val
-        '''
         if v == 0 or l >= self.r or r <= self.l:
             return self.ans
         #self.ans = '?'
@@ -134,9 +102,6 @@ class SegTree:
         return self.ans
 
     def inc_idx(self, idx, v):
-        '''
-        increase idx by val
-        '''
         if v == 0 or idx >= self.r or idx < self.l:
             return self.ans
         if idx == self.l == self.r - 1:
@@ -173,9 +138,6 @@ class SegTree:
             self.lazy_tag = 0
 
     def query(self, l, r):
-        '''
-        查询线段[right,bottom)的RMQ
-        '''
         if l>=r: return 0
         if l <= self.l and r >= self.r:
             return self.ans
@@ -208,10 +170,38 @@ def f2(a,n):
         c2[c] = c1[c]*n
         ans += (c2[c]**2) * c
     return c2,ans
-    
-seg = SegTree(f1,f2,0,n,({0:1},0))
-seg.init_seg([(Counter({a:1}),a) for a in L])
-for q in range(t): #iter for test cases
+
+ST = set()
+Q = []
+M = {}
+for q in range(t):
     i,j = map(int,input().split()) #input tuple
-    ans = seg.query(i-1,j)[1]
+    Q.append([i,j])
+    ST.add(i-1)
+    ST.add(j)
+
+SL = sorted(list(ST))
+for i,a in enumerate(SL):
+    M[a] = i
+
+MAX = len(SL)
+Evt = []
+i = SL[0]
+cnt = Counter()
+ans = 0
+for idx in SL[1:]:
+    while idx > i:
+        a = L[i]
+        cnt[a]+=1
+        i+=1
+    for a in cnt:
+        ans += a * (cnt[a]**2)
+    Evt.append((cnt,ans))
+    ans = 0
+    cnt = Counter()
+
+seg = SegTree(f1,f2,0,MAX-1,(Counter({0:1}),0))
+seg.init_seg(Evt)
+for i,j in Q: #iter for test cases
+    ans = seg.query(M[i-1],M[j])[1]
     print(ans)
