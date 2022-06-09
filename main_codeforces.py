@@ -186,22 +186,30 @@ for i,a in enumerate(SL):
 
 MAX = len(SL)
 Evt = []
-i = SL[0]
+i = 0
 cnt = Counter()
 ans = 0
-for idx in SL[1:]:
+for idx in SL:
     while idx > i:
         a = L[i]
         cnt[a]+=1
         i+=1
-    for a in cnt:
-        ans += a * (cnt[a]**2)
-    Evt.append((cnt,ans))
+    #for a in cnt:
+    #    ans += a * (cnt[a]**2)
+    #Evt.append((cnt,ans))
+    Evt.append(cnt)
     ans = 0
     cnt = Counter()
 
-seg = SegTree(f1,f2,0,MAX-1,(Counter({0:1}),0))
-seg.init_seg(Evt)
+def calc(cnt):
+    ans = 0
+    for a in cnt:
+        ans += a * (cnt[a]**2)
+    return ans
+
+#seg = SegTree(f1,f2,0,MAX-1,(Counter({0:1}),0))
+#seg.init_seg(Evt)
 for i,j in Q: #iter for test cases
-    ans = seg.query(M[i-1],M[j])[1]
-    print(ans)
+    #ans = seg.query(M[i-1],M[j])[1]
+    ans = Evt[M[j]] - Evt[M[i-1]]
+    print(calc(ans))
