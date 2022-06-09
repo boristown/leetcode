@@ -197,9 +197,9 @@ for idx in SL:
     #for a in cnt:
     #    ans += a * (cnt[a]**2)
     #Evt.append((cnt,ans))
-    Evt.append(cnt)
-    ans = 0
-    cnt = Counter()
+    Evt.append(Counter(cnt))
+    #ans = 0
+    #cnt = Counter()
 
 def calc(cnt):
     ans = 0
