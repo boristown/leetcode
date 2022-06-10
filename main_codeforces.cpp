@@ -7,7 +7,9 @@ begin of codeforces template (don't delete):
 
 #include <bits/stdc++.h>
 
-#define VI vector<int>
+typedef long long LL;
+typedef vector<int> VI;
+#define REP(i,a,b) for(int i = a; i <= b; i++)
 #define UMII unordered_map<int,int>
 #define PUB push_back
 #define POB pop_back
@@ -20,6 +22,10 @@ begin of codeforces template (don't delete):
 
 using namespace std;
 
+const int N = 1e6+100;
+
+int A[N];
+
 int main() {
     string s;
     int n,a,b;
@@ -27,7 +33,7 @@ int main() {
     cin >> s; // input string
     cin >> n; // input int
     MALL0(A,int,n); // Create Array
-    for(int i=0;i<n;i++){ //loop for input
+    REP(i,1,n){ //loop for input
         cin>>a>>b; //input tuple
         cin>>A[i]; //input array
     }
@@ -38,7 +44,9 @@ end of codeforces template
 */
 #include <bits/stdc++.h>
 
-#define VI vector<int>
+typedef long long LL;
+typedef vector<int> VI;
+#define REP(i,a,b) for(int i = a; i <= b; i++)
 #define UMII unordered_map<int,int>
 #define PUB push_back
 #define POB pop_back
@@ -51,12 +59,35 @@ end of codeforces template
 
 using namespace std;
 
+const int N = 1e6+100;
+
+int L, R;
+int A[N],pos[N];
+
+struct Node{
+    int l,r,id;
+    bool operator < (Node xx) const{
+        if(pos[l] == pos[xx.l]) return r < xx.r;
+        else return pos[l] < pos[xx.l];
+    }
+}Q[N];
+
+void add(int x){
+}
+
+void del(int x){
+}
+
 int main() {
     int n,t,a;
     cin>>n>>t; //input tuple
     vector<vector<pair<int,int>>> A;
     UMII cnt;
     UMII cnt2;
+    int sz = sqrt(n);
+    REP(i,1,n){
+        cin>>a[i];
+    }
     for(int i=0;i<n;i++){ //loop for input
         cin>>a; //input tuple
         cnt[a]++;
@@ -65,6 +96,7 @@ int main() {
         if(c>A.size()) A.PUB(vector<pair<int,int>>());
         A[c-1].PUB({i,cnt2[c]});
     }
+    L = 1, R = 0;
     int l,r;
     for(int i=0;i<t;i++){
         cin>>l>>r;
