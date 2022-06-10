@@ -63,6 +63,8 @@ const int N = 1e6+100;
 
 int L, R;
 int A[N],pos[N];
+LL ans[N],Ans,flag[N];
+
 
 struct Node{
     int l,r,id;
@@ -81,12 +83,28 @@ void del(int x){
 int main() {
     int n,t,a;
     cin>>n>>t; //input tuple
-    vector<vector<pair<int,int>>> A;
     UMII cnt;
     UMII cnt2;
     int sz = sqrt(n);
     REP(i,1,n){
-        cin>>a[i];
+        cin>>A[i];
+        pos[i] = i/sz;
+    }
+    REP(i,1,t){
+        cin>>Q[i].l>>Q[i].r;
+        Q[i].id = i;
+    }
+    sort(Q+1,Q+1+t);
+    REP(i,1,t){
+        while(L < Q[i].l) del(L),L++;
+
+        while(L > Q[i].l) L--, add(L);
+
+        while(R < Q[i].r) R++, add(R);
+
+        while(R > Q[i].r) del(R), R--;
+
+        ans[Q[i].id] = 0;
     }
     for(int i=0;i<n;i++){ //loop for input
         cin>>a; //input tuple
