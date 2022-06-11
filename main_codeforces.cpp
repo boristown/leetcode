@@ -46,8 +46,8 @@ end of codeforces template
 #include <bits/stdc++.h>
 
 typedef long long LL;
-typedef vector<int> VI;
-typedef vector<LL> VLL;
+//typedef vector<int> VI;
+//typedef vector<LL> VLL;
 #define REP(i,a,b) for(int i = a; i <= b; i++)
 #define UMII unordered_map<int,int>
 #define PUB push_back
@@ -65,8 +65,7 @@ const int N = 1e6+100;
 
 int L, R;
 int A[N],pos[N];
-LL ans[N],Ans,flag[N];
-
+LL ans[N],Ans,cnt[N];
 
 struct Node{
     int l,r,id;
@@ -77,16 +76,21 @@ struct Node{
 }Q[N];
 
 void add(int x){
+    Ans += A[x] * (2 * cnt[A[x]] + 1);
+    cnt[A[x]]++;
+
 }
 
 void del(int x){
+    cnt[A[x]]--;
+    Ans -= A[x] * (2 * cnt[A[x]] + 1);
 }
 
 int main() {
     int n,t,a;
     cin>>n>>t; //input tuple
-    UMII cnt;
-    UMII cnt2;
+    //UMII cnt;
+    //UMII cnt2;
     int sz = sqrt(n);
     REP(i,1,n){
         cin>>A[i];
@@ -106,31 +110,10 @@ int main() {
 
         while(R > Q[i].r) del(R), R--;
 
-        ans[Q[i].id] = 0;
+        ans[Q[i].id] = Ans;
     }
-    for(int i=0;i<n;i++){ //loop for input
-        cin>>a; //input tuple
-        cnt[a]++;
-        int c = cnt[a];
-        cnt2[c]+=a;
-        if(c>A.size()) A.PUB(vector<pair<int,int>>());
-        A[c-1].PUB({i,cnt2[c]});
-    }
-    L = 1, R = 0;
-    int l,r;
-    for(int i=0;i<t;i++){
-        cin>>l>>r;
-        r--;
-        l--;
-        long long ans = 0;
-        for(int c=0;c<A.size();c++){
-            
-        }
-        for(auto& k:A){
-            int len = UPB(k.second,r) - LOB(k.second,l);
-            if(len) ans+=(long long)(k.first)*len*len;
-        }
-        cout<<ans<<endl;
+    REP(i,1,t){
+        cout<<ans[i]<<endl;
     }
     return 0;
 };
