@@ -61,57 +61,55 @@ typedef long long LL;
 
 using namespace std;
 
-const int N = 1e6+100;
+const int N = 1e5+10;
 
-int L, R;
-int A[N],pos[N];
-LL ans[N],Ans,cnt[N];
+LL ans[N];
+int color[N],vis[N];
+vector<int> children[N];
 
-struct Node{
-    int l,r,id;
-    bool operator < (Node xx) const{
-        if(pos[l] == pos[xx.l]) return r < xx.r;
-        else return pos[l] < pos[xx.l];
+map<int,unordered_set<int>> dfs(int idx){
+    int ti,el;
+    map<int,unordered_set<int>> sorted_counter;
+    map<int,int> counter;
+    vis[idx] = 1;
+    sorted_counter[1].insert(color[idx]);
+    counter[color[idx]]=1;
+    for(auto j:children[idx]){
+        if(vis[j]) continue;
+        auto sub_counter = dfs(j);
+        for(auto _ti : sub_counter){
+            ti = _ti.first;
+            for(auto el : _ti.second){
+                int c1 = counter[el],c2 = c1+ti;
+                if(c1>0) sorted_counter[c1].erase(el);
+                sorted_counter[c2].insert(el);
+                counter[el]+=ti;
+            }
+        }
     }
-}Q[N];
-
-void add(int x){
-    Ans += A[x] * (2 * cnt[A[x]] + 1);
-    cnt[A[x]]++;
-
-}
-
-void del(int x){
-    cnt[A[x]]--;
-    Ans -= A[x] * (2 * cnt[A[x]] + 1);
+    auto p = sorted_counter.end();
+    p--;
+    while(!p->second.size()) p--;
+    for(auto colr : p->second)
+        ans[idx] += colr;
+    return sorted_counter;
 }
 
 int main() {
-    int n,t,a;
-    cin>>n>>t; //input tuple
-    int sz = sqrt(n);
+    int n,a,b;
+    cin>>n; //input tuple
     REP(i,1,n){
-        cin>>A[i];
-        pos[i] = i/sz;
+        cin>>color[i];
     }
-    REP(i,1,t){
-        cin>>Q[i].l>>Q[i].r;
-        Q[i].id = i;
+    REP(i,1,n-1){
+        cin>>a>>b;
+        children[a].PUB(b);
+        children[b].PUB(a);
     }
-    sort(Q+1,Q+1+t);
-    REP(i,1,t){
-        while(L < Q[i].l) del(L),L++;
-
-        while(L > Q[i].l) L--, add(L);
-
-        while(R < Q[i].r) R++, add(R);
-
-        while(R > Q[i].r) del(R), R--;
-
-        ans[Q[i].id] = Ans;
-    }
-    REP(i,1,t){
-        cout<<ans[i]<<endl;
+    dfs(1);
+    REP(i,1,n){
+        cout<<ans[i];
+        if(i<n) cout<<" ";
     }
     return 0;
 };
