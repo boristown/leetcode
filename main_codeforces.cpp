@@ -61,67 +61,13 @@ typedef long long LL;
 
 using namespace std;
 
-const LL N = 1e5+10;
-
-LL ans[N];
-LL color[N],vis[N],dis[N],parent[N],pos[N],max_dis;
-vector<LL> children[N];
-
-void op(LL idx,LL val){
-    if(val>=dis[idx]) return;
-    dis[idx] = val;
-    max_dis = max(max_dis,val);
-    //op(parent[idx],val+1);
-    for(auto j:children[idx]){
-        op(j,val+1);
-    }
-}
-
 int main() {
-    LL n,m,a,b;
-    LL max_child = 0;
-    set<LL> sorted_st;
-    cin>>n>>m; //input tuple
-    memset(dis, 0x3f, sizeof(LL) * N);
-    REP(i,1,n-1){
-        cin>>a>>b;
-        children[a].PUB(b);
-        children[b].PUB(a);
-        //max_child = max(max_child,(LL)children[a].size());
-        //max_child = max(max_child,(LL)children[b].size());
-        //parent[b] = a;
-    }
-    op(1,0);
-    if(max_dis<n-1)
-    {
-        REP(i,1,m){
-            LL ti,vi;
-            cin>>ti>>vi;
-            if(ti==1){
-                op(vi,0);
-            }
-            else{
-                cout<<dis[vi]<<endl;
-            }
-        }
-    }
-    else{
-        sorted_st.insert(dis[1]);
-        REP(i,1,m){
-            int ti,vi;
-            cin>>ti>>vi;
-            if(ti==1){
-                sorted_st.insert(dis[vi]);
-            }
-            else{
-                auto pos = sorted_st.upper_bound(dis[vi]);
-                LL min_dis = N+1;
-                if(pos!=sorted_st.end()) min_dis = min(min_dis,abs((*pos)-dis[vi]));
-                pos--;
-                min_dis = min(min_dis,abs(dis[vi]-(*pos)));
-                cout<<min_dis<<endl;
-            }
-        }
+    int t;
+    LL l,r;
+    cin>>t;
+    REP(i,1,t){
+        cin>>l>>r;
+        cout<<r-l+1;
     }
     return 0;
 };
