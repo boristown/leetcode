@@ -4,7 +4,6 @@ import heapq
 import itertools
 from functools import *
 import math
-from decimal import Decimal,ROUND_HALF_UP
 #end of leetcode template
 inf = float("inf")
 class Solution:
