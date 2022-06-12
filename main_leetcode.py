@@ -30,3 +30,4 @@ if __name__ == "__main__":
     print(slt.totalSteps([4,5,7,7,13])) #0
     print(slt.totalSteps([10,1,2,3,4,5,6,1,2,3])) #6
     print(slt.totalSteps([7,14,4,14,13,2,6,13])) #3
+    print(100000002/50000001 == 2)

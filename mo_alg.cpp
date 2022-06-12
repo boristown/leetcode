@@ -1,4 +1,3 @@
-// https://codeforces.com/problemset/problem/86/D
 /*
 compile & run: 
 g++ main_codeforces.cpp
@@ -9,8 +8,8 @@ begin of codeforces template (don't delete):
 #include <bits/stdc++.h>
 
 typedef long long LL;
-typedef vector<int> VI;
-typedef vector<LL> VLL;
+#define VI vector<int>
+#define VLL vector<LL> VLL
 #define REP(i,a,b) for(int i = a; i <= b; i++)
 #define UMII unordered_map<int,int>
 #define PUB push_back
@@ -47,8 +46,8 @@ end of codeforces template
 #include <bits/stdc++.h>
 
 typedef long long LL;
-//typedef vector<int> VI;
-//typedef vector<LL> VLL;
+#define VI vector<int>
+#define VLL vector<LL> VLL
 #define REP(i,a,b) for(int i = a; i <= b; i++)
 #define UMII unordered_map<int,int>
 #define PUB push_back

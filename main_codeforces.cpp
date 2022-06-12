@@ -8,8 +8,8 @@ begin of codeforces template (don't delete):
 #include <bits/stdc++.h>
 
 typedef long long LL;
-typedef vector<int> VI;
-typedef vector<LL> VLL;
+#define VI vector<int>
+#define VLL vector<LL> VLL
 #define REP(i,a,b) for(int i = a; i <= b; i++)
 #define UMII unordered_map<int,int>
 #define PUB push_back
@@ -46,8 +46,8 @@ end of codeforces template
 #include <bits/stdc++.h>
 
 typedef long long LL;
-//typedef vector<int> VI;
-//typedef vector<LL> VLL;
+#define VI vector<int>
+#define VLL vector<LL> VLL
 #define REP(i,a,b) for(int i = a; i <= b; i++)
 #define UMII unordered_map<int,int>
 #define PUB push_back
@@ -89,8 +89,6 @@ void del(int x){
 int main() {
     int n,t,a;
     cin>>n>>t; //input tuple
-    //UMII cnt;
-    //UMII cnt2;
     int sz = sqrt(n);
     REP(i,1,n){
         cin>>A[i];
