@@ -64,7 +64,7 @@ using namespace std;
 const int N = 1e5+10;
 
 LL ans[N];
-int color[N],vis[N];
+int color[N],vis[N],g_cnt[N];
 vector<int> children[N];
 
 map<int,unordered_set<int>> dfs(int idx){
@@ -90,23 +90,39 @@ map<int,unordered_set<int>> dfs(int idx){
     auto p = sorted_counter.end();
     p--;
     while(!p->second.size()) p--;
+    int maxn = p->first;
     for(auto colr : p->second)
         ans[idx] += colr;
     return sorted_counter;
 }
 
+LL dfs_fast(int idx){
+    vis[idx] = 1;
+    LL a = color[idx];
+    for(auto j:children[idx]){
+        if(vis[j]) continue;
+        a+=dfs_fast(j);
+    }
+    ans[idx] = a;
+    return ans[idx];
+}
+
 int main() {
     int n,a,b;
+    int max_n = 0;
     cin>>n; //input tuple
     REP(i,1,n){
         cin>>color[i];
+        g_cnt[color[i]]++;
+        max_n = max(max_n,g_cnt[color[i]]);
     }
     REP(i,1,n-1){
         cin>>a>>b;
         children[a].PUB(b);
         children[b].PUB(a);
     }
-    dfs(1);
+    if(max_n==1) dfs_fast(1);
+    else dfs(1);
     REP(i,1,n){
         cout<<ans[i];
         if(i<n) cout<<" ";
