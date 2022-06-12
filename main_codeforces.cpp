@@ -61,71 +61,67 @@ typedef long long LL;
 
 using namespace std;
 
-const int N = 1e5+10;
+const LL N = 1e5+10;
 
 LL ans[N];
-int color[N],vis[N],g_cnt[N];
-vector<int> children[N];
+LL color[N],vis[N],dis[N],parent[N],pos[N],max_dis;
+vector<LL> children[N];
 
-map<int,unordered_set<int>> dfs(int idx){
-    int ti,el;
-    map<int,unordered_set<int>> sorted_counter;
-    map<int,int> counter;
-    vis[idx] = 1;
-    sorted_counter[1].insert(color[idx]);
-    counter[color[idx]]=1;
+void op(LL idx,LL val){
+    if(val>=dis[idx]) return;
+    dis[idx] = val;
+    max_dis = max(max_dis,val);
+    //op(parent[idx],val+1);
     for(auto j:children[idx]){
-        if(vis[j]) continue;
-        auto sub_counter = dfs(j);
-        for(auto _ti : sub_counter){
-            ti = _ti.first;
-            for(auto el : _ti.second){
-                int c1 = counter[el],c2 = c1+ti;
-                if(c1>0) sorted_counter[c1].erase(el);
-                sorted_counter[c2].insert(el);
-                counter[el]+=ti;
-            }
-        }
+        op(j,val+1);
     }
-    auto p = sorted_counter.end();
-    p--;
-    while(!p->second.size()) p--;
-    int maxn = p->first;
-    for(auto colr : p->second)
-        ans[idx] += colr;
-    return sorted_counter;
-}
-
-LL dfs_fast(int idx){
-    vis[idx] = 1;
-    LL a = color[idx];
-    for(auto j:children[idx]){
-        if(vis[j]) continue;
-        a+=dfs_fast(j);
-    }
-    ans[idx] = a;
-    return ans[idx];
 }
 
 int main() {
-    int n,a,b;
-    int max_n = 0;
-    cin>>n; //input tuple
-    REP(i,1,n){
-        cin>>color[i];
-        g_cnt[color[i]]++;
-        max_n = max(max_n,g_cnt[color[i]]);
-    }
+    LL n,m,a,b;
+    LL max_child = 0;
+    set<LL> sorted_st;
+    cin>>n>>m; //input tuple
+    memset(dis, 0x3f, sizeof(LL) * N);
     REP(i,1,n-1){
         cin>>a>>b;
         children[a].PUB(b);
         children[b].PUB(a);
+        //max_child = max(max_child,(LL)children[a].size());
+        //max_child = max(max_child,(LL)children[b].size());
+        //parent[b] = a;
     }
-    if(max_n==1) dfs_fast(1);
-    else dfs(1);
-    REP(i,1,n){
-        cout<<ans[i];
-        if(i<n) cout<<" ";
+    op(1,0);
+    if(max_dis<n-1)
+    {
+        REP(i,1,m){
+            LL ti,vi;
+            cin>>ti>>vi;
+            if(ti==1){
+                op(vi,0);
+            }
+            else{
+                cout<<dis[vi]<<endl;
+            }
+        }
+    }
+    else{
+        sorted_st.insert(dis[1]);
+        REP(i,1,m){
+            int ti,vi;
+            cin>>ti>>vi;
+            if(ti==1){
+                sorted_st.insert(dis[vi]);
+            }
+            else{
+                auto pos = sorted_st.upper_bound(dis[vi]);
+                LL min_dis = N+1;
+                if(pos!=sorted_st.end()) min_dis = min(min_dis,abs((*pos)-dis[vi]));
+                pos--;
+                min_dis = min(min_dis,abs(dis[vi]-(*pos)));
+                cout<<min_dis<<endl;
+            }
+        }
     }
     return 0;
 };
