@@ -10,29 +10,30 @@ g++ main_leetcode.cpp
 
 using namespace std;
 
+typedef long long LL;
+#define VI vector<int>
+#define VLL vector<LL> VLL
+#define REP(i,a,b) for(int i = a; i <= b; i++)
+#define UMII unordered_map<int,int>
+#define PUB push_back
+#define POB pop_back
+#define SORT(L) sort(L.begin(),L.end())
+#define RSOR(L) sort(L.rbegin(),L.rend())
+#define LOB(A,a) lower_bound(A.begin(),A.end(),a)
+#define UPB(A,a) upper_bound(A.begin(),A.end(),a)
+#define MALL0(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0, sizeof(T) * N);
+#define MALLI(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0x3f, sizeof(T) * N);
+
 class Solution {
 public:
-    int largestPalindrome(int n) {
-        if (n == 1) {
-            return 9;
-        }
-        int upper = pow(10, n) - 1;
-        for (int left = upper;; --left) { // 枚举回文数的左半部分
-            long p = left;
-            for (int x = left; x > 0; x /= 10) {
-                p = p * 10 + x % 10; // 翻转左半部分到其自身末尾，构造回文数 p
-            }
-            for (long x = upper; x * x >= p; --x) {
-                if (p % x == 0) { // x 是 p 的因子
-                    return p % 1337;
-                }
-            }
-        }
+    long long maximumBeauty(vector<int>& flowers, long long newFlowers, int target, int full, int partial) {
+        return 0;
     }
 };
 
 int main(){
     auto sol = Solution();
-    cout<< sol.largestPalindrome(1) << endl;
+    vector<int> flowers{1,3,1,1};
+    cout<< sol.maximumBeauty(flowers,7,6,12,1) << endl;
     return 0;
 }
