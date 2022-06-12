@@ -67,7 +67,19 @@ int main() {
     cin>>t;
     REP(i,1,t){
         cin>>l>>r;
-        cout<<r-l+1;
+        LL ans = 0;
+        REP(j,l,r){
+            LL k = j;
+            bool flag = true;
+            while(k>0){
+                int v = k%10;
+                if(v==0) {k/=10; continue;}
+                if((j%v)>0) {flag = false; break;}
+                k/=10;
+            }
+            if(flag) ans++;
+        }
+        cout<<ans<<endl;
     }
     return 0;
 };
