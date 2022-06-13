@@ -11,6 +11,7 @@ typedef long long LL;
 #define VI vector<int>
 #define VLL vector<LL> VLL
 #define REP(i,a,b) for(int i = a; i <= b; i++)
+#define REP2(i,a,b) for(int i = a; i >= b; i--)
 #define UMII unordered_map<int,int>
 #define PUB push_back
 #define POB pop_back
@@ -52,6 +53,7 @@ typedef long long LL;
 #define VI vector<int>
 #define VLL vector<LL> VLL
 #define REP(i,a,b) for(int i = a; i <= b; i++)
+#define REP2(i,a,b) for(int i = a; i >= b; i--)
 #define UMII unordered_map<int,int>
 #define PUB push_back
 #define POB pop_back
