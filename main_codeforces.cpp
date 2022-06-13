@@ -14,12 +14,15 @@ typedef long long LL;
 #define UMII unordered_map<int,int>
 #define PUB push_back
 #define POB pop_back
-#define SORT(L) sort(L.begin(),L.end())
-#define RSOR(L) sort(L.rbegin(),L.rend())
+#define SORT(L) sort(L.begin(),L.end());
+#define RSOR(L) sort(L.rbegin(),L.rend());
 #define LOB(A,a) lower_bound(A.begin(),A.end(),a)
 #define UPB(A,a) upper_bound(A.begin(),A.end(),a)
+#define LOBI(A,a) lower_bound(A.begin(),A.end(),a)-A.begin()
+#define UPBI(A,a) upper_bound(A.begin(),A.end(),a)-A.begin()
 #define MALL0(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0, sizeof(T) * N);
 #define MALLI(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0x3f, sizeof(T) * N);
+#define LEN(i,A) int i = A.size();
 
 using namespace std;
 
@@ -52,12 +55,15 @@ typedef long long LL;
 #define UMII unordered_map<int,int>
 #define PUB push_back
 #define POB pop_back
-#define SORT(L) sort(L.begin(),L.end())
-#define RSOR(L) sort(L.rbegin(),L.rend())
+#define SORT(L) sort(L.begin(),L.end());
+#define RSOR(L) sort(L.rbegin(),L.rend());
 #define LOB(A,a) lower_bound(A.begin(),A.end(),a)
 #define UPB(A,a) upper_bound(A.begin(),A.end(),a)
+#define LOBI(A,a) lower_bound(A.begin(),A.end(),a)-A.begin()
+#define UPBI(A,a) upper_bound(A.begin(),A.end(),a)-A.begin()
 #define MALL0(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0, sizeof(T) * N);
 #define MALLI(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0x3f, sizeof(T) * N);
+#define LEN(i,A) int i = A.size();
 
 using namespace std;
 
