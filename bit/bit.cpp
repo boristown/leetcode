@@ -1,5 +1,8 @@
 // 位运算
 // https://oi-wiki.org/math/bit/
+#include<string>
+
+using namespace std;
 
 //获取一个二进制长度为n且全是1的数字
 int allone(int n) { return (1<<n)-1; }
@@ -34,4 +37,14 @@ int popcount(int x) {
         x >>= 1;
     }
     return cnt;
+}
+
+string Dec2Binary(int n)
+{
+    string r;
+    while (n != 0){
+        r = ( n % 2 == 0 ? "0" : "1" ) + r;
+        n /= 2;
+    }
+    return r;
 }
