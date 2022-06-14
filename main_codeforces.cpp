@@ -69,25 +69,53 @@ typedef long long LL;
 
 using namespace std;
 
+const static int N = 2e5+100;
+
+LL A[N];
+
 int main() {
-    int t;
-    LL l,r;
+    int t,n;
     cin>>t;
     REP(i,1,t){
-        cin>>l>>r;
-        LL ans = 0;
-        REP(j,l,r){
-            LL k = j;
-            bool flag = true;
-            while(k>0){
-                int v = k%10;
-                if(v==0) {k/=10; continue;}
-                if((j%v)>0) {flag = false; break;}
-                k/=10;
-            }
-            if(flag) ans++;
+        cin>>n;
+        unordered_map<LL,vector<int>> MV;
+        unordered_map<LL,vector<int>> pre;
+        vector<int> IDX;
+        LL temp;
+        A[0]=0;
+        REP(j,1,n){
+            cin>>temp;
+            MV[temp].PUB(j);
         }
-        cout<<ans<<endl;
+        int an,anss=0;
+        int left = 1,right = 1,ans = 0;
+        for(auto &IT:MV){
+            tie(temp,IDX) = IT;
+            pre[temp].PUB(0);
+            int cum = 0;
+            int last = -1;
+            int mn = 0;
+            int mni = IDX[0]-1;
+            for(auto idx:IDX){
+                if(last==-1){
+                    cum++;
+                }
+                else{
+                    cum += 1 - (idx-last-1);
+                }
+                an = cum-mn;
+                if(an>anss){ 
+                    anss = an;
+                    ans = temp;
+                    left = mni+1;
+                    right = idx;
+                }
+                pre[temp].PUB(cum);
+                if(cum<mn) {mn = cum;mni = idx;}
+                last = idx;
+            }
+        }
+        cout<<ans<<" "<<left<<" "<<right<<endl;
     }
     return 0;
 };
