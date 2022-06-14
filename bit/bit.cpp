@@ -1,6 +1,7 @@
 // 位运算
 // https://oi-wiki.org/math/bit/
 #include<string>
+#include <bitset>
 
 using namespace std;
 
@@ -39,12 +40,13 @@ int popcount(int x) {
     return cnt;
 }
 
-string Dec2Binary(int n)
+string Dec2Binary(long n)
 {
-    string r;
-    while (n != 0){
-        r = ( n % 2 == 0 ? "0" : "1" ) + r;
-        n /= 2;
-    }
-    return r;
+    bitset<16> bint{n};
+    return bint.to_string();
+}
+
+long Binary2Dec(string s){
+    bitset<16> bint{s};
+    return bint.to_ulong();
 }
