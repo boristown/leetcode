@@ -24,6 +24,8 @@ typedef long long LL;
 #define MALL0(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0, sizeof(T) * N);
 #define MALLI(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0x3f, sizeof(T) * N);
 #define LEN(i,A) int i = A.size();
+#define SUM_FORE(s,e,E,F,t) int s = 0; for(auto &e : E) {F;s+=t;}
+#define MAX_FORI(s,i,a,b,F,t) int s = 0; REP(i,a,b) {F;s=max(s,t);}
 
 using namespace std;
 
