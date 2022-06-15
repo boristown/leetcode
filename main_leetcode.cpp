@@ -27,8 +27,15 @@ typedef long long LL;
 #define MALL0(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0, sizeof(T) * N);
 #define MALLI(P,T,N) P = (T *)malloc(N * sizeof(T)); memset(P, 0x3f, sizeof(T) * N);
 #define LEN(i,A) int i = A.size();
-#define SUM_FORE(s,e,E,F,t) int s = 0; for(auto &e : E) {F;s+=t;}
-#define MAX_FORI(s,i,a,b,F,t) int s = 0; REP(i,a,b) {F;s=max(s,t);}
+#define SUM_E(s,E) long s = 0; for(auto &e : E) {s+=e;}
+#define MAX_E(s,E) long s = 0; for(auto &e : E) {s=max(s,e);}
+#define MIN_E(s,E) long s = LONG_MAX; for(auto &e : E) {s=min(s,e);}
+#define SUM_FORE(s,e,E,F,t) long s = 0; for(auto &e : E) {F;s+=t;}
+#define SUM_FORI(s,i,a,b,F,t) long s = 0; REP(i,a,b) {F;s+=t;}
+#define MAX_FORE(s,e,E,F,t) long s = 0; for(auto &e : E) {F;s=max(s,t);}
+#define MAX_FORI(s,i,a,b,F,t) long s = 0; REP(i,a,b) {F;s=max(s,t);}
+#define MIN_FORE(s,e,E,F,t) long s = LONG_MAX; for(auto &e : E) {F;s=min(s,t);}
+#define MIN_FORI(s,i,a,b,F,t) long s = LONG_MAX; REP(i,a,b) {F;s=min(s,t);}
 
 class Solution {
 public:
