@@ -79,6 +79,25 @@ vector<int> str2vec_i(string s){
     return ans;
 }
 
+//["coffee","donuts","time"] => vector<string>{"coffee","donuts","time"}
+vector<string> str2vec_s(string s){
+    vector<string> ans;
+    string a = "";
+    int f = false;
+    for(auto c : s){
+        if(c!='"' && c!='[' && c!=']' && c!=',' && c!=' '){
+            a+=c;
+            f = true;
+        }
+        else{
+            if(f) ans.push_back(a);
+            f = false;
+            a = "";
+        }
+    }
+    return ans;
+}
+
 int main(){
     int t=0;
     string str;
