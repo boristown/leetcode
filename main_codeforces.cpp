@@ -33,6 +33,8 @@ typedef long long LL;
 #define MAX_FORI(s,i,a,b,F,t) long s = 0; REP(i,a,b) {F;s=max(s,t);}
 #define MIN_FORE(s,e,E,F,t) long s = LONG_MAX; for(auto &e : E) {F;s=min(s,t);}
 #define MIN_FORI(s,i,a,b,F,t) long s = LONG_MAX; REP(i,a,b) {F;s=min(s,t);}
+#define UMP unordered_map
+#define UST unordered_set
 
 using namespace std;
 
@@ -84,6 +86,8 @@ typedef long long LL;
 #define MAX_FORI(s,i,a,b,F,t) long s = 0; REP(i,a,b) {F;s=max(s,t);}
 #define MIN_FORE(s,e,E,F,t) long s = LONG_MAX; for(auto &e : E) {F;s=min(s,t);}
 #define MIN_FORI(s,i,a,b,F,t) long s = LONG_MAX; REP(i,a,b) {F;s=min(s,t);}
+#define UMP unordered_map
+#define UST unordered_set
 
 using namespace std;
 

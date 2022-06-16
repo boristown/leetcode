@@ -36,17 +36,37 @@ typedef long long LL;
 #define MAX_FORI(s,i,a,b,F,t) long s = 0; REP(i,a,b) {F;s=max(s,t);}
 #define MIN_FORE(s,e,E,F,t) long s = LONG_MAX; for(auto &e : E) {F;s=min(s,t);}
 #define MIN_FORI(s,i,a,b,F,t) long s = LONG_MAX; REP(i,a,b) {F;s=min(s,t);}
+#define UMP unordered_map
+#define UST unordered_set
 
 class Solution {
 public:
-    int largestCombination(vector<int>& candidates) {
-        
+    long long distinctNames(vector<string>& ideas) {
+        LEN(n,ideas);
+        LL ans = 0;
+        UMP<char,UST<string>> suf_set;
+        UMP<string,UST<char>> pre_set;
+        for(auto e : ideas){
+            LEN(le,e);
+            auto a = e[0];
+            auto d = e.substr(1,le-1);
+            
+        }
+        for(auto e : ideas){
+            LEN(le,e);
+            auto a = e[0];
+            auto d = e.substr(1,le-1);
+            auto invalid_pre = pre_count[d].size();
+            auto invalid_suf = suf_count[a].size();
+            ans += (total_pre-invalid_pre)*(total_suf-invalid_suf);
+        }
+        return 0;
     }
 };
 
 int main(){
     auto sol = Solution();
-    vector<int> candi{16,17,71,62,12,24,14};
-    cout<< sol.largestCombination(candi) << endl;
+    vector<string> ideas{"coffee","donuts","time","toffee"};
+    cout<< sol.distinctNames(ideas) << endl;
     return 0;
 }
