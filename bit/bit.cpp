@@ -2,6 +2,7 @@
 // https://oi-wiki.org/math/bit/
 #include<string>
 #include <bitset>
+#include<stack>
 
 using namespace std;
 
@@ -54,26 +55,37 @@ long Binary2Dec(string s){
 //任意进制转十进制
 long any2dec(string origin, int x){
     long ans=0;
-    return int(str(origin), base = x) // origin必须是字符串
+    int i=0;
+    while(origin.size()!=i)
+    {
+        ans*=x;             //我这里是把1看成0，把0看成1来算的。这样比较方便。其实都一样。
+        ans+=origin[i]-'0';
+        i++;
+    }
+    return ans;
 }
 
-def dec2any(n,x):
-    '''
-    10进制转N进制
-    n为待转换的十进制数，x为机制，取值为2-16
-    适用场景：进制转换
-    '''
-    a=['0','1','2','3','4','5','6','7','8','9','A','b','C','D','E','F']
-    b=[]
-    while True:
-        s=n//x  # 商
-        y=n%x  # 余数
-        b=b+[y]
-        if s==0:
-            break
-        n=s
-    b.reverse()
-    x=""
-    for i in b:
-        x+=a[i]
-    return x
+string dec2any(int n,int r){
+    string ans;
+    stack<int> s;
+    while(n)
+    {
+        s.push(n%r);
+        n/=r;
+    }
+    while(!s.empty())
+    {
+        switch(s.top())
+        {
+            case 10:ans+='A';break;
+            case 11:ans+='B';break;
+            case 12:ans+='C';break;
+            case 13:ans+='D';break;
+            case 14:ans+='E';break;
+            case 15:ans+='F';break;//这些都是为了能转化为十六进制。
+            default:ans+=s.top();break;
+        }
+        s.pop();
+    }
+    return ans;
+}

@@ -38,6 +38,9 @@ typedef long long LL;
 #define MIN_FORI(s,i,a,b,F,t) long s = LONG_MAX; REP(i,a,b) {F;s=min(s,t);}
 #define UMP unordered_map
 #define UST unordered_set
+#define UNION(A,B,C) C=A; for(auto &b:B) C.insert(b);
+#define INTERSECTION(A,B,C) C.clear(); for(auto &b:B) if(A.count(b)) C.insert(b);
+#define DIFFERENCE(A,B,C) C=A; for(auto &b:B) if(C.count(b)) C.erase(b);
 
 class Solution {
 public:
@@ -45,22 +48,24 @@ public:
         LEN(n,ideas);
         LL ans = 0;
         UMP<char,UST<string>> suf_set;
-        UMP<string,UST<char>> pre_set;
-        for(auto e : ideas){
-            LEN(le,e);
-            auto a = e[0];
-            auto d = e.substr(1,le-1);
-            
+        UST<char> pre_all;
+        for(auto &e : ideas){
+            LEN(len,e);
+            auto pre = e[0];
+            auto suf = e.substr(1,len-1);
+            suf_set[pre].insert(suf);
+            pre_all.insert(pre);
         }
-        for(auto e : ideas){
-            LEN(le,e);
-            auto a = e[0];
-            auto d = e.substr(1,le-1);
-            auto invalid_pre = pre_count[d].size();
-            auto invalid_suf = suf_count[a].size();
-            ans += (total_pre-invalid_pre)*(total_suf-invalid_suf);
+        for(char a = 'a';a<'z';a++){
+            for(char b=a+1;b<='z';b++)
+            {
+                UST<string> stc;
+                INTERSECTION(suf_set[a],suf_set[b],stc);
+                LL k = stc.size();
+                ans+=2*(suf_set[a].size()-k)*(suf_set[b].size()-k);
+            }
         }
-        return 0;
+        return ans;
     }
 };
 
@@ -68,5 +73,7 @@ int main(){
     auto sol = Solution();
     vector<string> ideas{"coffee","donuts","time","toffee"};
     cout<< sol.distinctNames(ideas) << endl;
+    vector<string> ideas2{"aaa","baa","caa","bbb","cbb","dbb"};
+    cout<< sol.distinctNames(ideas2) << endl;
     return 0;
 }

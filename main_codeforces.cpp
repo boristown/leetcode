@@ -35,6 +35,9 @@ typedef long long LL;
 #define MIN_FORI(s,i,a,b,F,t) long s = LONG_MAX; REP(i,a,b) {F;s=min(s,t);}
 #define UMP unordered_map
 #define UST unordered_set
+#define UNION(A,B,C) C=A; for(auto &b:B) C.insert(b);
+#define INTERSECTION(A,B,C) C.clear(); for(auto &b:B) if(A.count(b)) C.insert(b);
+#define DIFFERENCE(A,B,C) C=A; for(auto &b:B) if(C.count(b)) C.erase(b);
 
 using namespace std;
 
@@ -88,6 +91,9 @@ typedef long long LL;
 #define MIN_FORI(s,i,a,b,F,t) long s = LONG_MAX; REP(i,a,b) {F;s=min(s,t);}
 #define UMP unordered_map
 #define UST unordered_set
+#define UNION(A,B,C) C=A; for(auto &b:B) C.insert(b);
+#define INTERSECTION(A,B,C) C.clear(); for(auto &b:B) if(A.count(b)) C.insert(b);
+#define DIFFERENCE(A,B,C) C=A; for(auto &b:B) if(C.count(b)) C.erase(b);
 
 using namespace std;
 
