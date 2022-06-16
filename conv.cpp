@@ -31,6 +31,37 @@ vector<char> strlist(string s){
     return ans;
 }
 
+vector<string> split(string s, char delim){
+    stringstream ss(s);
+    string item;
+    vector<string> elems;
+    while (getline(ss, item, delim)) {
+        if (!item.empty()) {
+            elems.push_back(item);
+        }
+    }
+    return elems;
+}
+
+//[1, 2, 3] => vector<int>{1,2,3}
+vector<int> str2vec_i(string s){
+    vector<int> ans;
+    int a = 0;
+    int f = false;
+    for(auto c : s){
+        if('0'<=c && c<='9'){
+            a=a*10+(c-'0');
+            f = true;
+        }
+        else{
+            if(f) ans.push_back(a);
+            f = false;
+            a = 0;
+        }
+    }
+    return ans;
+}
+
 long str2int(string s){
     return stoi(s);
 }

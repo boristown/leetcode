@@ -44,36 +44,53 @@ typedef long long LL;
 
 class Solution {
 public:
-    long long distinctNames(vector<string>& ideas) {
-        LEN(n,ideas);
-        LL ans = 0;
-        UMP<char,UST<string>> suf_set;
-        UST<char> pre_all;
-        for(auto &e : ideas){
-            LEN(len,e);
-            auto pre = e[0];
-            auto suf = e.substr(1,len-1);
-            suf_set[pre].insert(suf);
-            pre_all.insert(pre);
-        }
-        for(char a = 'a';a<'z';a++){
-            for(char b=a+1;b<='z';b++)
-            {
-                UST<string> stc;
-                INTERSECTION(suf_set[a],suf_set[b],stc);
-                LL k = stc.size();
-                ans+=2*(suf_set[a].size()-k)*(suf_set[b].size()-k);
+    int findPairs(vector<int>& nums, int k) {
+        unordered_set<int> visited;
+        unordered_set<int> res;
+        for (int num : nums) {
+            if (visited.count(num - k)) {
+                res.emplace(num - k);
             }
+            if (visited.count(num + k)) {
+                res.emplace(num);
+            }
+            visited.emplace(num);
         }
-        return ans;
+        return res.size();
     }
 };
 
+//[1, 2, 3] => vector<int>{1,2,3}
+vector<int> str2vec_i(string s){
+    vector<int> ans;
+    int a = 0;
+    int f = false;
+    for(auto c : s){
+        if('0'<=c && c<='9'){
+            a=a*10+(c-'0');
+            f = true;
+        }
+        else{
+            if(f) ans.push_back(a);
+            f = false;
+            a = 0;
+        }
+    }
+    return ans;
+}
+
 int main(){
-    auto sol = Solution();
-    vector<string> ideas{"coffee","donuts","time","toffee"};
-    cout<< sol.distinctNames(ideas) << endl;
-    vector<string> ideas2{"aaa","baa","caa","bbb","cbb","dbb"};
-    cout<< sol.distinctNames(ideas2) << endl;
+    int t=0;
+    string str;
+    getline(cin,str);
+    t = stoi(str);
+    REP(i,1,t){
+        auto sol = Solution();
+        getline(cin,str);
+        vector<int> vi = str2vec_i(str);
+        getline(cin,str);
+        int k = stoi(str);
+        cout<< sol.findPairs(vi,k) << endl;
+    }
     return 0;
 }
