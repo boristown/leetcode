@@ -8,7 +8,7 @@ int bisect_right(int l,int r,bool (*pf)(int)){
     */
     while(l<r){
         int mid = (l+r)/2;
-        if((*pf)(mid)) 
+        if((*pf)(mid))
             r=mid;
         else 
             l=mid+1;

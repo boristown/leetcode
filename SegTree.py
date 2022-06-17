@@ -46,24 +46,21 @@ class SegTree:
         if not self.right:
             self.right = SegTree(self.f1, self.f2, midh, self.r, self.default)
 
-    def init_seg(self, M):
+    def build(self, arr):
         '''
-        将线段树的值初始化为矩阵Matrx
-        输入保证Matrx与线段大小一致
+        将线段树的值初始化为arr
+        输入保证arr与线段大小一致
         '''
-        m0 = M[0]
+        m0 = arr[0]
         self.lazy_tag = 0
-        for a in M:
-            if a!=m0:
-                break
-        else:
+        if self.r == self.l+1:
             self.v = m0
-            self.ans = self.f2(m0,len(M))
+            self.ans = self.f2(m0,len(arr))
             return self.ans
         self.v = '#'
         midh = self.mid_h
         self.create_subtrees()
-        self.ans = self.f1(self.left.init_seg(M[:midh-self.l]), self.right.init_seg(M[midh-self.l:]))
+        self.ans = self.f1(self.left.build(arr[:midh-self.l]), self.right.build(arr[midh-self.l:]))
         return self.ans
     
     def cover_seg(self, l, r, v):
