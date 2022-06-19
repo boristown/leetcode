@@ -13,8 +13,6 @@ typedef long long LL;
 #define REP(i,a,b) for(int i = a; i <= b; i++)
 #define REP2(i,a,b) for(int i = a; i >= b; i--)
 #define UMII unordered_map<int,int>
-#define PUB push_back
-#define POB pop_back
 #define SORT(L) sort(L.begin(),L.end());
 #define RSOR(L) sort(L.rbegin(),L.rend());
 #define LOB(A,a) lower_bound(A.begin(),A.end(),a)
@@ -33,6 +31,8 @@ typedef long long LL;
 #define MAX_FORI(s,i,a,b,F,t) long s = 0; REP(i,a,b) {F;s=max(s,t);}
 #define MIN_FORE(s,e,E,F,t) long s = LONG_MAX; for(auto &e : E) {F;s=min(s,t);}
 #define MIN_FORI(s,i,a,b,F,t) long s = LONG_MAX; REP(i,a,b) {F;s=min(s,t);}
+#define VEC_FORE(T,vt,e,E,cond,F,t) vector<T> vt; for(auto &e : E) if(cond) {F;vt.emplace_back(t);}
+#define VEC_FORI(T,vt,i,a,b,cond,F,t) vector<T> vt; REP(i,a,b) if(cond) {F;vt.emplace_back(t);}
 #define UMP unordered_map
 #define UST unordered_set
 #define UNION(A,B,C) C=A; for(auto &b:B) C.insert(b);
@@ -69,8 +69,6 @@ typedef long long LL;
 #define REP(i,a,b) for(int i = a; i <= b; i++)
 #define REP2(i,a,b) for(int i = a; i >= b; i--)
 #define UMII unordered_map<int,int>
-#define PUB push_back
-#define POB pop_back
 #define SORT(L) sort(L.begin(),L.end());
 #define RSOR(L) sort(L.rbegin(),L.rend());
 #define LOB(A,a) lower_bound(A.begin(),A.end(),a)
@@ -89,6 +87,8 @@ typedef long long LL;
 #define MAX_FORI(s,i,a,b,F,t) long s = 0; REP(i,a,b) {F;s=max(s,t);}
 #define MIN_FORE(s,e,E,F,t) long s = LONG_MAX; for(auto &e : E) {F;s=min(s,t);}
 #define MIN_FORI(s,i,a,b,F,t) long s = LONG_MAX; REP(i,a,b) {F;s=min(s,t);}
+#define VEC_FORE(T,vt,e,E,cond,F,t) vector<T> vt; for(auto &e : E) if(cond) {F;vt.emplace_back(t);}
+#define VEC_FORI(T,vt,i,a,b,cond,F,t) vector<T> vt; REP(i,a,b) if(cond) {F;vt.emplace_back(t);}
 #define UMP unordered_map
 #define UST unordered_set
 #define UNION(A,B,C) C=A; for(auto &b:B) C.insert(b);
