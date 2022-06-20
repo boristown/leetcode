@@ -43,13 +43,15 @@ int popcount(int x) {
 
 string Dec2Binary(long n)
 {
-    bitset<16> bint{n};
-    return bint.to_string();
+    char ans[32];
+    itoa(n,ans,2);
+    return string(ans);
 }
 
 long Binary2Dec(string s){
-    bitset<16> bint{s};
-    return bint.to_ulong();
+    long ans;
+    ans = stoi(s,nullptr,2);
+    return ans;
 }
 
 //任意进制转十进制
