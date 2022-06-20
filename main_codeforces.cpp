@@ -35,8 +35,8 @@ typedef long long LL;
 #define VEC_FORI(T,vt,i,a,b,cond,F,t) vector<T> vt; REP(i,a,b) if(cond) {F;vt.emplace_back(t);}
 #define UMP unordered_map
 #define UST unordered_set
-#define UNION(A,B,C) C=A; for(auto &b:B) C.insert(b);
-#define INTERSECTION(A,B,C) C.clear(); for(auto &b:B) if(A.count(b)) C.insert(b);
+#define UNION(A,B,C) C=A; for(auto &b:B) C.emplace(b);
+#define INTERSECTION(A,B,C) C.clear(); for(auto &b:B) if(A.count(b)) C.emplace(b);
 #define DIFFERENCE(A,B,C) C=A; for(auto &b:B) if(C.count(b)) C.erase(b);
 
 using namespace std;
@@ -91,32 +91,30 @@ typedef long long LL;
 #define VEC_FORI(T,vt,i,a,b,cond,F,t) vector<T> vt; REP(i,a,b) if(cond) {F;vt.emplace_back(t);}
 #define UMP unordered_map
 #define UST unordered_set
-#define UNION(A,B,C) C=A; for(auto &b:B) C.insert(b);
-#define INTERSECTION(A,B,C) C.clear(); for(auto &b:B) if(A.count(b)) C.insert(b);
+#define UNION(A,B,C) C=A; for(auto &b:B) C.emplace(b);
+#define INTERSECTION(A,B,C) C.clear(); for(auto &b:B) if(A.count(b)) C.emplace(b);
 #define DIFFERENCE(A,B,C) C=A; for(auto &b:B) if(C.count(b)) C.erase(b);
 
 using namespace std;
 
-const static int N = 2e5+100;
+const static int N = 1e3+2;
 
 LL A[N];
 
-string zfill(string s,int n){
-    ostringstream oss;
-    oss.setf(ios::right);
-    oss.fill('0');
-    oss.width(n);
-    oss << s;
-    return oss.str();
-}
-
 int main() {
-    int t,n;
-    string s;
-    cin>>t;
-    REP(i,1,t){
-        cin>>s>>n;
-        cout<<zfill(s,n)<<endl;
+    int n,l;
+    cin>>n>>l;
+    REP(i,1,n) cin>>A[i];
+    sort(A+1,A+n+1);
+    A[0] = -A[1];
+    A[n+1] = 2*l-A[n];
+    LL ans = 0;
+    REP(i,0,n) 
+    {
+        ans = max(ans,A[i+1]-A[i]);
     }
+    cout<<ans/2;
+    if(ans%2) cout<<".5000000000";
+    cout<<endl;
     return 0;
 };
