@@ -15,19 +15,54 @@
 #    print(ans)
 #
 #end of codeforces template
-from calendar import month_name
-from collections import *
-from bisect import *
+class BoolSearch:
+    @staticmethod
+    def right(l,r,func,param=None):
+        if param:
+            while l<r:
+                mid=(l+r)//2
+                if func(mid,param):
+                    r=mid
+                else:
+                    l=mid+1
+            return r
+        else:
+            while l<r:
+                mid=(l+r)//2
+                if func(mid):
+                    r=mid
+                else:
+                    l=mid+1
+            return r
+
+    @staticmethod
+    def left(l,r,func,param=None):
+        if param:
+            while l<r:
+                mid=(l+r)//2+1
+                if func(mid,param):
+                    l=mid
+                else:
+                    r=mid-1
+            return l
+        else:
+            while l<r:
+                mid=(l+r)//2+1
+                if func(mid):
+                    l=mid
+                else:
+                    r=mid-1
+            return l
+
 n=int(input())
 A=list(map(int,input().split()))
-sm = sum(A)
-mx = 0
-tot = 0
-min_v = 1
+m=int(input())
+Q=list(map(int,input().split()))
+pre = [0]
+s = 0
 for a in A:
-    tot = (tot + 1) if a == 1 else (tot - 1)
-    v = tot - mx
-    min_v = min(min_v,v)
-    mx = max(mx,tot)
-ans = sm - min_v
-print(ans)
+    s+=a
+    pre.append(s)
+for q in Q:
+    ans = BoolSearch.left(0,n,lambda x:q>pre[x])+1
+    print(ans)
