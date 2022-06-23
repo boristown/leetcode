@@ -15,24 +15,19 @@
 #    print(ans)
 #
 #end of codeforces template
+from calendar import month_name
 from collections import *
 from bisect import *
 n=int(input())
 A=list(map(int,input().split()))
-m=int(input())
-B=list(map(int,input().split()))
-A.sort()
-B.sort()
-i=ans=0
-j=-1
+sm = sum(A)
+mx = 0
+tot = 0
+min_v = 1
 for a in A:
-    l,r = bisect_left(B,a-1),bisect_right(B,a+1)-1
-    if l < m:
-        j2=max(j+1,l)
-        if j2 > r or j2 >= m:
-            continue
-        j = j2
-        ans+=1
-    else:
-        break
+    tot = (tot + 1) if a == 1 else (tot - 1)
+    v = tot - mx
+    min_v = min(min_v,v)
+    mx = max(mx,tot)
+ans = sm - min_v
 print(ans)
