@@ -102,19 +102,16 @@ const static int N = 1e3+2;
 LL A[N];
 
 int main() {
-    int n,l;
-    cin>>n>>l;
-    REP(i,1,n) cin>>A[i];
-    sort(A+1,A+n+1);
-    A[0] = -A[1];
-    A[n+1] = 2*l-A[n];
-    LL ans = 0;
-    REP(i,0,n) 
-    {
-        ans = max(ans,A[i+1]-A[i]);
+    int n,m,a,b;
+    int ans;
+    cin>>n>>m>>a>>b;
+    if(a*m<=b) ans = n*a;
+    else{
+        int v1 = n/m;
+        int v2 = n%m;
+        if(!v2) ans = v1*b;
+        else ans = min(v1*b+v2*a,(v1+1)*b);
     }
-    cout<<ans/2;
-    if(ans%2) cout<<".5000000000";
-    cout<<endl;
+    cout<<ans<<endl;
     return 0;
 };
