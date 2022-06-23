@@ -54,15 +54,20 @@ class BoolSearch:
                     r=mid-1
             return l
 
-n=int(input())
-A=list(map(int,input().split()))
-m=int(input())
-Q=list(map(int,input().split()))
-pre = [0]
-s = 0
-for a in A:
-    s+=a
-    pre.append(s)
-for q in Q:
-    ans = BoolSearch.left(0,n,lambda x:q>pre[x])+1
+t=int(input())
+for _ in range(t):
+    n=int(input())
+    A=list(map(int,input().split()))
+    ans = 0
+    side = 1 if A[0]>0 else -1
+    mx = A[0]
+    for a in A:
+        side2 = 1 if a>0 else -1
+        if side2 != side:
+            ans += mx
+            mx = a
+            side = side2
+        else:
+            mx = max(mx,a)
+    ans += mx
     print(ans)
