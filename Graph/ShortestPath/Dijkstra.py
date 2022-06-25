@@ -50,6 +50,20 @@ def dijkstraF(e,s):
                 heapq.heappush(q,(dis[v],v))
     return dis
 
+def dijkstraFFull(graph):
+    '''
+    输入：
+    e:邻接函数表
+    返回：
+    dis:任意两个顶点之间的最短路长度
+    '''
+    ans = {}
+    for start in graph:
+        dis = dijkstraF(graph,start)
+        for end in dis:
+            ans[start,end] = dis[end]
+    return ans
+
 def dijkstra_path(e,s,t):
     '''
     输入：

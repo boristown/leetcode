@@ -61,6 +61,17 @@ def ShortestPathALL(graph,start):
                 Q.append((step,node2))
     return ans
 
+def ShortestPathFull(graph):
+    '''
+    有向无权图中：任意两个结点之间的最短路长度
+    '''
+    ans = {}
+    for start in graph:
+        dis = ShortestPathALL(graph,start)
+        for end in dis:
+            ans[start,end] = dis[end]
+    return ans
+
 def ShortestPath_random(graph,start,end):
     '''
     有向无权图中：从start到end的随机最短路
