@@ -15,59 +15,34 @@
 #    print(ans)
 #
 #end of codeforces template
-class BoolSearch:
-    @staticmethod
-    def right(l,r,func,param=None):
-        if param:
-            while l<r:
-                mid=(l+r)//2
-                if func(mid,param):
-                    r=mid
-                else:
-                    l=mid+1
-            return r
-        else:
-            while l<r:
-                mid=(l+r)//2
-                if func(mid):
-                    r=mid
-                else:
-                    l=mid+1
-            return r
 
-    @staticmethod
-    def left(l,r,func,param=None):
-        if param:
-            while l<r:
-                mid=(l+r)//2+1
-                if func(mid,param):
-                    l=mid
-                else:
-                    r=mid-1
-            return l
-        else:
-            while l<r:
-                mid=(l+r)//2+1
-                if func(mid):
-                    l=mid
-                else:
-                    r=mid-1
-            return l
+from collections import *
 
-t=int(input())
+t = int(input()) #input number of test cases
 for _ in range(t):
-    n=int(input())
-    A=list(map(int,input().split()))
-    ans = 0
-    side = 1 if A[0]>0 else -1
-    mx = A[0]
-    for a in A:
-        side2 = 1 if a>0 else -1
-        if side2 != side:
-            ans += mx
-            mx = a
-            side = side2
+    n = int(input()) #input number of test cases
+    s = input()
+    a = ""
+    b = ""
+    f = 0
+    for c in s:
+        if c == '2':
+            if not f:
+                a+="1"
+                b+="1"
+            else:
+                a+='0'
+                b+='2'
+        elif c == '0':
+            a+="0"
+            b+="0"
         else:
-            mx = max(mx,a)
-    ans += mx
-    print(ans)
+            if not f:
+                a+="1"
+                b+="0"
+            else:
+                a+="0"
+                b+="1"
+            f = 1
+    print(a)
+    print(b)

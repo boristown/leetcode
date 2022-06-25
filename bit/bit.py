@@ -43,6 +43,9 @@ def popcount(x):
         x >>= 1
     return cnt
 
+def dec2bin(origin):
+    print(bin(origin)[2:])
+
 def any2dec(origin, x):
     '''
     m: int 
