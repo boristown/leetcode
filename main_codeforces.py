@@ -18,31 +18,36 @@
 
 from collections import *
 
+inf = float("inf")
+
 t = int(input()) #input number of test cases
 for _ in range(t):
-    n = int(input()) #input number of test cases
-    s = input()
-    a = ""
-    b = ""
-    f = 0
-    for c in s:
-        if c == '2':
-            if not f:
-                a+="1"
-                b+="1"
-            else:
-                a+='0'
-                b+='2'
-        elif c == '0':
-            a+="0"
-            b+="0"
+    s = input() #input string
+    n = len(s)
+    if n < 3:
+        print(0)
+    else:
+        i,j = 0,2
+        cnt = Counter(s[:3])
+        ans = inf
+        while cnt['1'] == 0 or cnt['2'] == 0 or cnt['3'] == 0:
+            j+=1
+            if j >= n: break
+            cnt[s[j]]+=1
+        if not (cnt['1'] == 0 or cnt['2'] == 0 or cnt['3'] == 0):
+            ans = j-i+1
+        if ans == inf:
+            print(0)
         else:
-            if not f:
-                a+="1"
-                b+="0"
+            for i in range(1,n-2):
+                cnt[s[i-1]]-=1
+                while cnt['1'] == 0 or cnt['2'] == 0 or cnt['3'] == 0:
+                    j+=1
+                    if j >= n: break
+                    cnt[s[j]]+=1
+                if not (cnt['1'] == 0 or cnt['2'] == 0 or cnt['3'] == 0):
+                    ans = min(ans,j-i+1)
+            if ans == inf:
+                print(0)
             else:
-                a+="0"
-                b+="1"
-            f = 1
-    print(a)
-    print(b)
+                print(ans)
