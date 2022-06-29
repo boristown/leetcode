@@ -20,34 +20,29 @@ from collections import *
 
 inf = float("inf")
 
-t = int(input()) #input number of test cases
-for _ in range(t):
-    s = input() #input string
-    n = len(s)
-    if n < 3:
-        print(0)
-    else:
-        i,j = 0,2
-        cnt = Counter(s[:3])
-        ans = inf
-        while cnt['1'] == 0 or cnt['2'] == 0 or cnt['3'] == 0:
-            j+=1
-            if j >= n: break
-            cnt[s[j]]+=1
-        if not (cnt['1'] == 0 or cnt['2'] == 0 or cnt['3'] == 0):
-            ans = j-i+1
-        if ans == inf:
-            print(0)
+d,sumTime = map(int,input().split()) #input tuple
+sum_min=sum_max=0
+limit = []
+for _ in range(d):
+    l,r = map(int,input().split())
+    limit.append((l,r))
+    sum_min+=l
+    sum_max+=r
+if sumTime<sum_min or sumTime>sum_max:
+    print("NO")
+else:
+    print("YES")
+    ans = [l for l,r in limit]
+    sm = sum_min
+    i = 0
+    while sm < sumTime:
+        dis = limit[i][1] - ans[i]
+        if dis + sm <= sumTime:
+            ans[i] = limit[i][1]
+            sm += dis
+            i+=1
         else:
-            for i in range(1,n-2):
-                cnt[s[i-1]]-=1
-                while cnt['1'] == 0 or cnt['2'] == 0 or cnt['3'] == 0:
-                    j+=1
-                    if j >= n: break
-                    cnt[s[j]]+=1
-                if not (cnt['1'] == 0 or cnt['2'] == 0 or cnt['3'] == 0):
-                    ans = min(ans,j-i+1)
-            if ans == inf:
-                print(0)
-            else:
-                print(ans)
+            delta = sumTime - sm
+            ans[i] += delta
+            break
+    print(" ".join(map(str,ans)))
