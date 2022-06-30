@@ -17,32 +17,40 @@
 #end of codeforces template
 
 from collections import *
+from lzma import FILTER_LZMA2
 
 inf = float("inf")
 
-d,sumTime = map(int,input().split()) #input tuple
-sum_min=sum_max=0
-limit = []
-for _ in range(d):
-    l,r = map(int,input().split())
-    limit.append((l,r))
-    sum_min+=l
-    sum_max+=r
-if sumTime<sum_min or sumTime>sum_max:
-    print("NO")
-else:
-    print("YES")
-    ans = [l for l,r in limit]
-    sm = sum_min
-    i = 0
-    while sm < sumTime:
-        dis = limit[i][1] - ans[i]
-        if dis + sm <= sumTime:
-            ans[i] = limit[i][1]
-            sm += dis
-            i+=1
+def solve(n,L):
+    ans = 0
+    i,j = 0,n-1
+    f = L[0]
+    f2 = 1-L[0]
+    while True:
+        while i<=j:
+            if f==L[i]:
+                i+=1
+                f = 1-f
+            else:
+                break
+        while i<=j:
+            if f2==L[j]:
+                j-=1
+                f2 = 1-f2
+            else:
+                break
+        if i <= j:
+            f = 1-f
+            f2 = 1-f2
+            ans += 1
         else:
-            delta = sumTime - sm
-            ans[i] += delta
             break
-    print(" ".join(map(str,ans)))
+    return ans
+
+t = int(input()) #input number of test cases
+for _ in range(t):
+    n = int(input())
+    s = input()
+    L = list(map(int,list(s))) #input list
+    ans = solve(n,L)
+    print(ans)
