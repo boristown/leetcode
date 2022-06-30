@@ -17,40 +17,27 @@
 #end of codeforces template
 
 from collections import *
-from lzma import FILTER_LZMA2
 
 inf = float("inf")
 
-def solve(n,L):
-    ans = 0
-    i,j = 0,n-1
-    f = L[0]
-    f2 = 1-L[0]
-    while True:
-        while i<=j:
-            if f==L[i]:
-                i+=1
-                f = 1-f
-            else:
-                break
-        while i<=j:
-            if f2==L[j]:
-                j-=1
-                f2 = 1-f2
-            else:
-                break
-        if i <= j:
-            f = 1-f
-            f2 = 1-f2
-            ans += 1
+def solve(s,t):
+    ans = list(s)
+    i = len(s) - 1
+    while i>=0:
+        a = s[i]
+        if a == 'z':
+            b = 'a'
+            ans[i] = b
+            i-=1
         else:
+            b = chr(ord(a)+1)
+            ans[i] = b
             break
-    return ans
+    ans2 = "".join(ans)
+    if ans2>=t:
+        return "No such string"
+    return ans2
 
-t = int(input()) #input number of test cases
-for _ in range(t):
-    n = int(input())
-    s = input()
-    L = list(map(int,list(s))) #input list
-    ans = solve(n,L)
-    print(ans)
+s = input()
+t = input()
+print(solve(s,t))
