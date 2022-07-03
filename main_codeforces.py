@@ -20,24 +20,30 @@ from collections import *
 
 inf = float("inf")
 
-def solve(s,t):
-    ans = list(s)
-    i = len(s) - 1
-    while i>=0:
-        a = s[i]
-        if a == 'z':
-            b = 'a'
-            ans[i] = b
-            i-=1
-        else:
-            b = chr(ord(a)+1)
-            ans[i] = b
-            break
-    ans2 = "".join(ans)
-    if ans2>=t:
-        return "No such string"
-    return ans2
-
-s = input()
-t = input()
-print(solve(s,t))
+t = int(input())
+for _ in range(t):
+    n,m = map(int,input().split()) #input tuple
+    def ok(i,j):
+        return 0<=i<n and 0<=j<m
+    def val(i,j):
+        cnt = 0
+        for x,y in [(-1,0),(1,0),(0,-1),(0,1)]:
+            if ok(i+x,j+y):
+                cnt += 1
+        return cnt
+    ans = [[0]*m for _ in range(n)]
+    f = True
+    for i in range(n):
+        L = list(map(int,input().split())) #input list
+        for j in range(m):
+            ans[i][j] = val(i,j)
+            v = L[j]
+            if ans[i][j] < v:
+                f = False
+    if not f:
+        print("NO")
+    else:
+        print("YES")
+        for i in range(n):
+            print(" ".join(map(str,ans[i])))
+    
