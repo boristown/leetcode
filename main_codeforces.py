@@ -16,34 +16,51 @@
 #
 #end of codeforces template
 
+from bisect import *
 from collections import *
 
 inf = float("inf")
 
+def solve(n,m,A):
+    cnt = Counter([a%m for a in A])
+    ans = 1 if cnt[0] else 0
+    n -= cnt[0]
+    cnt[0] = 0
+    for i in range(1,m):
+        j = m-i
+        if cnt[i] and cnt[j]:
+            if i == j:
+                n-=cnt[i]
+                cnt[i]=0
+            else:
+                n1 = min(cnt[i],cnt[j])
+                n2 = max(cnt[i],cnt[j])
+                if n2>n1:
+                    n3 = n1 + 1
+                    n-=n1*2+1
+                else:
+                    n3 = n1
+                    n-=n1*2
+                cnt[i]-=n1
+                cnt[j]-=n1
+                if cnt[i] > 0:
+                    cnt[i]-=1
+                elif cnt[j] > 0:
+                    cnt[j]-=1
+            #print(i,j)
+            ans += 1
+        if cnt[i]:
+            #print(i,"*",cnt[i])
+            ans += cnt[i]
+            n-=cnt[i]
+            cnt[i] = 0
+        if not n:
+            break
+    return ans
+
 t = int(input())
 for _ in range(t):
     n,m = map(int,input().split()) #input tuple
-    def ok(i,j):
-        return 0<=i<n and 0<=j<m
-    def val(i,j):
-        cnt = 0
-        for x,y in [(-1,0),(1,0),(0,-1),(0,1)]:
-            if ok(i+x,j+y):
-                cnt += 1
-        return cnt
-    ans = [[0]*m for _ in range(n)]
-    f = True
-    for i in range(n):
-        L = list(map(int,input().split())) #input list
-        for j in range(m):
-            ans[i][j] = val(i,j)
-            v = L[j]
-            if ans[i][j] < v:
-                f = False
-    if not f:
-        print("NO")
-    else:
-        print("YES")
-        for i in range(n):
-            print(" ".join(map(str,ans[i])))
-    
+    A = list(map(int,input().split())) #input list
+    ans = solve(n,m,A)
+    print(ans)
