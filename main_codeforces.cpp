@@ -99,35 +99,28 @@ using namespace std;
 
 const static int N = 2e5+100;
 
-LL ans[N];
+LL A[N];
 
 int main() {
-    int t,m,n;
+    int t,n;
     LL a;
     int b;
     cin>>t;
     REP(i,1,t){
-        cin>>n>>m;
-        int n_ans = 1;
-        int s = 0;
+        bool ok = false;
+        cin>>n;
         REP(j,1,n){
-            cin>>a;
-            b=a%2;
-            s+=b;
-            if(s%2==1 && n_ans<m){
-                ans[n_ans++] = j;
-                s=0;
+            cin>>A[j];
+            if(j>1){
+                if(abs(A[j-1]-A[j])>1 && !ok){
+                    cout<<"YES"<<endl;
+                    cout<<j-1<<" "<<j<<endl;
+                    ok = true;
+                }
             }
+
         }
-        if(s%2==1) ans[n_ans++] = n;
-        if(n_ans==m+1){
-            cout<<"YES"<<endl;
-            REP(j,1,n_ans-1){
-                cout<<ans[j]<<" ";
-            }
-            cout<<endl;
-        }
-        else{
+        if(!ok){
             cout<<"NO"<<endl;
         }
     }
