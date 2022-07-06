@@ -97,21 +97,32 @@ typedef long long LL;
 
 using namespace std;
 
-const static int N = 1e3+2;
+const static int N = 2e5+100;
 
 LL A[N];
 
 int main() {
-    int n,m,a,b;
-    int ans;
-    cin>>n>>m>>a>>b;
-    if(a*m<=b) ans = n*a;
-    else{
-        int v1 = n/m;
-        int v2 = n%m;
-        if(!v2) ans = v1*b;
-        else ans = min(v1*b+v2*a,(v1+1)*b);
+    int t,n;
+    LL a;
+    int b;
+    cin>>t;
+    REP(i,1,t){
+        bool ok = false;
+        cin>>n;
+        REP(j,1,n){
+            cin>>A[j];
+            if(j>1){
+                if(abs(A[j-1]-A[j])>1 && !ok){
+                    cout<<"YES"<<endl;
+                    cout<<j-1<<" "<<j<<endl;
+                    ok = true;
+                }
+            }
+
+        }
+        if(!ok){
+            cout<<"NO"<<endl;
+        }
     }
-    cout<<ans<<endl;
     return 0;
 };
