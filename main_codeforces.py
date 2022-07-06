@@ -24,9 +24,12 @@ for _ in range(t):
     n = int(input())
     L = list(map(int,input().split())) #input list
     L.sort()
-    for i in range(n-1):
-        if L[i+1]-L[i]==1:
-            print("NO")
-            break
-    else:
+    if L[0]==L[-1] == 1:
         print("YES")
+    else:
+        for i in range(n-1):
+            if L[i+1]-L[i]==1:
+                print("NO")
+                break
+        else:
+            print("YES")
