@@ -123,3 +123,20 @@ primes = [
 9817,9829,9833,9839,9851,9857,9859,9871,9883,9887,
 9901,9907,9923,9929,9931,9941,9949,9967,9973
 ]
+
+import math
+def get_primes(n=100000):
+    flag = False
+    prime_number = [2]
+    for i in range(3, n, 2):
+        edge = math.ceil(math.sqrt(i))+1
+        for j in prime_number:
+            if i % j == 0:
+                flag = True
+                break
+            if j >= edge:
+                flag = False
+                break
+        if not flag:
+            prime_number.append(i)
+    return prime_number
