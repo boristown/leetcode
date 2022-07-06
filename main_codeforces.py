@@ -23,8 +23,14 @@ t = int(input())
 for _ in range(t):
     n = int(input())
     L = list(map(int,input().split())) #input list
-    L.sort()
-    if L.count(0) and L.count(1) or L.count(2) and L.count(1):
-        print("NO")
+    if L[-2]>L[-1]:
+        print(-1)
     else:
-        print("YES")
+        d = L[-2]-L[-1]
+        for i in range(n-2):
+            if L[i]>d:
+                L[i]=d
+        if 
+        print(n-2)
+        for i in range(n-2):
+            print(i+1,n-1,n)
