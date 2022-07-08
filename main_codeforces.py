@@ -18,19 +18,35 @@
 
 from collections import *
 
+def issorted(A):
+    n = len(A)
+    for i in range(n-1):
+        if A[i]>A[i+1]:
+            return False
+    return True
+    
+def solve(n,x,L):
+    if x*2<=n:
+        return "YES"
+    if n == x:
+        return "YES" if issorted(L) else "NO"
+    l=n-x
+    r=x-1
+    B = L[l:r+1]
+    if not issorted(B):
+        return 'NO'
+    A = L[:l] + L[r+1:]
+    A.sort()
+    l0,r0 = A[l-1],A[l]
+    l1,r1 = L[l],L[r]
+    if l0<=l1 <= r1 <= r0:
+        return "YES"
+    return "NO"
+
 inf = float("inf")
 t = int(input())
 for _ in range(t):
-    n = int(input())
+    n,x = map(int,input().split()) #input tuple
     L = list(map(int,input().split())) #input list
-    if L[-2]>L[-1]:
-        print(-1)
-    else:
-        d = L[-2]-L[-1]
-        for i in range(n-2):
-            if L[i]>d:
-                L[i]=d
-        if 
-        print(n-2)
-        for i in range(n-2):
-            print(i+1,n-1,n)
+    ans = solve(n,x,L)
+    print(ans)

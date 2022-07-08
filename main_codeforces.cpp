@@ -97,32 +97,45 @@ typedef long long LL;
 
 using namespace std;
 
-const static int N = 2e5+100;
+const static int N = 1e5+100;
 
 LL A[N];
+LL B[N];
+
+bool solve(int n,int x){
+    if(x*2<=n) return true;
+    if(n==x) return is_sorted(A+1,A+n+1);
+    int l = n-x;
+    int r = x-1;
+    int gap = r-l+1;
+    int n2 = n-gap;
+    if(!is_sorted(A+l+1,A+r+2)) return false;
+    REP(i,1,l){
+        B[i] = A[i];
+    }
+    REP(i,r+2,n){
+        B[i-gap] = A[i];
+    }
+    sort(B+1,B+n2+1);
+    int l0 = B[l],r0 = B[l+1];
+    int l1 = A[l+1],r1 = A[r+1];
+    if(l0<=l1 && r1 <= r0) return true;
+    return false;
+}
 
 int main() {
-    int t,n;
+    int t,n,x;
     LL a;
     int b;
     cin>>t;
     REP(i,1,t){
-        bool ok = false;
-        cin>>n;
+        cin>>n>>x;
         REP(j,1,n){
             cin>>A[j];
-            if(j>1){
-                if(abs(A[j-1]-A[j])>1 && !ok){
-                    cout<<"YES"<<endl;
-                    cout<<j-1<<" "<<j<<endl;
-                    ok = true;
-                }
-            }
-
         }
-        if(!ok){
-            cout<<"NO"<<endl;
-        }
+        bool ans = solve(n,x);
+        if(ans) cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
     }
     return 0;
 };
