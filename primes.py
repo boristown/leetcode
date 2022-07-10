@@ -1,3 +1,4 @@
+from collections import *
 primes = [
 2,3,5,7,11,13,17,19,23,29,
 31,37,41,43,47,53,59,61,67,71,
@@ -140,3 +141,14 @@ def get_primes(n=100000):
         if not flag:
             prime_number.append(i)
     return prime_number
+
+def prime_factors(n):
+    x = 2
+    cnt = Counter()
+    while x < n:
+        if n%x:
+            cnt[x]+=1
+            n//=x
+        else:
+            x+=1
+    return cnt
