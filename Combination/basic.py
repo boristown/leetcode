@@ -114,14 +114,14 @@ def _Amod(n,m):
     return (_Amod(n-1,m-1)*n)%MOD
 
 @cache
-def _Cmod(n,m):
+def _C(n,m):
     '''
-    从n个元素中选择m个组合数(结果取模)
+    从n个元素中选择m个组合数
     递归写法
     适用场景：计算组合数
     '''
     if m == 0: return 1
-    return _Cmod(n-1,m-1) * n // m
+    return _C(n-1,m-1) * n // m
 
 def Cmod2(n):
     '''
