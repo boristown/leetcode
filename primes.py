@@ -145,8 +145,8 @@ def get_primes(n=100000):
 def prime_factors(n):
     x = 2
     cnt = Counter()
-    while x < n:
-        if n%x:
+    while x <= n:
+        if n%x == 0:
             cnt[x]+=1
             n//=x
         else:
