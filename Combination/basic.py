@@ -120,8 +120,8 @@ def _Cmod(n,m):
     递归写法
     适用场景：计算组合数
     '''
-    if m == 0: return 1
-    return _Cmod(n-1,m-1) * n // m
+    if m == n or m == 0: return 1
+    return (_Cmod(n-1,m-1)+_Cmod(n-1,m))%MOD
 
 def Cmod2(n):
     '''
