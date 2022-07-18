@@ -100,42 +100,41 @@ using namespace std;
 const static int N = 1e5+100;
 
 LL A[N];
-LL B[N];
+LL dp[N];
+int n = 0;
 
-bool solve(int n,int x){
-    if(x*2<=n) return true;
-    if(n==x) return is_sorted(A+1,A+n+1);
-    int l = n-x;
-    int r = x-1;
-    int gap = r-l+1;
-    int n2 = n-gap;
-    if(!is_sorted(A+l+1,A+r+2)) return false;
-    REP(i,1,l){
-        B[i] = A[i];
+LL solve(int i){
+    if(i>n-1) return 0;
+    return max(max(A[i-1],A[i+1])+1-A[i],LL(0));
+}
+
+LL F(int n,int j){
+    if(n < 3) return 0;
+    if(n%2==1)
+        return dp[j+1];
+    else{
+        LL ans1 = solve(j+1) + F(n-2,j+2);
+        LL ans2 = solve(j+2) + F(n-3,j+3);
+        return min(ans1,ans2);
     }
-    REP(i,r+2,n){
-        B[i-gap] = A[i];
-    }
-    sort(B+1,B+n2+1);
-    int l0 = B[l],r0 = B[l+1];
-    int l1 = A[l+1],r1 = A[r+1];
-    if(l0<=l1 && r1 <= r0) return true;
-    return false;
 }
 
 int main() {
-    int t,n,x;
+    int t,x;
     LL a;
     int b;
     cin>>t;
-    REP(i,1,t){
-        cin>>n>>x;
-        REP(j,1,n){
+    REP(i,0,t-1){
+        cin>>n;
+        A[0] = 0;
+        REP(j,0,n-1){
             cin>>A[j];
         }
-        bool ans = solve(n,x);
-        if(ans) cout<<"YES"<<endl;
-        else cout<<"NO"<<endl;
+        dp[n] = 0;
+        for(int j=n-2;j>0;j-=2){
+            dp[j] = solve(j) + dp[j+2];
+        }
+        cout<<F(n,0)<<endl;
     }
     return 0;
 };
