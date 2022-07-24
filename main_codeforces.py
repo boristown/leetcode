@@ -9,10 +9,11 @@
 #for _ in range(t): #iter for test cases
 #    n = int(input()) #input int
 #    n,m = map(int,input().split()) #input tuple
-#    L = list(map(int,input().split())) #input list
+#    A = list(map(int,input().split())) #input list
 #    s = input() #input string
 #    ans = solve(s,L) #solve
-#    print(ans)
+#    print(ans) #print single answer
+#    print(" ".join(map(str,ans))) #print int array
 #
 #end of codeforces template
 
@@ -21,23 +22,19 @@ import math
 
 inf = float("inf")
 
+def solve(n,m,k,A):
+    if A[0] >= nm:
+        return True
+    B = [a//n for a in A]
+    C = [b//2*2 for b in B if b > 1]
+    return sum(C) >= m
+
 t = int(input()) #input number of test cases
 for _ in range(t): #iter for test cases
-    n,k = map(int,input().split()) #input tuple
+    n,m,k = map(int,input().split()) #input tuple
     A = list(map(int,input().split())) #input list
     A.sort(reverse=True)
-    ans = inf
-    mx,mn = A[0],A[-1]//k
-    for a in range(max(1,mn),mx+1):
-        mna,mxa = inf,-inf
-        for i in range(n):
-            d = A[i]/a
-            d1,d2 = max(1,min(k,math.ceil(d))),min(k,max(math.floor(d),1))
-            c1,c2 = A[i]//d1,A[i]//d2
-            if abs(c1-a)>abs(c2-a):
-                c1,c2=c2,c1
-            mna,mxa = min(mna,c1),max(mxa,c1)
-        an = mxa-mna
-        if an < ans:
-            ans = an
-    print(ans)
+    nm = n*m
+    ans = A[0] >= nm or solve(n,m,k,A) or solve(m,n,k,A)
+    if ans: print("Yes")
+    else: print("No")
