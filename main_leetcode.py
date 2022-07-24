@@ -19,20 +19,6 @@ class Solution:
 
     def idealArrays(self, n: int, mv: int) -> int:
         return self.solve(n,mv)
-        a=self.solve(2,mv)
-        b=self.solve(3,mv)
-        c=self.solve(4,mv)
-        d1 = (b-a) - (a-mv)
-        d2 = (c-b) - (b-a)
-        ans = mv
-        e = a-mv
-        d = d1
-        d3 = d2-d1
-        for i in range(n-1):
-            ans += e
-            e+=d
-            d+=d3
-        return ans % MOD
 
 if __name__ == "__main__":
     slt = Solution()
