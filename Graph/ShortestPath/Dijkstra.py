@@ -64,6 +64,20 @@ def dijkstraFFull(graph):
             ans[start,end] = dis[end]
     return ans
 
+def dijkstraFull(graph):
+    '''
+    输入：
+    e:邻接表
+    返回：
+    dis:任意两个顶点之间的最短路长度
+    '''
+    ans = {}
+    for start in graph:
+        dis = dijkstra(graph,start)
+        for end in dis:
+            ans[start,end] = dis[end]
+    return ans
+
 def dijkstra_path(e,s,t):
     '''
     输入：

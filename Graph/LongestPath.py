@@ -20,3 +20,9 @@ def LongestPath(G):
         for b in G[a]:
             ans = max(ans,1+dp(a,b))
     return ans
+
+def LongestPathIJ(G,i,j):
+    '''
+    在图G中，从i到j的最长路径
+    '''
+    

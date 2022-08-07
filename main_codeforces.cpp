@@ -99,23 +99,13 @@ using namespace std;
 
 const static int N = 1e5+100;
 
-LL A[N];
-LL dp[N];
-int n = 0;
+int dp[N];
 
-LL solve(int i){
-    if(i>n-1) return 0;
-    return max(max(A[i-1],A[i+1])+1-A[i],LL(0));
-}
-
-LL F(int n,int j){
-    if(n < 3) return 0;
-    if(n%2==1)
-        return dp[j+1];
-    else{
-        LL ans1 = solve(j+1) + F(n-2,j+2);
-        LL ans2 = solve(j+2) + F(n-3,j+3);
-        return min(ans1,ans2);
+int longestIdealString(string s, int k) {
+    int n = s.size();
+    dp[n] = 0;
+    for(int i=n-1;i>=0;i--){
+        
     }
 }
 
@@ -136,5 +126,6 @@ int main() {
         }
         cout<<F(n,0)<<endl;
     }
+    cout<<"test"<<endl;
     return 0;
 };
