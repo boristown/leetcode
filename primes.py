@@ -1,4 +1,5 @@
 from collections import *
+import time
 primes = [
 2,3,5,7,11,13,17,19,23,29,
 31,37,41,43,47,53,59,61,67,71,
@@ -126,6 +127,7 @@ primes = [
 ]
 
 import math
+#非筛法
 def get_primes(n=100000):
     flag = False
     prime_number = [2]
@@ -142,6 +144,21 @@ def get_primes(n=100000):
             prime_number.append(i)
     return prime_number
 
+#欧拉筛
+def get_primes_o(N=100000):
+    result = list()
+    isPrime = [True for _ in range(N)]
+    for i in range(2, N):
+        if isPrime[i]:
+            result.append(i)
+        for e in result:
+            if e * i >= N:
+                break
+            isPrime[e * i] = False
+            if i % e == 0:
+                break
+    return result
+
 def prime_factors(n):
     x = 2
     cnt = Counter()
@@ -152,3 +169,14 @@ def prime_factors(n):
         else:
             x+=1
     return cnt
+
+
+if __name__ == '__main__':
+    N = 10000000
+    t0 = time.time()
+    get_primes(N)
+    t1 = time.time()
+    print(t1-t0)
+    get_primes_o(N)
+    t2 = time.time()
+    print(t2-t1)
