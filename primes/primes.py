@@ -144,20 +144,24 @@ def get_primes(n=100000):
             prime_number.append(i)
     return prime_number
 
-#欧拉筛
+#2倍欧拉筛
 def get_primes_o(N=100000):
-    result = list()
-    isPrime = [True for _ in range(N)]
-    for i in range(2, N):
-        if isPrime[i]:
+    result = []
+    N2 = N//2
+    isPrime = [True for _ in range(N2)] #1 3 5 7……
+    i2 = 0
+    for i in range(3, N, 2):
+        i2+=1
+        if isPrime[i2]:
             result.append(i)
         for e in result:
-            if e * i >= N:
+            ei = e*i
+            if ei >= N:
                 break
-            isPrime[e * i] = False
+            isPrime[ei>>1] = False
             if i % e == 0:
                 break
-    return result
+    return [2]+result
 
 def prime_factors(n):
     x = 2
@@ -172,11 +176,11 @@ def prime_factors(n):
 
 
 if __name__ == '__main__':
-    N = 10000000
-    t0 = time.time()
-    get_primes(N)
+    N = 100000000
+    #t0 = time.time()
+    #get_primes(N)
     t1 = time.time()
-    print(t1-t0)
-    get_primes_o(N)
+    #print(t1-t0)
+    res = get_primes_o(N)
     t2 = time.time()
-    print(t2-t1)
+    print(t2-t1,len(res))

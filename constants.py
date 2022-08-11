@@ -1,5 +1,5 @@
 import string
-from primes import *
+from primes.primes import *
 INF = float("inf") #无限
 MOD = 1000000007 #力扣取模常数
 D4 = [(-1,0),(1,0),(0,-1),(0,1)] #迷宫的4个方向
