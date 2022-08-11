@@ -97,35 +97,48 @@ typedef long long LL;
 
 using namespace std;
 
-const static int N = 1e5+100;
+class Primes{
+    public: 
+    const static int N = 1e8+10;
+    const static int M = 1e7+10;
 
-int dp[N];
+    public:
+    int cnt=0;
+    bool isPrime[N];
+    int result[M];
 
-int longestIdealString(string s, int k) {
-    int n = s.size();
-    dp[n] = 0;
-    for(int i=n-1;i>=0;i--){
-        
+    //2倍欧拉筛,找小于N的所有素数
+    public:
+    void get_primes_o(int n=100000){
+        memset(isPrime,1,N*sizeof(bool));
+        result[0] = 2;
+        int n2 = n / 2;
+        cnt = 1;
+        int i2 = 0;
+        for(int i=3;i<n;i+=2){
+            i2++;
+            if(isPrime[i2]){
+                result[cnt++]=i;
+            }
+            for(int j=1;j<cnt;j++){
+                int e = result[j];
+                int ei = e*i;
+                if(ei>=n) break;
+                isPrime[ei>>1] = 0;
+                if(i%e==0) break;
+            }
+        }
     }
-}
+};
 
 int main() {
-    int t,x;
-    LL a;
-    int b;
-    cin>>t;
-    REP(i,0,t-1){
-        cin>>n;
-        A[0] = 0;
-        REP(j,0,n-1){
-            cin>>A[j];
-        }
-        dp[n] = 0;
-        for(int j=n-2;j>0;j-=2){
-            dp[j] = solve(j) + dp[j+2];
-        }
-        cout<<F(n,0)<<endl;
+    int n,q,x;
+    cin>>n>>q;
+    auto pri = new Primes();
+    pri->get_primes_o(n+1);
+    REP(i,1,q){
+        cin>>x;
+        cout<<pri->result[x-1]<<endl;
     }
-    cout<<"test"<<endl;
     return 0;
 };

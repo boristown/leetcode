@@ -25,6 +25,7 @@ def merge(point1, point2):
             X[r1] = r2
             if R[r1] == R[r2]:
                 R[r2] += 1
+
 def kruskal(vertices,edges):
     '''KRUSKAL算法实现
     '''
