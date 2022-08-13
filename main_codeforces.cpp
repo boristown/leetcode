@@ -97,24 +97,87 @@ typedef long long LL;
 
 using namespace std;
 
-int main() {
-    int n;
-    int k,a;
-    cin>>n;
-    auto pq = priority_queue<int,vector<int>,greater<int>>();
-    REP(i,1,n)
+//Disjoint Set
+class DisjSet
+{
+  public:
+    std::vector<int> parent;
+    std::vector<int> size;
+
+  public:
+    DisjSet(int max_size) : parent(std::vector<int>(max_size)),
+                            size(std::vector<int>(max_size))
     {
-        cin>>k;
-        if(k==1){
-            cin>>a;
-            pq.push(a);
-        }
-        else if(k==2){
-            cout << pq.top() << endl;
-        }
-        else{
-            pq.pop();
-        }
+        for (int i = 0; i < max_size; ++i){
+            parent[i] = i;
+            size[i] = 1;
+            }
     }
+    int find(int x)
+    {
+        return x == parent[x] ? x : (parent[x] = find(parent[x]));
+    }
+    void to_union(int x, int y)
+    {
+        x = find(x);
+        y = find(y);
+        if(x==y) return;
+        int t;
+        if (size[x] < size[y])
+        {
+            t = x;
+            x = y;
+            y = t;
+        }
+        parent[y] = x;
+        size[x] += size[y];
+    }
+    bool is_same(int e1, int e2)
+    {
+        return find(e1) == find(e2);
+    }
+};
+
+int main() {
+    set<tuple<int,int>> CO;
+    vector<tuple<int,int>> V;
+    V.push_back({0,0});
+    int N,M,E,u,v;
+    cin>>N>>M>>E;
+    REP(i,1,E){
+        cin>>u>>v;
+        tuple<int,int> tp = {u-1,v-1};
+        CO.emplace(tp);
+        V.emplace_back(tp);
+    }
+    int sup = N+M;
+    int tot = sup+1;
+    auto UF = DisjSet(tot);
+    REP(i,N,M+N-1){
+        UF.to_union(i,sup);
+    }
+    int Q,x;
+    cin >> Q;
+    vector<tuple<int,int>> QL;
+    REP(i,1,Q){
+        cin>>x;
+        QL.emplace_back(V[x]);
+        CO.erase(V[x]);
+    }
+    for(auto x:CO){
+        tie(u,v) = x;
+        UF.to_union(u,v);
+    }
+    vector<int> ans;
+    REP2(i,Q-1,0){
+        tie(u,v) = QL[i];
+        int a = UF.size[UF.find(sup)]-M-1;
+        ans.emplace_back(a);
+        UF.to_union(u,v);
+    }
+    REP2(i,Q-1,0){
+        cout<<ans[i]<<endl;
+    }
+    /**/
     return 0;
 };

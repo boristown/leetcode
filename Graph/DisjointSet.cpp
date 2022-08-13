@@ -1,34 +1,39 @@
-#include <vector>
+#include<vector>
+
 //Disjoint Set
 class DisjSet
 {
-  private:
+  public:
     std::vector<int> parent;
-    std::vector<int> rank;
+    std::vector<int> size;
 
   public:
     DisjSet(int max_size) : parent(std::vector<int>(max_size)),
-                            rank(std::vector<int>(max_size, 0))
+                            size(std::vector<int>(max_size))
     {
-        for (int i = 0; i < max_size; ++i)
+        for (int i = 0; i < max_size; ++i){
             parent[i] = i;
+            size[i] = 1;
+            }
     }
     int find(int x)
     {
         return x == parent[x] ? x : (parent[x] = find(parent[x]));
     }
-    void to_union(int x1, int x2)
+    void to_union(int x, int y)
     {
-        int f1 = find(x1);
-        int f2 = find(x2);
-        if (rank[f1] > rank[f2])
-            parent[f2] = f1;
-        else
+        x = find(x);
+        y = find(y);
+        if(x==y) return;
+        int t;
+        if (size[x] < size[y])
         {
-            parent[f1] = f2;
-            if (rank[f1] == rank[f2])
-                ++rank[f2];
+            t = x;
+            x = y;
+            y = t;
         }
+        parent[y] = x;
+        size[x] += size[y];
     }
     bool is_same(int e1, int e2)
     {
