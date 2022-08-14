@@ -22,70 +22,59 @@ from itertools import *
 
 inf = float("inf")
 
-# 并查集模板
-class UnionFind:
-    '''
-    适用范围：连通性检测
-    '''
-    def __init__(self, n: int):
-        self.parent = list(range(n))
-        self.size = [1] * n
-        self.n = n
-        # 当前连通分量数目
-        self.setCount = n
-    
-    def findset(self, x: int) -> int:
-        if self.parent[x] == x:
-            return x
-        self.parent[x] = self.findset(self.parent[x])
-        return self.parent[x]
-    
-    def un(self, x: int, y: int) -> bool:
-        '''
-        unite合并
-        '''
-        x, y = self.findset(x), self.findset(y)
-        if x == y:
-            return False
-        if self.size[x] < self.size[y]:
-            x, y = y, x
-        self.parent[y] = x
-        self.size[x] += self.size[y]
-        self.setCount -= 1
-        return True
-    
-    def co(self, x: int, y: int) -> bool:
-        '''
-        connected连通性
-        '''
-        x, y = self.findset(x), self.findset(y)
-        return x == y
+def solve(n,A):
+    I = defaultdict(list)
+    preMax = []
+    maxE = []
+    for i,a in enumerate(A):
+        I[a].append(i)
+        maxE.append(len(I))
+    mx = 0
+    for i,a in enumerate(A):
+        mx = max(mx,I[a][-1])
+        preMax.append(mx)
 
-CO = set()
-V = [(0,0)]
-N,M,E = map(int,input().split()) #input tuple
-for i in range(E): #iter for test cases
-    u,v = map(int,input().split()) #input tuple
-    CO.add((u-1,v-1))
-    V.append((u-1,v-1))
-sup = N+M
-tot = sup+1
-UF = UnionFind(tot)
-for i in range(N,M+N):
-    UF.un(i,sup)
-Q = int(input()) #input int
-QL = []
-for _ in range(Q): #iter for test cases
-    x = int(input()) #input int
-    QL.append(V[x])
-    CO.remove(V[x])
-for u,v in CO:
-    UF.un(u,v)
+    for i in range(n-2,-1,-1):
+        a,b = A[i],A[i+1]
+        if a>b: #key point
+            k=preMax[i]
+            ans = maxE[k]
+            #print("ans:",i,preMax,k,maxE,ans)
+            return ans
+    return 0
 
-ans = []
-for u,v in QL[::-1]:
-    ans.append(UF.size[UF.findset(sup)]-M-1)
-    UF.un(u,v)
-
-for i in range(Q-1,-1,-1):
-    print(ans[i])
+MAX = 10**9
+t = int(input()) #input number of test cases
+for _ in range(t): #iter for test cases
+    n,k = map(int,input().split()) #input tuple
+    A = list(map(int,input().split())) #input list
+    P = [(a,i) for i,a in enumerate(A)]
+    P.sort()
+    if n == k:
+        print(MAX)
+    else:
+        if n == 2:
+            print(max(A))
+        else:
+            if k == 1:
+                minsuf = min(A[2:])
+                minpre = min(A[:-2])
+                ans1 = min(A[0],minsuf*2)
+                ans2 = min(A[-1],minpre*2)
+                ans4 = min(A[1],minsuf*2)
+                ans5 = min(A[-2],minpre*2)
+                ans3 = max(A)
+                print(max(ans1,ans2,ans3,ans4,ans5))
+            else:
+                S = set()
+                for i in range(k):
+                    p = P[i][1]
+                    f = False
+                    if p-1 in S or p+1 in S:
+                        f=True
+                    S.add(p)
+                if f:
+                    ans = P[k][0]*2
+                else:
+                    ans = P[k-1][0]*2
+                print(min(ans,MAX))
