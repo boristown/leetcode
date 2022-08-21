@@ -94,18 +94,17 @@ public:
     }
 };
 
+int MOD = 998244353;
+UST<tuple<int,int>> ST;
+int N,M,A,B,C,D,E,F,X,Y;
 
 int main(){
-    int t=0;
-    string str;
-    getline(cin,str);
-    t = stoi(str);
-    VI vi;
-    REP(i,1,t){
-        auto sol = Solution();
-        getline(cin,str);
-        int k = stoi(str);
-        cout<< sol.kSum(vi,k) << endl;
+    cin>>N>>M;
+    cin>>A>>B>>C>>D>>E>>F;
+    REP(i,1,M){
+        cin>>X>>Y;
+        ST.insert({X,Y});
     }
+
     return 0;
 }

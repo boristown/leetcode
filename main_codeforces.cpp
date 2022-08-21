@@ -97,54 +97,39 @@ typedef long long LL;
 
 using namespace std;
 
-int MOD = 998244353;
+LL MOD = 998244353;
 
-const int N = 5e3+100;
+const int _N = 5e3+100;
 
-int A[N];
-int C[N];
-int n;
+set<tuple<int,int>> ST;
+map<tuple<LL,LL,int>,LL> MP;
+int N,M,A,B,C,D,E,F,X,Y;
 
-int dfs(int i,int k){
-    if(C[n]==n) return 1;
-    int ans = 1;
-    int tmp = 0;
-    REP(p,1,n-1){
-        if(A[p]<A[p+1]){
-            tmp = A[p];
-            C[tmp]--;
-            C[A[p+1]]++;
-            A[p]=A[p+1];
-            ans = (ans + dfs()) % MOD;
-            A[p] = tmp;
-            C[A[p+1]]--;
-            C[tmp]++;
-        }
-        else if(A[p]>A[p+1]){
-            tmp = A[p+1];
-            C[tmp]--;
-            C[A[p]]++;
-            A[p+1]=A[p];
-            ans = (ans + dfs()) % MOD;
-            A[p+1] = tmp;
-            C[A[p]]--;
-            C[tmp]++;
-        }
+LL dp(LL i,LL j,int k){
+    if(MP.count({i,j,k})){
+        return MP[{i,j,k}];
     }
+    if(ST.count({i,j})){
+        MP[{i,j,k}]=0;
+        return 0;
+    }
+    if(!k){
+        MP[{i,j,k}]=1;
+        return 1;
+    }
+    LL ans = 0;
+    ans = (dp(i+A,j+B,k-1) + dp(i+C,j+D,k-1) + dp(i+E,j+F,k-1))%MOD;
+    MP[{i,j,k}]=ans;
     return ans;
 }
 
 int main() {
-    cin>>n;
-    REP(i,1,n){ //loop for input
-        cin>>A[i]; //input array
-        C[i] = 1;
+    cin>>N>>M;
+    cin>>A>>B>>C>>D>>E>>F;
+    REP(i,1,M){
+        cin>>X>>Y;
+        ST.insert({X,Y});
     }
-    int ans = 0;
-    REP(k,A[1],n){
-        A[1] = k;
-        ans = (ans + dfs(1,k)) % MOD;
-    }
-    cout << ans << endl;
+    cout<<dp(0,0,N)<<endl;
     return 0;
 };
