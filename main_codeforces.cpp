@@ -97,87 +97,54 @@ typedef long long LL;
 
 using namespace std;
 
-//Disjoint Set
-class DisjSet
-{
-  public:
-    std::vector<int> parent;
-    std::vector<int> size;
+int MOD = 998244353;
 
-  public:
-    DisjSet(int max_size) : parent(std::vector<int>(max_size)),
-                            size(std::vector<int>(max_size))
-    {
-        for (int i = 0; i < max_size; ++i){
-            parent[i] = i;
-            size[i] = 1;
-            }
-    }
-    int find(int x)
-    {
-        return x == parent[x] ? x : (parent[x] = find(parent[x]));
-    }
-    void to_union(int x, int y)
-    {
-        x = find(x);
-        y = find(y);
-        if(x==y) return;
-        int t;
-        if (size[x] < size[y])
-        {
-            t = x;
-            x = y;
-            y = t;
+const int N = 5e3+100;
+
+int A[N];
+int C[N];
+int n;
+
+int dfs(int i,int k){
+    if(C[n]==n) return 1;
+    int ans = 1;
+    int tmp = 0;
+    REP(p,1,n-1){
+        if(A[p]<A[p+1]){
+            tmp = A[p];
+            C[tmp]--;
+            C[A[p+1]]++;
+            A[p]=A[p+1];
+            ans = (ans + dfs()) % MOD;
+            A[p] = tmp;
+            C[A[p+1]]--;
+            C[tmp]++;
         }
-        parent[y] = x;
-        size[x] += size[y];
+        else if(A[p]>A[p+1]){
+            tmp = A[p+1];
+            C[tmp]--;
+            C[A[p]]++;
+            A[p+1]=A[p];
+            ans = (ans + dfs()) % MOD;
+            A[p+1] = tmp;
+            C[A[p]]--;
+            C[tmp]++;
+        }
     }
-    bool is_same(int e1, int e2)
-    {
-        return find(e1) == find(e2);
-    }
-};
+    return ans;
+}
 
 int main() {
-    set<tuple<int,int>> CO;
-    vector<tuple<int,int>> V;
-    V.push_back({0,0});
-    int N,M,E,u,v;
-    cin>>N>>M>>E;
-    REP(i,1,E){
-        cin>>u>>v;
-        tuple<int,int> tp = {u-1,v-1};
-        CO.emplace(tp);
-        V.emplace_back(tp);
+    cin>>n;
+    REP(i,1,n){ //loop for input
+        cin>>A[i]; //input array
+        C[i] = 1;
     }
-    int sup = N+M;
-    int tot = sup+1;
-    auto UF = DisjSet(tot);
-    REP(i,N,M+N-1){
-        UF.to_union(i,sup);
+    int ans = 0;
+    REP(k,A[1],n){
+        A[1] = k;
+        ans = (ans + dfs(1,k)) % MOD;
     }
-    int Q,x;
-    cin >> Q;
-    vector<tuple<int,int>> QL;
-    REP(i,1,Q){
-        cin>>x;
-        QL.emplace_back(V[x]);
-        CO.erase(V[x]);
-    }
-    for(auto x:CO){
-        tie(u,v) = x;
-        UF.to_union(u,v);
-    }
-    vector<int> ans;
-    REP2(i,Q-1,0){
-        tie(u,v) = QL[i];
-        int a = UF.size[UF.find(sup)]-M-1;
-        ans.emplace_back(a);
-        UF.to_union(u,v);
-    }
-    REP2(i,Q-1,0){
-        cout<<ans[i]<<endl;
-    }
-    /**/
+    cout << ans << endl;
     return 0;
 };
