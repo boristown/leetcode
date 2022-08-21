@@ -44,72 +44,68 @@ typedef long long LL;
 
 class Solution {
 public:
-    int findPairs(vector<int>& nums, int k) {
-        unordered_set<int> visited;
-        unordered_set<int> res;
-        for (int num : nums) {
-            if (visited.count(num - k)) {
-                res.emplace(num - k);
+    long long kSum(vector<int>& nums, int k) {
+        SORT(nums);
+        int p = LOBI(nums,0);
+        VI posi;
+        VI nega;
+        LL mx;
+        SUM_E(mx,posi);
+        if(k == 1) return mx;
+        priority_queue<int> hq;
+        hq.push(-mx);
+        int cnt = 0;
+        for(int i=nega.size()-1;i>=0;i--){
+            int a = nega[i];
+            priority_queue<int> hq2 = hq;
+            for(int i = 0; i < hq2.size(); i++){ // 这里只会遍历一次
+                int b = hq2.top();
+                hq2.pop();
+                int c = a+b;
+                hq.push(-c);
+                if(hq.size()>k){
+                    hq.pop();
+                }
             }
-            if (visited.count(num + k)) {
-                res.emplace(num);
+            cnt ++;
+            if(cnt==k){
+                break;
             }
-            visited.emplace(num);
         }
-        return res.size();
+        cnt = 0;
+        for(int i=0;i<posi.size();i++){
+            int a = -posi[i];
+            priority_queue<int> hq2 = hq;
+            for(int i = 0; i < hq2.size(); i++){ // 这里只会遍历一次
+                int b = hq2.top();
+                hq2.pop();
+                int c = a+b;
+                hq.push(-c);
+                if(hq.size()>k){
+                    hq.pop();
+                }
+            }
+            cnt ++;
+            if(cnt==k){
+                break;
+            }
+        }
+        return -hq.top();
     }
 };
 
-//[1, 2, 3] => vector<int>{1,2,3}
-vector<int> str2vec_i(string s){
-    vector<int> ans;
-    int a = 0;
-    int f = false;
-    for(auto c : s){
-        if('0'<=c && c<='9'){
-            a=a*10+(c-'0');
-            f = true;
-        }
-        else{
-            if(f) ans.push_back(a);
-            f = false;
-            a = 0;
-        }
-    }
-    return ans;
-}
-
-//["coffee","donuts","time"] => vector<string>{"coffee","donuts","time"}
-vector<string> str2vec_s(string s){
-    vector<string> ans;
-    string a = "";
-    int f = false;
-    for(auto c : s){
-        if(c!='"' && c!='[' && c!=']' && c!=',' && c!=' '){
-            a+=c;
-            f = true;
-        }
-        else{
-            if(f) ans.push_back(a);
-            f = false;
-            a = "";
-        }
-    }
-    return ans;
-}
 
 int main(){
     int t=0;
     string str;
     getline(cin,str);
     t = stoi(str);
+    VI vi;
     REP(i,1,t){
         auto sol = Solution();
         getline(cin,str);
-        vector<int> vi = str2vec_i(str);
-        getline(cin,str);
         int k = stoi(str);
-        cout<< sol.findPairs(vi,k) << endl;
+        cout<< sol.kSum(vi,k) << endl;
     }
     return 0;
 }
