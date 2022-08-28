@@ -1,8 +1,15 @@
+from graphlib import TopologicalSorter, CycleError
+
+#注意：以下内容已作废
+#请直接使用graphlib自带的拓扑排序器graphlib.TopologicalSorter
+#示例代码：https://www.geeksforgeeks.org/topological-sorting-using-graphlib-python-module/
+
 from collections import *
 import collections
+
 from typing import *
 
-class TopologicalSortor:
+class TopologicalSortorNoCircle:
     '''
     拓扑排序器(无环图)
     '''
